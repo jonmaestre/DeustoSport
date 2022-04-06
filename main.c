@@ -232,6 +232,7 @@ int ventaPrincipal()
     printf("7. Ver carrito \n");
 
     printf("Eleccion: ")
+    fflush(stdout);
     scanf("%i", respuesta);
     if (respuesta = 1)
     {
