@@ -59,4 +59,5 @@ COMPRA
 
 CARRITO 
 - Identificativo (int) --> Identificativo de COMPRA
+- IdComprador
 - PrecioTotal (float)
