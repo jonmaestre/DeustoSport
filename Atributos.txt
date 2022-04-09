@@ -1,0 +1,62 @@
+ADMINISTRADOR
+- Nombre (text)
+- Identificativo (int)
+- Contrasena (text)
+- Funcion (text)
+-----------------------------------
+
+COMPRADOR
+- Nombre (text)
+- Identificativo (int)
+- Telefono (int)
+- Correo (text)
+- Direccion (text)
+- Contrasena (text)
+-----------------------------------
+
+ROPA
+- Identificativo (int)
+- Nombre (text)
+- Tipo (text)
+- Color (text)
+- Talla (text)
+- Precio (float)
+- Sexo (int (0/1))
+------------------------------------
+
+ZAPATILLAS
+- Identificativo (int)
+- Nombre (text)
+- Tipo (text)
+- Color (text)
+- Talla (text)
+- Precio (float)
+- Sexo (int (0/1))
+-----------------------------------
+
+MATERIAL_DEPORTIVO
+- Identificativo (int)
+- Nombre (text)
+- Tipo (text)
+- Color (text)
+- Talla (text)
+- Precio (float)
+- Deporte (text)
+-----------------------------------
+
+SUPLEMENTO
+- Identificativo (int)
+- Nombre (text)
+- Tipo (text)
+-----------------------------------
+
+COMPRA
+- Identificativo (int)
+- IdProducto (int)
+- IdComprador (int)
+- Cantidad (int)
+------------------------------------
+
+CARRITO 
+- Identificativo (int) --> Identificativo de COMPRA
+- PrecioTotal (float)
