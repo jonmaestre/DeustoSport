@@ -210,3 +210,280 @@ void iniciarAdmin () {
 // --------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------
 
+
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+// INICIO PARTE GRAFICA DE ELECCIONES
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+
+int ventaPrincipal()
+{
+    int respuesta;
+
+    printf("¿Qué Tipo de producto esta buscando? Eliga el numero del tipo de producto que busca \n");
+    printf("\n");
+    printf("1. Zapatillas (Hombre)\n");
+    printf("2. Zapatillas (Mujer)\n");
+    printf("3. Ropa (Hombre)\n");
+    printf("4. Ropa (Mujer)\n");
+    printf("5. Suplementos deportivos\n");
+    printf("6. Material especifico para deportes \n");
+    printf("7. Ver carrito \n");
+
+    printf("Eleccion: ")
+    fflush(stdout);
+    scanf("%i", respuesta);
+    if (respuesta = 1)
+    {
+        iniciarZapatillasH();
+    }
+    if (respuesta = 2)
+    {
+        iniciarZapatillasM();
+    }
+    if (respuesta = 3);
+    {
+        iniciarRopaH();
+    }
+    if (respuesta = 4)
+    {
+        iniciarRopaM();
+    }
+    if (respuesta = 5)
+    {
+        iniciarSuplementos();
+    }
+    if (respuesta = 6)
+    {
+        iniciarMaterialD();
+    }
+    if (respuesta = 7)
+    {
+        iniciarCarrito();
+    }
+    return respuesta;
+
+}
+
+// Para inicio de la Zapatillas hombre
+int iniciarZapatillasH()
+{
+    int respuesta;
+    printf("Estas son las zapatillas para hombre que tenemos en este momento: \n");
+    printf("\n");
+
+    printf("0. Ver carrito \n");
+    if (respuesta = 0)
+    {
+        iniciarCarrito();
+    }
+
+    printf("1. Volver a la pagina de atras \n");
+    if (respuesta = 1)
+    {
+        ventaPrincipal();
+    }
+     
+
+    ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos las Zapatillas para hombre que metas
+
+    
+    return respuesta;
+
+
+}
+
+
+// Para inicio de la zapatillas mujer
+
+int iniciarZapatillasM()
+{
+    int respuesta;
+    printf("Estas son las zapatillas para mujer que tenemos en este momento: \n");
+    printf("\n");
+
+    printf("0. Ver carrito \n");
+    if (respuesta = 0)
+    {
+        iniciarCarrito();
+    }
+
+    printf("1. Volver a la pagina de atras \n");
+    if (respuesta = 1)
+    {
+        ventaPrincipal();
+    }
+     
+
+    ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos las Zapatillas para mujer que metas
+
+    
+    return respuesta;
+
+
+}
+
+
+// Para inicio de ropa hombre
+
+int iniciarRopaH()
+{
+    int respuesta;
+    printf("Esta es la ropa para hombre que tenemos en este momento: \n");
+    printf("\n");
+
+    printf("0. Ver carrito \n");
+    if (respuesta = 0)
+    {
+        iniciarCarrito();
+    }
+
+    printf("1. Volver a la pagina de atras \n");
+    if (respuesta = 1)
+    {
+        ventaPrincipal();
+    }
+     
+
+    ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos ropa de hombre que metas
+
+    
+    return respuesta;
+
+
+}
+
+
+// Para inicio de ropa mujer
+
+int iniciarRopaM()
+{
+    int respuesta;
+    printf("Esta es la ropa para mujer que tenemos en este momento: \n");
+    printf("\n");
+
+    printf("0. Ver carrito \n");
+    if (respuesta = 0)
+    {
+        iniciarCarrito();
+    }
+
+    printf("1. Volver a la pagina de atras \n");
+    if (respuesta = 1)
+    {
+        ventaPrincipal();
+    }
+     
+
+    ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos ropa de mujer que metas
+
+    
+    return respuesta;
+
+
+}
+
+// Para inicio de ropa mujer
+
+int iniciarSuplementos()
+{
+    int respuesta;
+    printf("Estos son los suplementos deportivos que tenemos en este momento: \n");
+    printf("\n");
+
+    printf("0. Ver carrito \n");
+    if (respuesta = 0)
+    {
+        iniciarCarrito();
+    }
+    
+    printf("1. Volver a la pagina de atras \n");
+    if (respuesta = 1)
+    {
+        ventaPrincipal();
+    }
+
+    ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos los suplementos deportivos deportivos
+
+    
+    return respuesta;
+
+
+}
+
+// Para inicio de material deportivo especifico
+
+int iniciarMaterialD()
+{
+    int respuesta;
+    printf("Estos son los materiales deportivos especificos que tenemos en este momento: \n");
+    printf("\n");
+
+    printf("0. Ver carrito \n");
+    if (respuesta = 0)
+    {
+        iniciarCarrito();
+    }
+
+    printf("1. Volver a la pagina de atras \n");
+    if (respuesta = 1)
+    {
+        ventaPrincipal();
+    }
+
+    ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos los materiales especificos deportivos deportivos
+
+    
+    return respuesta;
+
+
+}
+
+
+int iniciarCarrito()
+{
+    int respuesta;
+    printf("Estos son los productos que tienes en el carrito en este instante: \n");
+    printf("\n");
+
+    
+     
+
+    ////<<<<<<<<------------------------------------ Se necesita funcion que almacene las compras para mostrarlas
+    printf("0. Volver atras \n");
+
+    if (respuesta = 0)
+    {
+        ventaPrincipal();
+    }
+
+    printf("1. Comprar \n");
+
+    if (respuesta = 1)
+    {
+        //<<<<<<<<<<------------------------------Falta funcion de comprar en la que calcule el precio
+    }
+
+    printf("2. Borrar Producto \n");
+
+    if (respuesta = 2)
+    {
+        //<<<<<<<<<<------------------------------Falta funcion de seleccionar producto y borrarlo
+    }
+    
+
+    
+    return respuesta;
+}
+
+///////<<<<<<<<<<<<<-------------------------------------------------------------Creo que haria falta una funcion mas que lea el objeto que esta seleccionado pero hay que esperar a la base de datos productos para verlo
+
+///// <<<<<----------- La funcion del producto te daria las opciones: AÑADIR AL CARRITO---VOLVER ATRAS----COMPRAR AHORA
+
+
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+// FIN PARTE GRAFICA DE ELECCIONES
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
