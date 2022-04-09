@@ -1,5 +1,8 @@
-#ifndef CALZADO_H_
-#define CALZADO_H_
+#ifndef ZAPATILLAS_H_
+#define ZAPATILLAS_H_
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct {
     int id;
@@ -10,6 +13,7 @@ typedef struct {
     float precio;
     int cantidad;
 } Calzado;
+
 
 
 #endif

@@ -165,7 +165,7 @@ void iniciarAdmin () {
     printf("---------------------------------\n");
 
     printf("IDENTIFICATIVO PROPIO: \n");
-    scanf("%c", correo);
+    scanf("%c", identificativo);
 	printf("CONTRASEÑA: \n");
     scanf("%c", contrasena);
     printf("¿CUÁNTOS PROGRAMADORES HAY EN 'DeustoSportKit'?: \n");
@@ -231,7 +231,7 @@ int ventaPrincipal()
     printf("6. Material especifico para deportes \n");
     printf("7. Ver carrito \n");
 
-    printf("Eleccion: ")
+    printf("Eleccion: ");
     fflush(stdout);
     scanf("%i", respuesta);
     if (respuesta = 1)
