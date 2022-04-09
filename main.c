@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 #include "Estructuras/Zapatillas.h"
+#include "/Base de Datos/bbdd.c"
 
 #include "sqlite3.h"
 
@@ -13,6 +14,11 @@
 int main (void) {
 
     // falta una bienvenida :)
+
+    sqlite3 *db;
+	int result = sqlite3_open("BaseDatos.db", &db);
+
+
 
 
 }
@@ -43,7 +49,7 @@ int inicio () {
 
 
 // tiene que returnear un cliente
-void registrar () {
+void registrar (sqlite3 *db) {
 
     // revisar los char*
     char* nombre;
@@ -70,6 +76,14 @@ void registrar () {
     printf("REPITA CONTRASEÑA: \n");
     scanf("%c", contrasena2);
 
+    bool existe = existeComprador(*db, correo);
+    while (existe) {
+        printf("El correo introducido ya existe. Por favor, introduzca otro. \n");
+        printf("CORREO ELECTRÓNICO: \n");
+        scanf("%c", correo);
+        bool existe = existeComprador(*db, correo);
+    }
+
     while (&contrasena1 != &contrasena2) {
         printf("¡Vaya! Parece que ha habido un error. \n");
         printf("Vuelve a introducir la contraseña. \n");
@@ -80,12 +94,6 @@ void registrar () {
     }
 
     
-
-    // se necesita método de bd para coger el último cliente introducido y así conseguir su id
-
-    // mirar si el correo que existe
-
-    // crear cliente con la estructura
 
     // meter nuevo cliente a la base de datos
 
