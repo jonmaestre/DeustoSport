@@ -1,5 +1,5 @@
-#ifndef ZAPATILLAS_H_
-#define ZAPATILLAS_H_
+#ifndef CALZADO_H_
+#define CALZADO_H_
 
 typedef struct {
     int id;
@@ -8,7 +8,7 @@ typedef struct {
     bool genero;
     char color;
     float precio;
-    int cantidad;
+    int stock;
 } Calzado;
 
 

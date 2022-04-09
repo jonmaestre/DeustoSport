@@ -1,5 +1,5 @@
-#ifndef ROPA_H_
-#define ROPA_H_
+#ifndef PRENDA_H_
+#define PRENDA_H_
 
 typedef struct {
     int identificativo;
@@ -9,7 +9,8 @@ typedef struct {
     char talla;
     float precio;
     int sexo;
-} Ropa;
+    int stock;
+} Prenda;
 
 
 #endif

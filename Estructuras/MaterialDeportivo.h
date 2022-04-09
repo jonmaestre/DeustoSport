@@ -9,6 +9,7 @@ typedef struct {
     char talla;
     float precio;
     char deporte;
+    int stock;
 } Material;
 
 

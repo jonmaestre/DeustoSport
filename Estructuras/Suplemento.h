@@ -5,6 +5,7 @@ typedef struct {
    int identificativo;
    char nombre;
    char tipo;
+   int stock;
 } Suplemento;
 
 
