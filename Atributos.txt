@@ -30,7 +30,7 @@ CALZADO
 - Nombre (text)
 - Tipo (text)
 - Color (text)
-- Talla (text)
+- Talla (float)
 - Precio (float)
 - Sexo (int (0/1))
 - Stock
@@ -70,3 +70,4 @@ CARRITO
 - Identificativo (int) --> Identificativo de COMPRA
 - IdComprador
 - PrecioTotal (float)
+- Fecha
