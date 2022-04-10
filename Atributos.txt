@@ -23,7 +23,7 @@ PRENDA
 - Precio (float)
 - Sexo (int (0/1))
 - Stock (int)
-------------------------------------
+-----------------------------------
 
 CALZADO
 - Identificativo (int)
@@ -54,12 +54,17 @@ SUPLEMENTO
 - Stock (int)
 -----------------------------------
 
+PRODUCTO
+- Identificativo (int)
+- Tipo (text)
+-----------------------------------
+
 COMPRA
 - Identificativo (int)
 - IdProducto (int)
 - IdComprador (int)
 - Cantidad (int)
-------------------------------------
+-----------------------------------
 
 CARRITO 
 - Identificativo (int) --> Identificativo de COMPRA
