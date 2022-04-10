@@ -3,7 +3,14 @@
 #include <string.h>
 #include <stdbool.h>
 
-#include "Estructuras/Zapatillas.h"
+#include "/Estructuras/Administrador.h"
+#include "/Estructuras/Calzado.h"
+#include "/Estructuras/Carrito.h"
+#include "/Estructuras/Compra.h"
+#include "/Estructuras/Comprador.h"
+#include "/Estructuras/MaterialDeportivo.h"
+#include "/Estructuras/Prenda.h"
+#include "/Estructuras/Suplemento.h"
 #include "/Base de Datos/bbdd.c"
 
 #include "sqlite3.h"
@@ -103,7 +110,7 @@ void registrar (sqlite3 *db) {
 
 
 // tiene que returnear un cliente
-void iniciarCliente () {
+Comprador iniciarCliente () {
 
     // revisar los char*
     char* correo;
@@ -117,10 +124,9 @@ void iniciarCliente () {
 	printf("CONTRASEÑA: \n");
     scanf("%c", contrasena);
 
-    // mirar si hay algún cliente con el correo  -> true or false
-    bool existe;                // ********************************* CAMBIAR ************************
+    bool existe = existeComprador(*db, correo);
     if (existe == false) {
-        int deNuevo;            // ********************************* CAMBIAR ************************
+        int deNuevo;
         while (existe == false) {
             printf("¡Vaya! Parece que ha habido un error. \n");
             printf("Creemos que no está registrado en DeustoSportKit. \n");
@@ -133,17 +139,22 @@ void iniciarCliente () {
             scanf("%i", deNuevo);
             if (deNuevo == 1) {
                 registrar ();
+            } if else (deNuevo == 2) {
+                printf("CORREO ELECTRÓNICO: \n");
+                scanf("%c", correo);
+	            printf("CONTRASEÑA: \n");
+                scanf("%c", contrasena);
+
+                bool existe = existeComprador(*db, correo);
             } else {
-                // ****************** revisar otra vez ****************
+                // next
             }
         }
     } else {
 
-        // ****************************************** REVISAR *****************************************
-
-        // método bd para coger el cliente con correo
-        char* correito;
-        char* contra;
+        Comprador persona = obtenerComprador (sqlite3 *db, char* correo);
+        char* correito = persona.correo;
+        char* contra = persona.contrasena;
         while (contrasena != contra && correo == correito) {
             printf("¡Vaya! Parece que ha habido un error. \n");
             printf("Vuelve a meter los datos. \n");
@@ -151,11 +162,14 @@ void iniciarCliente () {
             scanf("%c", correo);
 	        printf("CONTRASEÑA: \n");
             scanf("%c", contrasena);
+            Comprador persona = obtenerComprador (sqlite3 *db, char* correo);
+            char* correito = persona.correo;
+            char* contra = persona.contrasena;
         }
 
     }
 
-    // devolver cliente
+    return persona;
 
 }
 
