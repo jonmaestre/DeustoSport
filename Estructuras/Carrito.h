@@ -2,9 +2,10 @@
 #define CARRITO_H_
 
 typedef struct {
-   Compra* identificativo;
+   int identificativoCompra;
+   int identificativoComprador;
    float precioTotal;
-} Compra;
+} Carrito;
 
 
 #endif
