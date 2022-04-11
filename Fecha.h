@@ -7,8 +7,8 @@ typedef struct {
     int anio;
 } Fecha;
 
-int bisiesto (int anio);
-int dias_mes (struct Fecha fecha);
-int cuenta_dias (struct Fecha fecha1, struct Fecha fecha2);
- 
+int bisiesto(int anio);
+int diasMes(Fecha* fecha);
+int cuentaDias(Fecha* fecha1, Fecha* fecha2);
+
 #endif
