@@ -29,6 +29,9 @@ Suplemento obtenerSuplemento (sqlite3 *db, int id);
 bool existeComprador (sqlite3 *db, char* correo);
 Comprador obtenerComprador (sqlite3 *db, char* correo);
 
+
+// CARRITOS / COMPRAS
 int ultimoCarrito (sqlite3 *db);
+Compra* comprasConId (sqlite3* db, int idCompra);
 
 #endif 

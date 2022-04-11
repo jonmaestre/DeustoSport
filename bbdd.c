@@ -1,12 +1,14 @@
+#include "Administrador.h"
+#include "Calzado.h"
+#include "Carrito.h"
+#include "Compra.h"
+#include "Comprador.h"
+#include "MaterialDeportivo.h"
+#include "Prenda.h"
+#include "Suplemento.h"
 #include "bbdd.h"
-#include "/Estructuras/Administrador.h"
-#include "/Estructuras/Calzado.h"
-#include "/Estructuras/Carrito.h"
-#include "/Estructuras/Compra.h"
-#include "/Estructuras/Comprador.h"
-#include "/Estructuras/MaterialDeportivo.h"
-#include "/Estructuras/Prenda.h"
-#include "/Estructuras/Suplemento.h"
+#include "Fecha.h"
+#include "sqlite3.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -311,5 +313,29 @@ int ultimoCarrito (sqlite3 *db) {
 	sqlite3_finalize(stmt);
 
 	return maximo;
+}
+
+Compra* comprasConId (sqlite3* db, int idCompra) {
+	sqlite3_stmt *stmt;
+
+	char sql[100];
+
+	sprintf(sql, "SELECT COUNT(*) FROM Compra WHERE ID_Compra = %i", idCompra);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	int size = sqlite3_step(stmt);
+	sqlite3_finalize(stmt);
+
+	Compra* compras;
+	compras = (Compra*) malloc(sizeof(Compra) * size);
+
+	sprintf(sql, "SELECT * FROM Compra WHERE ID_Compra = %i", idCompra);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	compras = sqlite3_step(stmt);
+	sqlite3_finalize(stmt);
+
+	// para saber cuándo llega al final
+	compras[size] = NULL;
+
+	return compras;
 }
 

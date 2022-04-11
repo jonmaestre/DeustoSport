@@ -1,18 +1,36 @@
 #include "Carrito.h"
 #include "Compra.h"
 #include "Fecha.h"
+#include "Calzado.h"
+#include "bbdd.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-Carrito  crearCarrito(int idCompra, int idComprador) {
+Carrito  crearCarrito(sqlite *db, int idCompra, int idComprador) {
 
-    // BD MÉTODO -> devuelve un array de todas las compras con idCompra
-    // EL ÚLTIMO + 1 que sea NULL
     Compra* compra;
+    compra = Compra* comprasConId (sqlite3* db, idCompra);
+    
     int i = 0;
     float total = 0;
-    while (compra[i].cantidad != NULL) {
-        total += Carrito[i].precioTotal;
+    while (compra[i] != NULL) {
+
+        char type = obtenerTipoProducto (db, compra[i].idProducto);
+        // C -> calzado		M -> material	P -> prenda 	S -> suplemento
+        if (type = "C") {
+            Calzado calz = obtenerCalzado (db, int compra[i].idProducto);
+            total += calz.precio * compra[i].cantidad;
+        } else if (type = "M") {
+            MaterialDeportivo matD =  obtenerMaterial (db, int compra[i].idProducto);
+            total += matD.precio * compra[i].cantidad;
+        } else if (type = "P") {
+            Prenda pren = obtenerPrenda (db, int compra[i].idProducto);
+            total += pren.precio * compra[i].cantidad;
+        } else if (type = "S") {
+            Suplemento supl = obtenerSuplemento(db, int compra[i].idProducto);
+            total += supl.precio * compra[i].cantidad;
+        }
+
         i++;
     } 
 
