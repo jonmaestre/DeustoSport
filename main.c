@@ -238,56 +238,6 @@ void iniciarAdmin () {
 // INICIO PARTE GRAFICA DE ELECCIONES
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
-
-int ventaPrincipal()
-{
-    int respuesta;
-
-    printf("¿Qué Tipo de producto esta buscando? Eliga el numero del tipo de producto que busca \n");
-    printf("\n");
-    printf("1. Zapatillas (Hombre)\n");
-    printf("2. Zapatillas (Mujer)\n");
-    printf("3. Ropa (Hombre)\n");
-    printf("4. Ropa (Mujer)\n");
-    printf("5. Suplementos deportivos\n");
-    printf("6. Material especifico para deportes \n");
-    printf("7. Ver carrito \n");
-
-    printf("Eleccion: ");
-    fflush(stdout);
-    scanf("%i", respuesta);
-    if (respuesta = 1)
-    {
-        iniciarZapatillasH();
-    }
-    if (respuesta = 2)
-    {
-        iniciarZapatillasM();
-    }
-    if (respuesta = 3);
-    {
-        iniciarRopaH();
-    }
-    if (respuesta = 4)
-    {
-        iniciarRopaM();
-    }
-    if (respuesta = 5)
-    {
-        iniciarSuplementos();
-    }
-    if (respuesta = 6)
-    {
-        iniciarMaterialD();
-    }
-    if (respuesta = 7)
-    {
-        iniciarCarrito();
-    }
-    return respuesta;
-
-}
-
 // Para inicio de la Zapatillas hombre
 int iniciarZapatillasH()
 {
@@ -498,6 +448,57 @@ int iniciarCarrito()
     
     return respuesta;
 }
+
+
+int ventaPrincipal()
+{
+    int respuesta;
+
+    printf("¿Qué Tipo de producto esta buscando? Eliga el numero del tipo de producto que busca \n");
+    printf("\n");
+    printf("1. Zapatillas (Hombre)\n");
+    printf("2. Zapatillas (Mujer)\n");
+    printf("3. Ropa (Hombre)\n");
+    printf("4. Ropa (Mujer)\n");
+    printf("5. Suplementos deportivos\n");
+    printf("6. Material especifico para deportes \n");
+    printf("7. Ver carrito \n");
+
+    printf("Eleccion: ");
+    fflush(stdout);
+    scanf("%i", respuesta);
+    if (respuesta = 1)
+    {
+        iniciarZapatillasH();
+    }
+    if (respuesta = 2)
+    {
+        iniciarZapatillasM();
+    }
+    if (respuesta = 3);
+    {
+        iniciarRopaH();
+    }
+    if (respuesta = 4)
+    {
+        iniciarRopaM();
+    }
+    if (respuesta = 5)
+    {
+        iniciarSuplementos();
+    }
+    if (respuesta = 6)
+    {
+        iniciarMaterialD();
+    }
+    if (respuesta = 7)
+    {
+        iniciarCarrito();
+    }
+    return respuesta;
+
+}
+
 
 ///////<<<<<<<<<<<<<-------------------------------------------------------------Creo que haria falta una funcion mas que lea el objeto que esta seleccionado pero hay que esperar a la base de datos productos para verlo
 
