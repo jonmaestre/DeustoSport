@@ -12,7 +12,7 @@
 #include "Prenda.h"
 #include "Suplemento.h"
 #include "bbdd.h"
-
+#include "Fecha.h"
 #include "sqlite3.h"
 
 #define PROGRAMADORES 5
