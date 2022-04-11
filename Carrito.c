@@ -1,5 +1,8 @@
 #include "Carrito.h"
 #include "Compra.h"
+#include "Fecha.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 Carrito  crearCarrito(int idCompra, int idComprador) {
 
@@ -8,8 +11,8 @@ Carrito  crearCarrito(int idCompra, int idComprador) {
     Compra* compra;
     int i = 0;
     float total = 0;
-    while (compra[i] != NULL) {
-        total += compra[i].precioTotal;
+    while (compra[i].cantidad != NULL) {
+        total += Carrito[i].precioTotal;
         i++;
     } 
 

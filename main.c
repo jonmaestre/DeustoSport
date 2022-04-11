@@ -3,15 +3,15 @@
 #include <string.h>
 #include <stdbool.h>
 
-#include "/Estructuras/Administrador.h"
-#include "/Estructuras/Calzado.h"
-#include "/Estructuras/Carrito.h"
-#include "/Estructuras/Compra.h"
-#include "/Estructuras/Comprador.h"
-#include "/Estructuras/MaterialDeportivo.h"
-#include "/Estructuras/Prenda.h"
-#include "/Estructuras/Suplemento.h"
-#include "/Base de Datos/bbdd.c"
+#include "Administrador.h"
+#include "Calzado.h"
+#include "Carrito.h"
+#include "Compra.h"
+#include "Comprador.h"
+#include "MaterialDeportivo.h"
+#include "Prenda.h"
+#include "Suplemento.h"
+#include "bbdd.h"
 
 #include "sqlite3.h"
 
