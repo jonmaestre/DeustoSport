@@ -315,6 +315,30 @@ int ultimoCarrito (sqlite3 *db) {
 	return maximo;
 }
 
+Carrito obtenerCarrito (sqlite3 *db, int idCompra){
+
+    sqlite3_stmt *stmt;
+	char sql[100];
+
+	int idComprador;
+	float precioTotal;
+	Fecha fechaCompra;
+
+	sprintf(sql, "SELECT * FROM Carrito WHERE ID = %i", idCompra);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	
+	// REVISAR FECHA
+	strcpy(precioTotal, (float)sqlite3_column_text(stmt, 1));
+	strcpy(idComprador, (int)sqlite3_column_text(stmt, 2));
+	strcpy(fechaCompra, (Fecha)sqlite3_column_text(stmt, 3));
+
+	Carrito carrito = {idCompra, idComprador, precioTotal, fechaCompra};
+
+	sqlite3_finalize(stmt);
+
+	return carrito;
+}
+
 Compra* comprasConId (sqlite3* db, int idCompra) {
 	sqlite3_stmt *stmt;
 
@@ -337,5 +361,39 @@ Compra* comprasConId (sqlite3* db, int idCompra) {
 	compras[size] = NULL;
 
 	return compras;
+}
+
+
+void verTicket (sqlite3* db, int idCompra) {
+
+	Compra* compras;
+	compras = comprasConId(db, idCompra);
+
+	Carrito carrito = obtenerCarrito(db, idCompra);
+
+	printf("TICKET: %i \n", idCompra);
+	printf("--------------------\n")
+
+	int i = 0;
+	while (compras[i] != NULL) {
+		int num = i + 1;
+		char type = obtenerTipoProducto (db, compra[i].idProducto);
+        // C -> calzado		M -> material	P -> prenda 	S -> suplemento
+        if (type = "C") {
+            Calzado calz = obtenerCalzado (db, int compra[i].idProducto);
+            printf("%i: %s. X%i \n", num, calz.nombre, compras[i].cantidad);
+        } else if (type = "M") {
+            MaterialDeportivo matD =  obtenerMaterial (db, int compra[i].idProducto);
+            printf("%i: %s. X%i \n", num, matD.nombre, compras[i].cantidad);
+        } else if (type = "P") {
+            Prenda pren = obtenerPrenda (db, int compra[i].idProducto);
+            printf("%i: %s. X%i \n", num, pren.nombre, compras[i].cantidad);
+        } else if (type = "S") {
+            Suplemento supl = obtenerSuplemento(db, int compra[i].idProducto);
+            printf("%i: %s. X%i \n", num, supl.nombre, compras[i].cantidad);
+        }
+	}
+
+	printf("TOTAL: %f \n", carrito.precioTotal);
 }
 

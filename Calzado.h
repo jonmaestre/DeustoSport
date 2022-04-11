@@ -5,7 +5,7 @@ typedef struct {
     int id;
     char nombre;
     float talla;
-    bool genero;
+    int genero;
     char color;
     float precio;
     int stock;

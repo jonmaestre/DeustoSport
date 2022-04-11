@@ -6,7 +6,7 @@ typedef struct {
    int idCompra;
    int idComprador;
    float precioTotal;
-   Fecha* fechaCompra;
+   Fecha fechaCompra;
 } Carrito;
 
 
