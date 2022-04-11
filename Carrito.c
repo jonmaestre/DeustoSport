@@ -1,15 +1,22 @@
+#include "Administrador.h"
+#include "Calzado.h"
 #include "Carrito.h"
 #include "Compra.h"
+#include "Comprador.h"
+#include "MaterialDeportivo.h"
+#include "Prenda.h"
+#include "Suplemento.h"
+#include "bbdd.h"
 #include "Fecha.h"
-#include "Calzado.h"
+#include "sqlite3.h"
 #include "bbdd.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-Carrito  crearCarrito(sqlite *db, int idCompra, int idComprador) {
+Carrito crearCarrito(sqlite3 *db, int idCompra, int idComprador) {
 
     Compra* compra;
-    compra = Compra* comprasConId (sqlite3* db, idCompra);
+    compra = comprasConId (db, idCompra);
     
     int i = 0;
     float total = 0;
@@ -17,17 +24,17 @@ Carrito  crearCarrito(sqlite *db, int idCompra, int idComprador) {
 
         char type = obtenerTipoProducto (db, compra[i].idProducto);
         // C -> calzado		M -> material	P -> prenda 	S -> suplemento
-        if (type = "C") {
-            Calzado calz = obtenerCalzado (db, int compra[i].idProducto);
+        if (type == 'C') {
+            Calzado calz = obtenerCalzado (db, compra[i].idProducto);
             total += calz.precio * compra[i].cantidad;
-        } else if (type = "M") {
-            MaterialDeportivo matD =  obtenerMaterial (db, int compra[i].idProducto);
+        } else if (type == 'M') {
+            MaterialDeportivo matD =  obtenerMaterial (db, compra[i].idProducto);
             total += matD.precio * compra[i].cantidad;
-        } else if (type = "P") {
-            Prenda pren = obtenerPrenda (db, int compra[i].idProducto);
+        } else if (type == 'P') {
+            Prenda pren = obtenerPrenda (db, compra[i].idProducto);
             total += pren.precio * compra[i].cantidad;
-        } else if (type = "S") {
-            Suplemento supl = obtenerSuplemento(db, int compra[i].idProducto);
+        } else if (type == 'S') {
+            Suplemento supl = obtenerSuplemento(db, compra[i].idProducto);
             total += supl.precio * compra[i].cantidad;
         }
 

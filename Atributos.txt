@@ -51,6 +51,7 @@ SUPLEMENTO
 - Identificativo (int)
 - Nombre (text)
 - Tipo (text)
+- Precio (float)
 - Stock (int)
 -----------------------------------
 

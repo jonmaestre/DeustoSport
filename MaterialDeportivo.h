@@ -10,7 +10,7 @@ typedef struct {
     float precio;
     char deporte;
     int stock;
-} Material;
+} MaterialDeportivo;
 
 
 
