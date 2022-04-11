@@ -11,8 +11,22 @@
 #include <string.h>
 #include <stdbool.h>
 
+
 // --------------------------------------------------------------------------------------------------
 // PRODUCTOS
+
+int maxIdProducto(sqlite3 *db){
+    sqlite3_stmt *stmt;
+
+	char sql[100];
+	sprintf(sql, "SELECT MAX(idProducto) FROM Producto");
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	int maximo = sqlite3_step(stmt);
+
+	sqlite3_finalize(stmt);
+	
+	return maximo;
+}
 
 void eliminarProducto(sqlite3 *db, int id){
     sqlite3_stmt *stmt;
@@ -69,6 +83,8 @@ char obtenerTipoProducto (sqlite3 *db, int id){
 	return tipo[0];				// C -> calzado		M -> material	P -> prenda 	S -> suplemento
 }
 
+// *************************** CALZADO ***************************
+
 Calzado obtenerCalzado (sqlite3 *db, int id){
     sqlite3_stmt *stmt;
 	char sql[100];
@@ -95,6 +111,41 @@ Calzado obtenerCalzado (sqlite3 *db, int id){
 
 	return zapatilla;
 }
+
+void agregarCalzado(sqlite3 *db, char* nom, char* tipo, char* color, char* talla, float precio, int sexo, int cantidad){
+    sqlite3_stmt *stmt;
+
+	char sql[100];
+	int maxId = maxIdProducto(db);
+
+	sprintf(sql, "INSERT INTO Calzado VALUES (%i, %s, %s, %s, %s, %f, %i, %i)", maxId+1, nom, tipo, color, talla, precio, sexo, cantidad);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+
+	sqlite3_finalize(stmt);
+}
+
+void subirStockCalzado (sqlite3 *db, int id, int cant){
+    sqlite3_stmt *stmt;
+	char sql[100];
+
+	sprintf(sql, "UPDATE Calzado SET Stock_Calzado = Stock_Calzado + %i WHERE  ID_Calzado = %i", cant, id);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+	sqlite3_finalize(stmt);
+}
+
+void bajarStock(sqlite3 *db, int id){
+    sqlite3_stmt *stmt;
+	char sql[100];
+
+	sprintf(sql, "UPDATE Calzado SET Stock_Calzado = Stock_Calzado - %i WHERE  ID_Calzado = %i", cant, id);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+	sqlite3_finalize(stmt);
+}
+
+// *************************** PRENDA ***************************
 
 Prenda obtenerPrenda (sqlite3 *db, int id){
     sqlite3_stmt *stmt;
@@ -123,6 +174,7 @@ Prenda obtenerPrenda (sqlite3 *db, int id){
 	return prenda;
 }
 
+// *************************** MATERIAL ***************************
 
 Material obtenerMaterial (sqlite3 *db, int id){
     sqlite3_stmt *stmt;
@@ -151,6 +203,7 @@ Material obtenerMaterial (sqlite3 *db, int id){
 	return material;
 }
 
+// *************************** SUPLEMENTO ***************************
 
 Suplemento obtenerSuplemento (sqlite3 *db, int id){
     sqlite3_stmt *stmt;
