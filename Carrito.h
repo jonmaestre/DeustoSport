@@ -3,8 +3,8 @@
 #include "Fecha.h"
 
 typedef struct {
-   int identificativoCompra;
-   int identificativoComprador;
+   int idCompra;
+   int idComprador;
    float precioTotal;
    Fecha* fechaCompra;
 } Carrito;
