@@ -48,7 +48,7 @@ int cuentaDias( Fecha* fecha1, Fecha* fecha2 ) {
         if ( fecha1->anio == fecha2->anio && fecha1->mes == fecha2->mes )
             break;
             
-        acum = acum + ( dias_mes ( fecha1 ) - fecha1->dia );
+        acum = acum + ( diasMes ( fecha1 ) - fecha1->dia );
         
         if ( fecha1->mes == 12 ) {
             fecha1->mes = 1;

@@ -99,15 +99,15 @@ Calzado obtenerCalzado (sqlite3 *db, int id){
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	
 	strcpy(iden, (int)sqlite3_column_text(stmt, 0));
-	strcpy(nombre, (char*)sqlite3_column_text(stmt, 1));
-	strcpy(tipo, (char*)sqlite3_column_text(stmt, 2));
-	strcpy(color, (char*)sqlite3_column_text(stmt, 3));
+	strcpy(&nombre, (char*)sqlite3_column_text(stmt, 1));
+	strcpy(&tipo, (char*)sqlite3_column_text(stmt, 2));
+	strcpy(&color, (char*)sqlite3_column_text(stmt, 3));
 	strcpy(talla, (float)sqlite3_column_text(stmt, 4));
 	strcpy(precio, (float)sqlite3_column_text(stmt, 5));
 	strcpy(sexo, (int)sqlite3_column_text(stmt, 4));
 	strcpy(stock, (int)sqlite3_column_text(stmt, 5));
 
-	Calzado zapatilla = {iden, nombre, tipo, color, talla, precio, sexo, stock};
+	Calzado zapatilla = {iden, &nombre, &tipo, color, talla, precio, sexo, stock};
 
 	sqlite3_finalize(stmt);
 
@@ -137,7 +137,7 @@ void subirStockCalzado (sqlite3 *db, int id, int cant){
 	sqlite3_finalize(stmt);
 }
 
-void bajarStock(sqlite3 *db, int id){
+void bajarStockCalzado(sqlite3 *db, int id, int cant){
     sqlite3_stmt *stmt;
 	char sql[100];
 
@@ -161,15 +161,15 @@ Prenda obtenerPrenda (sqlite3 *db, int id){
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	
 	strcpy(iden, (int)sqlite3_column_text(stmt, 0));
-	strcpy(nombre, (char*)sqlite3_column_text(stmt, 1));
-	strcpy(tipo, (char*)sqlite3_column_text(stmt, 2));
-	strcpy(color, (char*)sqlite3_column_text(stmt, 3));
-	strcpy(talla, (char*)sqlite3_column_text(stmt, 4));
+	strcpy(&nombre, (char*)sqlite3_column_text(stmt, 1));
+	strcpy(&tipo, (char*)sqlite3_column_text(stmt, 2));
+	strcpy(&color, (char*)sqlite3_column_text(stmt, 3));
+	strcpy(&talla, (char*)sqlite3_column_text(stmt, 4));
 	strcpy(precio, (float)sqlite3_column_text(stmt, 5));
 	strcpy(sexo, (int)sqlite3_column_text(stmt, 4));
 	strcpy(stock, (int)sqlite3_column_text(stmt, 5));
 
-	Prenda prenda = {iden, nombre, tipo, color, talla, precio, sexo, stock};
+	Prenda prenda = {iden, &nombre, &tipo, &color, &talla, precio, sexo, stock};
 
 	sqlite3_finalize(stmt);
 
@@ -178,7 +178,7 @@ Prenda obtenerPrenda (sqlite3 *db, int id){
 
 // *************************** MATERIAL ***************************
 
-Material obtenerMaterial (sqlite3 *db, int id){
+MaterialDeportivo obtenerMaterial (sqlite3 *db, int id){
     sqlite3_stmt *stmt;
 	char sql[100];
 
@@ -191,14 +191,14 @@ Material obtenerMaterial (sqlite3 *db, int id){
 	
 	strcpy(iden, (int)sqlite3_column_text(stmt, 0));
 	strcpy(nombre, (char*)sqlite3_column_text(stmt, 1));
-	strcpy(tipo, (char*)sqlite3_column_text(stmt, 2));
-	strcpy(color, (char*)sqlite3_column_text(stmt, 3));
-	strcpy(talla, (char*)sqlite3_column_text(stmt, 4));
+	strcpy(&tipo, (char*)sqlite3_column_text(stmt, 2));
+	strcpy(&color, (char*)sqlite3_column_text(stmt, 3));
+	strcpy(&talla, (char*)sqlite3_column_text(stmt, 4));
 	strcpy(precio, (float)sqlite3_column_text(stmt, 5));
-	strcpy(deporte, (char*)sqlite3_column_text(stmt, 4));
+	strcpy(&deporte, (char*)sqlite3_column_text(stmt, 4));
 	strcpy(stock, (int)sqlite3_column_text(stmt, 5));
 
-	MaterialDeportivo material = {iden, nombre, tipo, color, talla, precio, deporte, stock};
+	MaterialDeportivo material = {iden, &nombre, &tipo, &color, &talla, precio, &deporte, stock};
 
 	sqlite3_finalize(stmt);
 
@@ -218,11 +218,11 @@ Suplemento obtenerSuplemento (sqlite3 *db, int id){
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	
 	strcpy(iden, (int)sqlite3_column_text(stmt, 0));
-	strcpy(nombre, (char*)sqlite3_column_text(stmt, 1));
-	strcpy(tipo, (char*)sqlite3_column_text(stmt, 2));
+	strcpy(&nombre, (char*)sqlite3_column_text(stmt, 1));
+	strcpy(&tipo, (char*)sqlite3_column_text(stmt, 2));
 	strcpy(stock, (int)sqlite3_column_text(stmt, 3));
 
-	Suplemento suplemento = {iden, nombre, tipo, stock};
+	Suplemento suplemento = {iden, &nombre, &tipo, stock};
 
 	sqlite3_finalize(stmt);
 
@@ -265,17 +265,17 @@ Comprador obtenerComprador (sqlite3 *db, char* correo) {
 	char sql[100], *nombre, *direccion, *contrasena;
 	int iden, telf;
 
-	sprintf(sql, "SELECT * FROM Comprador WHERE Correo = %c", correo);
+	sprintf(sql, "SELECT * FROM Comprador WHERE Correo = %s", correo);
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
 
-	strcpy(nombre, (char*)sqlite3_column_text(stmt, 0));
+	strcpy(&nombre, (char*)sqlite3_column_text(stmt, 0));
 	strcpy(iden, (int)sqlite3_column_text(stmt, 1));
 	strcpy(telf, (int)sqlite3_column_text(stmt, 2));
-	strcpy(correo, (char*)sqlite3_column_text(stmt, 3));
-	strcpy(direccion, (char*)sqlite3_column_text(stmt, 4));
-	strcpy(contrasena, (char*)sqlite3_column_text(stmt, 5));
+	strcpy(&correo, (char*)sqlite3_column_text(stmt, 3));
+	strcpy(&direccion, (char*)sqlite3_column_text(stmt, 4));
+	strcpy(&contrasena, (char*)sqlite3_column_text(stmt, 5));
 
-	persona = {nombre, iden, telf, correo, direccion, contrasena};
+	persona = {&nombre, iden, telf, &correo, &direccion, &contrasena};
 
 	sqlite3_finalize(stmt);
 	return persona;
@@ -372,7 +372,7 @@ void verTicket (sqlite3* db, int idCompra) {
 	Carrito carrito = obtenerCarrito(db, idCompra);
 
 	printf("TICKET: %i \n", idCompra);
-	printf("--------------------\n")
+	printf("--------------------\n");
 
 	int i = 0;
 	while (compras[i] != NULL) {

@@ -23,7 +23,7 @@ int main (void) {
     // falta una bienvenida :)
 
     sqlite3 *db;
-	int result = sqlite3_open("BaseDatos.db", &db);
+	int result = sqlite3_open("BaseDatos.db", db);
 
 
 
@@ -83,12 +83,12 @@ void registrar (sqlite3 *db) {
     printf("REPITA CONTRASEÑA: \n");
     scanf("%c", contrasena2);
 
-    bool existe = existeComprador(*db, correo);
+    bool existe = existeComprador(db, correo);
     while (existe) {
         printf("El correo introducido ya existe. Por favor, introduzca otro. \n");
         printf("CORREO ELECTRÓNICO: \n");
         scanf("%c", correo);
-        bool existe = existeComprador(*db, correo);
+        bool existe = existeComprador(db, correo);
     }
 
     while (&contrasena1 != &contrasena2) {
@@ -124,7 +124,9 @@ Comprador iniciarCliente () {
 	printf("CONTRASEÑA: \n");
     scanf("%c", contrasena);
 
-    bool existe = existeComprador(*db, correo);
+    Comprador persona;
+
+    bool existe = existeComprador(db, correo);
     if (existe == false) {
         int deNuevo;
         while (existe == false) {
@@ -138,7 +140,7 @@ Comprador iniciarCliente () {
 	        fflush(stdout);
             scanf("%i", deNuevo);
             if (deNuevo == 1) {
-                registrar ();
+                registrar (db);
             } if else (deNuevo == 2) {
                 printf("CORREO ELECTRÓNICO: \n");
                 scanf("%c", correo);
@@ -152,7 +154,7 @@ Comprador iniciarCliente () {
         }
     } else {
 
-        Comprador persona = obtenerComprador (sqlite3 *db, char* correo);
+        persona = obtenerComprador (db, correo);
         char* correito = persona.correo;
         char* contra = persona.contrasena;
         while (contrasena != contra && correo == correito) {
@@ -162,7 +164,7 @@ Comprador iniciarCliente () {
             scanf("%c", correo);
 	        printf("CONTRASEÑA: \n");
             scanf("%c", contrasena);
-            Comprador persona = obtenerComprador (sqlite3 *db, char* correo);
+            Comprador persona = obtenerComprador (db, correo);
             char* correito = persona.correo;
             char* contra = persona.contrasena;
         }
@@ -170,7 +172,6 @@ Comprador iniciarCliente () {
     }
 
     return persona;
-
 }
 
 
@@ -246,13 +247,13 @@ int iniciarZapatillasH()
     printf("\n");
 
     printf("0. Ver carrito \n");
-    if (respuesta = 0)
+    if (respuesta == 0)
     {
         iniciarCarrito();
     }
 
     printf("1. Volver a la pagina de atras \n");
-    if (respuesta = 1)
+    if (respuesta == 1)
     {
         ventaPrincipal();
     }
@@ -276,13 +277,13 @@ int iniciarZapatillasM()
     printf("\n");
 
     printf("0. Ver carrito \n");
-    if (respuesta = 0)
+    if (respuesta == 0)
     {
         iniciarCarrito();
     }
 
     printf("1. Volver a la pagina de atras \n");
-    if (respuesta = 1)
+    if (respuesta == 1)
     {
         ventaPrincipal();
     }
@@ -290,10 +291,7 @@ int iniciarZapatillasM()
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos las Zapatillas para mujer que metas
 
-    
     return respuesta;
-
-
 }
 
 
@@ -306,13 +304,13 @@ int iniciarRopaH()
     printf("\n");
 
     printf("0. Ver carrito \n");
-    if (respuesta = 0)
+    if (respuesta == 0)
     {
         iniciarCarrito();
     }
 
     printf("1. Volver a la pagina de atras \n");
-    if (respuesta = 1)
+    if (respuesta == 1)
     {
         ventaPrincipal();
     }
@@ -320,10 +318,7 @@ int iniciarRopaH()
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos ropa de hombre que metas
 
-    
     return respuesta;
-
-
 }
 
 
@@ -336,13 +331,13 @@ int iniciarRopaM()
     printf("\n");
 
     printf("0. Ver carrito \n");
-    if (respuesta = 0)
+    if (respuesta == 0)
     {
         iniciarCarrito();
     }
 
     printf("1. Volver a la pagina de atras \n");
-    if (respuesta = 1)
+    if (respuesta == 1)
     {
         ventaPrincipal();
     }
@@ -350,10 +345,7 @@ int iniciarRopaM()
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos ropa de mujer que metas
 
-    
     return respuesta;
-
-
 }
 
 // Para inicio de ropa mujer
@@ -365,23 +357,20 @@ int iniciarSuplementos()
     printf("\n");
 
     printf("0. Ver carrito \n");
-    if (respuesta = 0)
+    if (respuesta == 0)
     {
         iniciarCarrito();
     }
     
     printf("1. Volver a la pagina de atras \n");
-    if (respuesta = 1)
+    if (respuesta == 1)
     {
         ventaPrincipal();
     }
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos los suplementos deportivos deportivos
 
-    
     return respuesta;
-
-
 }
 
 // Para inicio de material deportivo especifico
@@ -393,23 +382,20 @@ int iniciarMaterialD()
     printf("\n");
 
     printf("0. Ver carrito \n");
-    if (respuesta = 0)
+    if (respuesta == 0)
     {
         iniciarCarrito();
     }
 
     printf("1. Volver a la pagina de atras \n");
-    if (respuesta = 1)
+    if (respuesta == 1)
     {
         ventaPrincipal();
     }
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos los materiales especificos deportivos deportivos
-
     
     return respuesta;
-
-
 }
 
 
@@ -421,31 +407,29 @@ int iniciarCarrito()
 
     
      
-
     ////<<<<<<<<------------------------------------ Se necesita funcion que almacene las compras para mostrarlas
     printf("0. Volver atras \n");
 
-    if (respuesta = 0)
+    if (respuesta == 0)
     {
         ventaPrincipal();
     }
 
     printf("1. Comprar \n");
 
-    if (respuesta = 1)
+    if (respuesta == 1)
     {
         //<<<<<<<<<<------------------------------Falta funcion de comprar en la que calcule el precio
     }
 
     printf("2. Borrar Producto \n");
 
-    if (respuesta = 2)
+    if (respuesta == 2)
     {
         //<<<<<<<<<<------------------------------Falta funcion de seleccionar producto y borrarlo
     }
     
 
-    
     return respuesta;
 }
 
@@ -467,36 +451,29 @@ int ventaPrincipal()
     printf("Eleccion: ");
     fflush(stdout);
     scanf("%i", respuesta);
-    if (respuesta = 1)
+    if (respuesta == 1)
     {
         iniciarZapatillasH();
-    }
-    if (respuesta = 2)
+    } else if (respuesta == 2)
     {
         iniciarZapatillasM();
-    }
-    if (respuesta = 3);
+    } else if (respuesta == 3);
     {
         iniciarRopaH();
-    }
-    if (respuesta = 4)
+    } else if (respuesta == 4)
     {
         iniciarRopaM();
-    }
-    if (respuesta = 5)
+    } else if (respuesta == 5)
     {
         iniciarSuplementos();
-    }
-    if (respuesta = 6)
+    } else if (respuesta == 6)
     {
         iniciarMaterialD();
-    }
-    if (respuesta = 7)
+    } else if (respuesta == 7)
     {
         iniciarCarrito();
     }
     return respuesta;
-
 }
 
 

@@ -21,7 +21,7 @@ void bajarStock(sqlite3 *db, int id);
 
 Prenda obtenerPrenda (sqlite3 *db, int id);
 
-Material obtenerMaterial (sqlite3 *db, int id);
+MaterialDeportivo obtenerMaterial (sqlite3 *db, int id);
 
 Suplemento obtenerSuplemento (sqlite3 *db, int id);
 
