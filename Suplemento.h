@@ -3,8 +3,8 @@
 
 typedef struct {
    int identificativo;
-   char nombre;
-   char tipo;
+   char* nombre;
+   char* tipo;
    float precio;
    int stock;
 } Suplemento;

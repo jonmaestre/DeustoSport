@@ -3,10 +3,10 @@
 
 typedef struct {
     int id;
-    char nombre;
+    char* nombre;
     float talla;
     int genero;
-    char color;
+    char* color;
     float precio;
     int stock;
 } Calzado;

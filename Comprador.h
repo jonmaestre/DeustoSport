@@ -2,12 +2,12 @@
 #define COMPRADOR_H_
 
 typedef struct {
-    char nombre;
+    char* nombre;
     int identificativo;
     int telefono;
-    char correo;
-    char direccion;
-    char contrasena;
+    char* correo;
+    char* direccion;
+    char* contrasena;
 } Comprador;
 
 
