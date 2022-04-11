@@ -1,6 +1,8 @@
 #ifndef BBDD_H_
 #define BBDD_H_
 #include "sqlite3.h"
+#include <stdbool.h>
+
 
 // PRODUCTOS
 void eliminarProducto(sqlite3 *db, int id);
