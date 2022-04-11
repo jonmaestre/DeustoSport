@@ -226,6 +226,17 @@ Comprador obtenerComprador (sqlite3 *db, char* correo) {
 	return persona;
 }
 
+void registrarComprador(sqlite3 *db, char nom, int id, int tlf, char correo, char dir, char cont){
+    sqlite3_stmt *stmt;
+	char sql[100];
+
+	sprintf(sql, "insert into comprador values(%c,%d,%d,%c,%c,%c)", nom, id, tlf, correo, dir, cont);
+	
+    sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+	sqlite3_finalize(stmt);
+}
+
 
 
 
