@@ -38,7 +38,7 @@ int main (void) {
 // --------------------------------------------------------------------------------------------
 
 int inicio () {
-    int respuesta;
+    int respuesta[1];
 
     printf("¿Qué desea hacer? \n");
     printf("\n");
@@ -60,8 +60,8 @@ void registrar (sqlite3 *db) {
 
     // revisar los char*
     char* nombre;
-    int codigo;
-    int telefono;
+    int* codigo;
+    int* telefono;
     char* correo;
     char* direccion;
     char* contrasena1;
@@ -141,13 +141,13 @@ Comprador iniciarCliente () {
             scanf("%i", deNuevo);
             if (deNuevo == 1) {
                 registrar (db);
-            } if else (deNuevo == 2) {
+            } else if (deNuevo == 2) {
                 printf("CORREO ELECTRÓNICO: \n");
                 scanf("%c", correo);
 	            printf("CONTRASEÑA: \n");
                 scanf("%c", contrasena);
 
-                bool existe = existeComprador(*db, correo);
+                bool existe = existeComprador(db, correo);
             } else {
                 // next
             }
