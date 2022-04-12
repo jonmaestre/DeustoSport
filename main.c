@@ -38,7 +38,7 @@ int main (void) {
 // --------------------------------------------------------------------------------------------
 
 int* inicio () {
-    int respuesta[1];
+    int* respuesta;
 
     printf("¿Qué desea hacer? \n");
     printf("\n");
@@ -241,20 +241,20 @@ Admin* iniciarAdmin (sqlite3 *db) {
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
 // Para inicio de la Zapatillas hombre
-int iniciarZapatillasH(sqlite3 *db)
+int* iniciarZapatillasH(sqlite3 *db)
 {
-    int respuesta;
+    int *respuesta;
     printf("Estas son las zapatillas para hombre que tenemos en este momento: \n");
     printf("\n");
 
     printf("0. Ver carrito \n");
-    if (respuesta == 0)
+    if (*respuesta == 0)
     {
         iniciarCarrito(db);
     }
 
     printf("1. Volver a la pagina de atras \n");
-    if (respuesta == 1)
+    if (*respuesta == 1)
     {
         ventaPrincipal(db);
     }
@@ -273,20 +273,20 @@ int iniciarZapatillasH(sqlite3 *db)
 
 // Para inicio de la zapatillas mujer
 
-int iniciarZapatillasM(sqlite3 *db)
+int* iniciarZapatillasM(sqlite3 *db)
 {
-    int respuesta;
+    int *respuesta;
     printf("Estas son las zapatillas para mujer que tenemos en este momento: \n");
     printf("\n");
 
     printf("0. Ver carrito \n");
-    if (respuesta == 0)
+    if (*respuesta == 0)
     {
         iniciarCarrito(db);
     }
 
     printf("1. Volver a la pagina de atras \n");
-    if (respuesta == 1)
+    if (*respuesta == 1)
     {
         ventaPrincipal(db);
     }
@@ -302,20 +302,20 @@ int iniciarZapatillasM(sqlite3 *db)
 
 // Para inicio de ropa hombre
 
-int iniciarRopaH(sqlite3 *db)
+int* iniciarRopaH(sqlite3 *db)
 {
-    int respuesta;
+    int* respuesta;
     printf("Esta es la ropa para hombre que tenemos en este momento: \n");
     printf("\n");
 
     printf("0. Ver carrito \n");
-    if (respuesta == 0)
+    if (*respuesta == 0)
     {
         iniciarCarrito(db);
     }
 
     printf("1. Volver a la pagina de atras \n");
-    if (respuesta == 1)
+    if (*respuesta == 1)
     {
         ventaPrincipal(db);
     }
@@ -331,20 +331,20 @@ int iniciarRopaH(sqlite3 *db)
 
 // Para inicio de ropa mujer
 
-int iniciarRopaM(sqlite3 *db)
+int* iniciarRopaM(sqlite3 *db)
 {
-    int respuesta;
+    int* respuesta;
     printf("Esta es la ropa para mujer que tenemos en este momento: \n");
     printf("\n");
 
     printf("0. Ver carrito \n");
-    if (respuesta == 0)
+    if (*respuesta == 0)
     {
         iniciarCarrito(db);
     }
 
     printf("1. Volver a la pagina de atras \n");
-    if (respuesta == 1)
+    if (*respuesta == 1)
     {
         ventaPrincipal(db);
     }
@@ -359,20 +359,20 @@ int iniciarRopaM(sqlite3 *db)
 
 // Para inicio de ropa mujer
 
-int iniciarSuplementos(sqlite3 *db)
+int* iniciarSuplementos(sqlite3 *db)
 {
-    int respuesta;
+    int* respuesta;
     printf("Estos son los suplementos deportivos que tenemos en este momento: \n");
     printf("\n");
 
     printf("0. Ver carrito \n");
-    if (respuesta == 0)
+    if (*respuesta == 0)
     {
         iniciarCarrito(db);
     }
 
     printf("1. Volver a la pagina de atras \n");
-    if (respuesta == 1)
+    if (*respuesta == 1)
     {
         ventaPrincipal(db);
     }
@@ -386,20 +386,20 @@ int iniciarSuplementos(sqlite3 *db)
 
 // Para inicio de material deportivo especifico
 
-int iniciarMaterialD(sqlite3 *db)
+int* iniciarMaterialD(sqlite3 *db)
 {
-    int respuesta;
+    int* respuesta;
     printf("Estos son los materiales deportivos especificos que tenemos en este momento: \n");
     printf("\n");
 
     printf("0. Ver carrito \n");
-    if (respuesta == 0)
+    if (*respuesta == 0)
     {
         iniciarCarrito(db);
     }
 
     printf("1. Volver a la pagina de atras \n");
-    if (respuesta == 1)
+    if (*respuesta == 1)
     {
         ventaPrincipal(db);
     }
@@ -412,9 +412,9 @@ int iniciarMaterialD(sqlite3 *db)
 }
 
 
-int iniciarCarrito(sqlite3 *db)
+int* iniciarCarrito(sqlite3 *db)
 {
-    int respuesta;
+    int* respuesta;
     printf("Estos son los productos que tienes en el carrito en este instante: \n");
     printf("\n");
 
@@ -423,21 +423,21 @@ int iniciarCarrito(sqlite3 *db)
     ////<<<<<<<<------------------------------------ Se necesita funcion que almacene las compras para mostrarlas
     printf("0. Volver atras \n");
 
-    if (respuesta == 0)
+    if (*respuesta == 0)
     {
         ventaPrincipal();
     }
 
     printf("1. Comprar \n");
 
-    if (respuesta == 1)
+    if (*respuesta == 1)
     {
         //<<<<<<<<<<------------------------------Falta funcion de comprar en la que calcule el precio
     }
 
     printf("2. Borrar Producto \n");
 
-    if (respuesta == 2)
+    if (*respuesta == 2)
     {
         //<<<<<<<<<<------------------------------Falta funcion de seleccionar producto y borrarlo
     }
@@ -449,9 +449,9 @@ int iniciarCarrito(sqlite3 *db)
 }
 
 
-int ventaPrincipal(sqlite3 *db)
+int* ventaPrincipal(sqlite3 *db)
 {
-    int respuesta[1];
+    int* respuesta;
 
     printf("¿Qué Tipo de producto esta buscando? Eliga el numero del tipo de producto que busca \n");
     printf("\n");
@@ -466,25 +466,25 @@ int ventaPrincipal(sqlite3 *db)
     printf("Eleccion: ");
     fflush(stdout);
     scanf("%i", respuesta);
-    if (respuesta == 1)
+    if (*respuesta == 1)
     {
         iniciarZapatillasH(db);
-    } else if (respuesta == 2)
+    } else if (*respuesta == 2)
     {
         iniciarZapatillasM(db);
-    } else if (respuesta == 3);
+    } else if (*respuesta == 3)
     {
         iniciarRopaH(db);
-    } else if (respuesta == 4)
+    } else if (*respuesta == 4)
     {
         iniciarRopaM(db);
-    } else if (respuesta == 5)
+    } else if (*respuesta == 5)
     {
         iniciarSuplementos(db);
-    } else if (respuesta == 6)
+    } else if (*respuesta == 6)
     {
         iniciarMaterialD(db);
-    } else if (respuesta == 7)
+    } else if (*respuesta == 7)
     {
         iniciarCarrito(db);
     }
