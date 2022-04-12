@@ -176,6 +176,39 @@ Prenda obtenerPrenda (sqlite3 *db, int id){
 	return prenda;
 }
 
+void agregarPrenda(sqlite3 *db, char* nom, char* tipo, char* color, char* talla, float precio, int sexo, int cantidad){
+    sqlite3_stmt *stmt;
+
+	char sql[100];
+	int maxId = maxIdProducto(db);
+
+	sprintf(sql, "INSERT INTO Prenda VALUES (%i, %s, %s, %s, %s, %f, %i, %i)", maxId+1, nom, tipo, color, talla, precio, sexo, cantidad);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+
+	sqlite3_finalize(stmt);
+}
+
+void subirStockPrenda (sqlite3 *db, int id, int cant){
+    sqlite3_stmt *stmt;
+	char sql[100];
+
+	sprintf(sql, "UPDATE Prenda SET Stock_Prenda = Stock_Prenda + %i WHERE  ID_Prenda = %i", cant, id);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+	sqlite3_finalize(stmt);
+}
+
+void bajarStockPrenda(sqlite3 *db, int id, int cant){
+    sqlite3_stmt *stmt;
+	char sql[100];
+
+	sprintf(sql, "UPDATE Prenda SET Stock_Prenda = Stock_Prenda - %i WHERE  ID_Prenda = %i", cant, id);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+	sqlite3_finalize(stmt);
+}
+
 // *************************** MATERIAL ***************************
 
 MaterialDeportivo obtenerMaterial (sqlite3 *db, int id){
@@ -205,6 +238,41 @@ MaterialDeportivo obtenerMaterial (sqlite3 *db, int id){
 	return material;
 }
 
+void agregarMD(sqlite3 *db, char* nom, char* tipo, char* color, char* talla, float precio, char* deporte, int cantidad){
+    sqlite3_stmt *stmt;
+
+	char sql[100];
+	int maxId = maxIdProducto(db);
+
+	sprintf(sql, "INSERT INTO Material_Deportivo VALUES (%i, %s, %s, %s, %s, %f, %s, %i)", maxId+1, nom, tipo, color, talla, precio, deporte, cantidad);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+
+	sqlite3_finalize(stmt);
+}
+
+void subirStockMD (sqlite3 *db, int id, int cant){
+    sqlite3_stmt *stmt;
+	char sql[100];
+
+	sprintf(sql, "UPDATE Material_Deportivo SET Stock_MD = Stock_MD + %i WHERE  ID_MD = %i", cant, id);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+	sqlite3_finalize(stmt);
+}
+
+void bajarStockMD(sqlite3 *db, int id, int cant){
+    sqlite3_stmt *stmt;
+	char sql[100];
+
+	sprintf(sql, "UPDATE Material_Deportivo SET Stock_MD = Stock_MD + %i WHERE  ID_MD = %i", cant, id);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+	sqlite3_finalize(stmt);
+}
+
+
+
 // *************************** SUPLEMENTO ***************************
 
 Suplemento obtenerSuplemento (sqlite3 *db, int id){
@@ -227,6 +295,39 @@ Suplemento obtenerSuplemento (sqlite3 *db, int id){
 	sqlite3_finalize(stmt);
 
 	return suplemento;
+}
+
+void agregarSupl(sqlite3 *db, char* nom, char* tipo, int cantidad,float precio){
+    sqlite3_stmt *stmt;
+
+	char sql[100];
+	int maxId = maxIdProducto(db);
+
+	sprintf(sql, "INSERT INTO Suplemento VALUES (%i, %s, %s, %i, %f)", maxId+1, nom, tipo, cantidad, precio);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+
+	sqlite3_finalize(stmt);
+}
+
+void subirStockSupl (sqlite3 *db, int id, int cant){
+    sqlite3_stmt *stmt;
+	char sql[100];
+
+	sprintf(sql, "UPDATE Suplemento SET Stock_Sup = Stock_Sup + %i WHERE  ID_Sup = %i", cant, id);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+	sqlite3_finalize(stmt);
+}
+
+void bajarStockSupl(sqlite3 *db, int id, int cant){
+    sqlite3_stmt *stmt;
+	char sql[100];
+
+	sprintf(sql, "UPDATE Suplemento SET Stock_Sup = Stock_Sup + %i WHERE  ID_Sup = %i", cant, id);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+	sqlite3_finalize(stmt);
 }
 
 
