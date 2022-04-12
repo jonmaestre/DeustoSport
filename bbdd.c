@@ -393,6 +393,24 @@ void registrarComprador(sqlite3 *db, char nom, int id, int tlf, char correo, cha
 	sqlite3_finalize(stmt);
 }
 
+void obtenerAdmin(sqlite3 *db, int id){
+	sqlite3_stmt *stmt;
+	char sql[100], *nombre, *contrasena, *funcion;
+	int id;
+
+	sprintf(sql, "SELECT * FROM Administrador WHERE id = %d", id);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+	strcpy(&nombre, (char*)sqlite3_column_text(stmt, 0));
+	strcpy(id, (int)sqlite3_column_text(stmt, 1));
+	strcpy(&contrasena, (char*)sqlite3_column_text(stmt,2));
+	strcpy(&funcion, (char*)sqlite3_column_text(stmt,3));
+
+	struct Admin a1 = {&nombre, id, &contrasena, &funcion};
+	sqlite3_finalize(stmt)
+	return a1;
+}
+
 
 
 
