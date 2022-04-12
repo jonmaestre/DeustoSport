@@ -38,7 +38,7 @@ int main (void) {
 // --------------------------------------------------------------------------------------------
 
 int inicio () {
-    int respuesta;
+    int respuesta[1];
 
     printf("¿Qué desea hacer? \n");
     printf("\n");
@@ -60,8 +60,8 @@ void registrar (sqlite3 *db) {
 
     // revisar los char*
     char* nombre;
-    int codigo;
-    int telefono;
+    int* codigo;
+    int* telefono;
     char* correo;
     char* direccion;
     char* contrasena1;
@@ -141,13 +141,13 @@ Comprador iniciarCliente () {
             scanf("%i", deNuevo);
             if (deNuevo == 1) {
                 registrar (db);
-            } if else (deNuevo == 2) {
+            } else if (deNuevo == 2) {
                 printf("CORREO ELECTRÓNICO: \n");
                 scanf("%c", correo);
 	            printf("CONTRASEÑA: \n");
                 scanf("%c", contrasena);
 
-                bool existe = existeComprador(*db, correo);
+                bool existe = existeComprador(db, correo);
             } else {
                 // next
             }
@@ -261,7 +261,9 @@ int iniciarZapatillasH()
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos las Zapatillas para hombre que metas
 
-    
+    fflush(stdout);
+    scanf("%i", respuesta);
+	
     return respuesta;
 
 
@@ -291,7 +293,9 @@ int iniciarZapatillasM()
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos las Zapatillas para mujer que metas
 
-    return respuesta;
+    fflush(stdout);
+    scanf("%i", respuesta);
+	return respuesta;
 }
 
 
@@ -318,7 +322,9 @@ int iniciarRopaH()
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos ropa de hombre que metas
 
-    return respuesta;
+    fflush(stdout);
+    scanf("%i", respuesta);
+	return respuesta;
 }
 
 
@@ -345,7 +351,9 @@ int iniciarRopaM()
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos ropa de mujer que metas
 
-    return respuesta;
+    fflush(stdout);
+    scanf("%i", respuesta);
+	return respuesta;
 }
 
 // Para inicio de ropa mujer
@@ -370,7 +378,9 @@ int iniciarSuplementos()
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos los suplementos deportivos deportivos
 
-    return respuesta;
+    fflush(stdout);
+    scanf("%i", respuesta);
+	return respuesta;
 }
 
 // Para inicio de material deportivo especifico
@@ -395,7 +405,9 @@ int iniciarMaterialD()
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos los materiales especificos deportivos deportivos
     
-    return respuesta;
+    fflush(stdout);
+    scanf("%i", respuesta);
+	return respuesta;
 }
 
 
@@ -430,7 +442,9 @@ int iniciarCarrito()
     }
     
 
-    return respuesta;
+    fflush(stdout);
+    scanf("%i", respuesta);
+	return respuesta;
 }
 
 
@@ -454,22 +468,28 @@ int ventaPrincipal()
     if (respuesta == 1)
     {
         iniciarZapatillasH();
-    } else if (respuesta == 2)
+    } 
+    else if (respuesta == 2)
     {
         iniciarZapatillasM();
-    } else if (respuesta == 3);
+    } 
+    else if (respuesta == 3)
     {
         iniciarRopaH();
-    } else if (respuesta == 4)
+    } 
+    else if (respuesta == 4)
     {
         iniciarRopaM();
-    } else if (respuesta == 5)
+    } 
+    else if (respuesta == 5)
     {
         iniciarSuplementos();
-    } else if (respuesta == 6)
+    } 
+    else if (respuesta == 6)
     {
         iniciarMaterialD();
-    } else if (respuesta == 7)
+    } 
+    else if (respuesta == 7)
     {
         iniciarCarrito();
     }
