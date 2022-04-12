@@ -30,7 +30,7 @@ void subirStockSupl (sqlite3 *db, int id, int cant);
 void bajarSupl(sqlite3 *db, int id);
 
 Suplemento obtenerSuplemento (sqlite3 *db, int id);
-void agregarMD(sqlite3 *db, char* nom, char* tipo,  int cantidad, float precio,);
+void agregarMD(sqlite3 *db, char* nom, char* tipo,  int cantidad, float precio);
 void subirStockMD (sqlite3 *db, int id, int cant);
 void bajarMD(sqlite3 *db, int id);
 

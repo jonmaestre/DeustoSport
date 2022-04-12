@@ -23,7 +23,7 @@ int main (void) {
     // falta una bienvenida :)
 
     sqlite3 *db;
-	int result = sqlite3_open("BaseDatos.db", db);
+	int result = sqlite3_open("BaseDatos.db", &db);
 
 
 
@@ -37,7 +37,7 @@ int main (void) {
 // --------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------
 
-int inicio () {
+int* inicio () {
     int respuesta[1];
 
     printf("¿Qué desea hacer? \n");
@@ -110,11 +110,13 @@ void registrar (sqlite3 *db) {
 
 
 // tiene que returnear un cliente
-Comprador iniciarCliente () {
+Comprador iniciarCliente (sqlite3 *db) {
 
     // revisar los char*
     char* correo;
+    correo = malloc(100*sizeof(char));
     char* contrasena;
+    contrasena = malloc(50*sizeof(char));
 
     printf("INCIAR SESIÓN \n");
     printf("---------------------------------\n");
@@ -138,7 +140,7 @@ Comprador iniciarCliente () {
 	        printf("\n");
 	        printf("Opción: ");
 	        fflush(stdout);
-            scanf("%i", deNuevo);
+            scanf("%i", &deNuevo);
             if (deNuevo == 1) {
                 registrar (db);
             } else if (deNuevo == 2) {
@@ -168,7 +170,6 @@ Comprador iniciarCliente () {
             char* correito = persona.correo;
             char* contra = persona.contrasena;
         }
-
     }
 
     return persona;
@@ -176,7 +177,7 @@ Comprador iniciarCliente () {
 
 
 // tiene que returnear un admin
-void iniciarAdmin () {
+Admin* iniciarAdmin (sqlite3 *db) {
 
     // revisar los char*
     char* identificativo;
@@ -192,7 +193,7 @@ void iniciarAdmin () {
 	printf("CONTRASEÑA: \n");
     scanf("%c", contrasena);
     printf("¿CUÁNTOS PROGRAMADORES HAY EN 'DeustoSportKit'?: \n");
-    scanf("%i", respuestaPregunta);
+    scanf("%i", &respuestaPregunta);
 
     if (respuestaPregunta != PROGRAMADORES) {
         printf("¡ERROR! Tú no eres un administrador.");
@@ -212,7 +213,7 @@ void iniciarAdmin () {
 	            printf("2. Salir\n");
     	        printf("\n");
 	            printf("Opción: ");
-                scanf("%i", deNuevo);
+                scanf("%i", &deNuevo);
                 if (deNuevo == 1) {
                     // ************************++  REVISAR **************************
                 } else {
@@ -240,7 +241,7 @@ void iniciarAdmin () {
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
 // Para inicio de la Zapatillas hombre
-int iniciarZapatillasH()
+int iniciarZapatillasH(sqlite3 *db)
 {
     int respuesta;
     printf("Estas son las zapatillas para hombre que tenemos en este momento: \n");
@@ -249,13 +250,13 @@ int iniciarZapatillasH()
     printf("0. Ver carrito \n");
     if (respuesta == 0)
     {
-        iniciarCarrito();
+        iniciarCarrito(db);
     }
 
     printf("1. Volver a la pagina de atras \n");
     if (respuesta == 1)
     {
-        ventaPrincipal();
+        ventaPrincipal(db);
     }
      
 
@@ -270,7 +271,7 @@ int iniciarZapatillasH()
 
 // Para inicio de la zapatillas mujer
 
-int iniciarZapatillasM()
+int iniciarZapatillasM(sqlite3 *db)
 {
     int respuesta;
     printf("Estas son las zapatillas para mujer que tenemos en este momento: \n");
@@ -279,13 +280,13 @@ int iniciarZapatillasM()
     printf("0. Ver carrito \n");
     if (respuesta == 0)
     {
-        iniciarCarrito();
+        iniciarCarrito(db);
     }
 
     printf("1. Volver a la pagina de atras \n");
     if (respuesta == 1)
     {
-        ventaPrincipal();
+        ventaPrincipal(db);
     }
      
 
@@ -297,7 +298,7 @@ int iniciarZapatillasM()
 
 // Para inicio de ropa hombre
 
-int iniciarRopaH()
+int iniciarRopaH(sqlite3 *db)
 {
     int respuesta;
     printf("Esta es la ropa para hombre que tenemos en este momento: \n");
@@ -306,13 +307,13 @@ int iniciarRopaH()
     printf("0. Ver carrito \n");
     if (respuesta == 0)
     {
-        iniciarCarrito();
+        iniciarCarrito(db);
     }
 
     printf("1. Volver a la pagina de atras \n");
     if (respuesta == 1)
     {
-        ventaPrincipal();
+        ventaPrincipal(db);
     }
      
 
@@ -324,7 +325,7 @@ int iniciarRopaH()
 
 // Para inicio de ropa mujer
 
-int iniciarRopaM()
+int iniciarRopaM(sqlite3 *db)
 {
     int respuesta;
     printf("Esta es la ropa para mujer que tenemos en este momento: \n");
@@ -333,13 +334,13 @@ int iniciarRopaM()
     printf("0. Ver carrito \n");
     if (respuesta == 0)
     {
-        iniciarCarrito();
+        iniciarCarrito(db);
     }
 
     printf("1. Volver a la pagina de atras \n");
     if (respuesta == 1)
     {
-        ventaPrincipal();
+        ventaPrincipal(db);
     }
      
 
@@ -350,7 +351,7 @@ int iniciarRopaM()
 
 // Para inicio de ropa mujer
 
-int iniciarSuplementos()
+int iniciarSuplementos(sqlite3 *db)
 {
     int respuesta;
     printf("Estos son los suplementos deportivos que tenemos en este momento: \n");
@@ -359,13 +360,13 @@ int iniciarSuplementos()
     printf("0. Ver carrito \n");
     if (respuesta == 0)
     {
-        iniciarCarrito();
+        iniciarCarrito(db);
     }
     
     printf("1. Volver a la pagina de atras \n");
     if (respuesta == 1)
     {
-        ventaPrincipal();
+        ventaPrincipal(db);
     }
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos los suplementos deportivos deportivos
@@ -375,7 +376,7 @@ int iniciarSuplementos()
 
 // Para inicio de material deportivo especifico
 
-int iniciarMaterialD()
+int iniciarMaterialD(sqlite3 *db)
 {
     int respuesta;
     printf("Estos son los materiales deportivos especificos que tenemos en este momento: \n");
@@ -384,13 +385,13 @@ int iniciarMaterialD()
     printf("0. Ver carrito \n");
     if (respuesta == 0)
     {
-        iniciarCarrito();
+        iniciarCarrito(db);
     }
 
     printf("1. Volver a la pagina de atras \n");
     if (respuesta == 1)
     {
-        ventaPrincipal();
+        ventaPrincipal(db);
     }
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos los materiales especificos deportivos deportivos
@@ -399,7 +400,7 @@ int iniciarMaterialD()
 }
 
 
-int iniciarCarrito()
+int iniciarCarrito(sqlite3 *db)
 {
     int respuesta;
     printf("Estos son los productos que tienes en el carrito en este instante: \n");
@@ -434,9 +435,9 @@ int iniciarCarrito()
 }
 
 
-int ventaPrincipal()
+int ventaPrincipal(sqlite3 *db)
 {
-    int respuesta;
+    int respuesta[1];
 
     printf("¿Qué Tipo de producto esta buscando? Eliga el numero del tipo de producto que busca \n");
     printf("\n");
@@ -453,25 +454,25 @@ int ventaPrincipal()
     scanf("%i", respuesta);
     if (respuesta == 1)
     {
-        iniciarZapatillasH();
+        iniciarZapatillasH(db);
     } else if (respuesta == 2)
     {
-        iniciarZapatillasM();
+        iniciarZapatillasM(db);
     } else if (respuesta == 3);
     {
-        iniciarRopaH();
+        iniciarRopaH(db);
     } else if (respuesta == 4)
     {
-        iniciarRopaM();
+        iniciarRopaM(db);
     } else if (respuesta == 5)
     {
-        iniciarSuplementos();
+        iniciarSuplementos(db);
     } else if (respuesta == 6)
     {
-        iniciarMaterialD();
+        iniciarMaterialD(db);
     } else if (respuesta == 7)
     {
-        iniciarCarrito();
+        iniciarCarrito(db);
     }
     return respuesta;
 }
