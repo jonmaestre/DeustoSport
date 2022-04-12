@@ -100,7 +100,7 @@ void registrar (sqlite3 *db) {
         scanf("%c", contrasena2);
     }
 
-    
+
 
     // meter nuevo cliente a la base de datos
 
@@ -258,11 +258,13 @@ int iniciarZapatillasH(sqlite3 *db)
     {
         ventaPrincipal(db);
     }
-     
+
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos las Zapatillas para hombre que metas
 
-    
+    fflush(stdout);
+    scanf("%i", respuesta);
+
     return respuesta;
 
 
@@ -288,11 +290,13 @@ int iniciarZapatillasM(sqlite3 *db)
     {
         ventaPrincipal(db);
     }
-     
+
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos las Zapatillas para mujer que metas
 
-    return respuesta;
+    fflush(stdout);
+    scanf("%i", respuesta);
+	return respuesta;
 }
 
 
@@ -315,11 +319,13 @@ int iniciarRopaH(sqlite3 *db)
     {
         ventaPrincipal(db);
     }
-     
+
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos ropa de hombre que metas
 
-    return respuesta;
+    fflush(stdout);
+    scanf("%i", respuesta);
+	return respuesta;
 }
 
 
@@ -342,11 +348,13 @@ int iniciarRopaM(sqlite3 *db)
     {
         ventaPrincipal(db);
     }
-     
+
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos ropa de mujer que metas
 
-    return respuesta;
+    fflush(stdout);
+    scanf("%i", respuesta);
+	return respuesta;
 }
 
 // Para inicio de ropa mujer
@@ -362,7 +370,7 @@ int iniciarSuplementos(sqlite3 *db)
     {
         iniciarCarrito(db);
     }
-    
+
     printf("1. Volver a la pagina de atras \n");
     if (respuesta == 1)
     {
@@ -371,7 +379,9 @@ int iniciarSuplementos(sqlite3 *db)
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos los suplementos deportivos deportivos
 
-    return respuesta;
+    fflush(stdout);
+    scanf("%i", respuesta);
+	return respuesta;
 }
 
 // Para inicio de material deportivo especifico
@@ -395,8 +405,10 @@ int iniciarMaterialD(sqlite3 *db)
     }
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos los materiales especificos deportivos deportivos
-    
-    return respuesta;
+
+    fflush(stdout);
+    scanf("%i", respuesta);
+	return respuesta;
 }
 
 
@@ -406,8 +418,8 @@ int iniciarCarrito(sqlite3 *db)
     printf("Estos son los productos que tienes en el carrito en este instante: \n");
     printf("\n");
 
-    
-     
+
+
     ////<<<<<<<<------------------------------------ Se necesita funcion que almacene las compras para mostrarlas
     printf("0. Volver atras \n");
 
@@ -429,9 +441,11 @@ int iniciarCarrito(sqlite3 *db)
     {
         //<<<<<<<<<<------------------------------Falta funcion de seleccionar producto y borrarlo
     }
-    
 
-    return respuesta;
+
+    fflush(stdout);
+    scanf("%i", respuesta);
+	return respuesta;
 }
 
 

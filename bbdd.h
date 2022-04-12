@@ -18,6 +18,8 @@ Calzado obtenerCalzado (sqlite3 *db, int id);
 void agregarCalzado(sqlite3 *db, char* nom, char* tipo, char* color, char* talla, float precio, int sexo, int cantidad);
 void subirStockCalzado (sqlite3 *db, int id, int cant);
 void bajarStock(sqlite3 *db, int id);
+int showCalzadoH(sqlite3 *db);
+int showCalzadoM(sqlite3 *db);
 
 Prenda obtenerPrenda (sqlite3 *db, int id);
 void agregarPrenda(sqlite3 *db, char* nom, char* tipo, char* color, char* talla, float precio, int sexo, int cantidad);
