@@ -147,6 +147,106 @@ void bajarStockCalzado(sqlite3 *db, int id, int cant){
 	sqlite3_finalize(stmt);
 }
 
+int showCalzadoH(sqlite3 *db) {
+	sqlite3_stmt *stmt;
+
+	char sql[] = "SELECT * FROM Calzado WHERE Sexo_Calzado = 0";
+
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+
+
+	char nombre[100];
+	char tipo[100];
+	char color[100];
+	char talla[100];
+	float precio;
+
+	printf("\n");
+	printf("\n");
+	printf("Ensenyando calzado para hombre:\n");
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {
+			strcpy(nombre, (char *) sqlite3_column_text(stmt, 1));
+			strcpy(tipo, (char *) sqlite3_column_text(stmt, 2));
+			strcpy(color, (char *) sqlite3_column_text(stmt, 3));
+			strcpy(talla, (char *) sqlite3_column_text(stmt, 4));
+			precio = sqlite3_column_double(stmt,5);
+			printf("Nombre: %s  Tipo:%s  Color:%s  Talla:%s  Precio:%f", nombre,tipo,color,talla,precio);
+		}
+	} while (result == SQLITE_ROW);
+ 
+	printf("\n");
+	printf("\n");
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	printf("Prepared statement finalized (SELECT)\n");
+
+	return SQLITE_OK;
+}
+
+int showCalzadoM(sqlite3 *db) {
+	sqlite3_stmt *stmt;
+
+	char sql[] = "SELECT * FROM Calzado WHERE Sexo_Calzado = 1";
+
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+
+
+	char nombre[100];
+	char tipo[100];
+	char color[100];
+	char talla[100];
+	float precio;
+
+	printf("\n");
+	printf("\n");
+	printf("Ensenyando calzado para hombre:\n");
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {
+			strcpy(nombre, (char *) sqlite3_column_text(stmt, 1));
+			strcpy(tipo, (char *) sqlite3_column_text(stmt, 2));
+			strcpy(color, (char *) sqlite3_column_text(stmt, 3));
+			strcpy(talla, (char *) sqlite3_column_text(stmt, 4));
+			precio = sqlite3_column_double(stmt,5);
+			printf("Nombre: %s  Tipo:%s  Color:%s  Talla:%s  Precio:%f", nombre,tipo,color,talla,precio);
+		}
+	} while (result == SQLITE_ROW);
+ 
+	printf("\n");
+	printf("\n");
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	printf("Prepared statement finalized (SELECT)\n");
+
+	return SQLITE_OK;
+}
+
 // *************************** PRENDA ***************************
 
 Prenda obtenerPrenda (sqlite3 *db, int id){
@@ -497,4 +597,5 @@ void verTicket (sqlite3* db, int idCompra) {
 
 	printf("TOTAL: %f \n", carrito.precioTotal);
 }
+
 
