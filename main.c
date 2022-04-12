@@ -48,9 +48,11 @@ int* inicio () {
     printf("4. Iniciar sesión como administrador\n");
 	printf("Pulsar 0 para salir\n");
 	printf("\n");
-	printf("Opción: ");
-	fflush(stdout);
-    scanf("%i", respuesta);
+    do {
+	    printf("Opción: ");
+	    fflush(stdout);
+        scanf("%i", respuesta);
+    } while (!(*respuesta >= 0 && *respuesta <=4));
 	return respuesta;
 }
 
@@ -58,14 +60,18 @@ int* inicio () {
 // tiene que returnear un cliente
 void registrar (sqlite3 *db) {
 
-    // revisar los char*
     char* nombre;
-    int* codigo;
+    nombre = malloc(50*sizeof(char));
     int* telefono;
+    telefono = malloc(1*sizeof(int));
     char* correo;
+    correo = malloc(70*sizeof(char));
     char* direccion;
+    direccion = malloc(80*sizeof(char));
     char* contrasena1;
+    contrasena1 = malloc(25*sizeof(char));
     char* contrasena2;
+    contrasena2 = malloc(25*sizeof(char));
 
     printf("REGISTRAR \n");
     printf("---------------------------------\n");
@@ -100,19 +106,16 @@ void registrar (sqlite3 *db) {
         scanf("%c", contrasena2);
     }
 
+    registrarComprador(db, nombre, telefono, correo, direccion, contrasena1);
 
+    Comprador comprador = obtenerComprador(db, correo);
 
-    // meter nuevo cliente a la base de datos
-
-    // devolver cliente
-
+    return comprador;
 }
 
 
-// tiene que returnear un cliente
 Comprador iniciarCliente (sqlite3 *db) {
 
-    // revisar los char*
     char* correo;
     correo = malloc(100*sizeof(char));
     char* contrasena;
@@ -138,9 +141,13 @@ Comprador iniciarCliente (sqlite3 *db) {
             printf("1. Registrarme\n");
 	        printf("2. Reintentar\n");
 	        printf("\n");
-	        printf("Opción: ");
-	        fflush(stdout);
-            scanf("%i", &deNuevo);
+
+            do {
+	            printf("Opción: ");
+	            fflush(stdout);
+                scanf("%i", &deNuevo);
+            } while (deNuevo != 1 || deNuevo != 2);
+
             if (deNuevo == 1) {
                 registrar (db);
             } else if (deNuevo == 2) {
@@ -150,10 +157,31 @@ Comprador iniciarCliente (sqlite3 *db) {
                 scanf("%c", contrasena);
 
                 bool existe = existeComprador(db, correo);
-            } else {
-                // next
-            }
+
+                if (existe == false) {
+                    printf("¡Vaya! Parece que ha habido un error. \n");
+                    return NULL;
+                } else {
+                    persona = obtenerComprador (db, correo);
+                    char* correito = persona.correo;
+                    char* contra = persona.contrasena;
+                    while (contrasena != contra && correo == correito) {
+                        printf("¡Vaya! Parece que ha habido un error. \n");
+                        printf("Vuelve a meter los datos. \n");
+                        printf("CORREO ELECTRÓNICO: \n");
+                        scanf("%c", correo);
+	                    printf("CONTRASEÑA: \n");
+                        scanf("%c", contrasena);
+                        Comprador persona = obtenerComprador (db, correo);
+                        char* correito = persona.correo;
+                        char* contra = persona.contrasena;
+                    }
+
+                    return persona;
+                }
+            } 
         }
+
     } else {
 
         persona = obtenerComprador (db, correo);
@@ -170,26 +198,27 @@ Comprador iniciarCliente (sqlite3 *db) {
             char* correito = persona.correo;
             char* contra = persona.contrasena;
         }
+        return persona;
     }
-
-    return persona;
 }
 
 
-// tiene que returnear un admin
 Admin* iniciarAdmin (sqlite3 *db) {
 
     // revisar los char*
-    char* identificativo;
+    int* identificativo;
+    identificativo = malloc(10*sizeof(int));
     char* contrasena;
-    int respuestaPregunta;
+    contrasena = malloc(30*sizeof(char*));
+    int* respuestaPregunta;
+    respuestaPregunta = malloc(1*sizeof(int));
     // si realmente son administradores, sabrán la respuesta a una pregunta. siempre la misma.
 
     printf("INCIAR SESIÓN \n");
     printf("---------------------------------\n");
 
     printf("IDENTIFICATIVO PROPIO: \n");
-    scanf("%c", identificativo);
+    scanf("%i", identificativo);
 	printf("CONTRASEÑA: \n");
     scanf("%c", contrasena);
     printf("¿CUÁNTOS PROGRAMADORES HAY EN 'DeustoSportKit'?: \n");
@@ -198,34 +227,32 @@ Admin* iniciarAdmin (sqlite3 *db) {
     if (respuestaPregunta != PROGRAMADORES) {
         printf("¡ERROR! Tú no eres un administrador.");
         return NULL;            // si returnea null, se cierra el programa
+
     } else {
-
-        // método bd para coger el administrador con el identificativo introducido
-
-        // mirar si hay algún admin con el iden  -> true or false
-        bool existe;                // ********************************* CAMBIAR ************************
+        bool existe;
+        existe = bool existeAdmin(db, identificativo);
         if (existe == false) {
-            int deNuevo;            // ********************************* CAMBIAR ************************
-            while (existe == false) {
-                printf("¡Vaya! Parece que ha habido un error. \n");
-                printf("¿Quiere intentarlo de nuevo?");
-                printf("1. Reintentar\n");
-	            printf("2. Salir\n");
-    	        printf("\n");
-	            printf("Opción: ");
-                scanf("%i", &deNuevo);
-                if (deNuevo == 1) {
-                    // ************************++  REVISAR **************************
-                } else {
+            printf("¡USTED NO ES UN ADMINISTRADOR! \n");
+            return NULL;
+        } else {
+            Admin administrador;
+            administrador = obtenerAdmin(db, id);
+            if (administrador.contrasena != contrasena) {
+                printf("Algo ha ido mal. Vuelva a introducir los datos.\n");
+                printf("Recuerde que solo tiene una oportunidad más \n");
+                printf("\n");
+                printf("CONTRASEÑA: \n");
+                scanf("%c", contrasena);
+                if (administrador.contrasena != contrasena) {
+                    printf("¡ERROR!\n");
                     return NULL;
                 }
+            } else {
+                printf("Bienvenido, %s", administrador.nombre);
+                return &administrador;
             }
         }
-
     }
-
-    // devolver admin
-
 }
 
 // --------------------------------------------------------------------------------------------
@@ -246,28 +273,35 @@ int* iniciarZapatillasH(sqlite3 *db)
     int *respuesta;
     printf("Estas son las zapatillas para hombre que tenemos en este momento: \n");
     printf("\n");
-
-    printf("0. Ver carrito \n");
-    if (*respuesta == 0)
-    {
-        iniciarCarrito(db);
-    }
-
-    printf("1. Volver a la pagina de atras \n");
-    if (*respuesta == 1)
-    {
-        ventaPrincipal(db);
-    }
-
-
-    ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos las Zapatillas para hombre que metas
+    printf("0. Ver zapatillas para hombre \n")
+    printf("1. Ver carrito \n");
+    printf("2. Volver a la pagina de atras \n");
 
     fflush(stdout);
     scanf("%i", respuesta);
 
+    if (*respuesta == 0) 
+    {
+
+        ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos las Zapatillas para hombre que metas
+
+        int *respuesta0;
+
+        printf("¿Te interesa alguna? \n");
+        printf("0. Comprar \n")
+        printf("1. Volver a la ventana principal \n"); 
+        scanf("%i", respuesta0); 
+    } 
+    else if (*respuesta == 1)
+    {
+        iniciarCarrito(db);
+    }
+    else if (*respuesta == 2)
+    {
+        ventaPrincipal(db);
+    }
+
     return respuesta;
-
-
 }
 
 

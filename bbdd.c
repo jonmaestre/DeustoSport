@@ -493,11 +493,11 @@ Comprador obtenerComprador (sqlite3 *db, char* correo) {
 	return persona;
 }
 
-void registrarComprador(sqlite3 *db, char nom, int id, int tlf, char correo, char dir, char cont){
+void registrarComprador(sqlite3 *db, char* nom, int tlf, char* correo, char* dir, char* cont){
     sqlite3_stmt *stmt;
 	char sql[100];
 
-	sprintf(sql, "insert into comprador values(%c,%d,%d,%c,%c,%c)", nom, id, tlf, correo, dir, cont);
+	sprintf(sql, "INSERT INTO Comprador (Nombre_Comprador, Telefono_Comprador, Correo_Comprador, Direccion_Comprador, Contrasena_Comprador) values(%c,%d,%c,%c,%c)", nom, tlf, correo, dir, cont);
 	
     sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	sqlite3_step(stmt);
@@ -519,6 +519,26 @@ Admin obtenerAdmin(sqlite3 *db, int id){
 	Admin a1 = {nombre, id, contrasena, funcion};
 	sqlite3_finalize(stmt);
 	return a1;
+}
+
+bool existeAdmin(sqlite3 *db, int id){
+	sqlite3_stmt *stmt;
+	char sql[100];
+
+	bool respuesta;
+
+	sprintf(sql, "SELECT COUNT(*) FROM Administrador WHERE Identificativo = %d", id);
+	int size = sqlite3_step(stmt);
+
+	sqlite3_finalize(stmt);
+
+	if (size == 0) {
+		respuesta = false;
+	} else {
+		respuesta = true;
+	}
+
+	return respuesta;
 }
 
 

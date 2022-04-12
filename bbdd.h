@@ -39,6 +39,9 @@ void bajarMD(sqlite3 *db, int id);
 // USUARIOS
 bool existeComprador (sqlite3 *db, char* correo);
 Comprador obtenerComprador (sqlite3 *db, char* correo);
+void registrarComprador(sqlite3 *db, char nom, int id, int tlf, char correo, char dir, char cont);
+Admin obtenerAdmin(sqlite3 *db, int id);
+bool existeAdmin(sqlite3 *db, int id);
 
 
 // CARRITOS / COMPRAS
