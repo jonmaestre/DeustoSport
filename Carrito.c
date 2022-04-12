@@ -12,6 +12,7 @@
 #include "bbdd.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 Carrito crearCarrito(sqlite3 *db, int idCompra, int idComprador) {
 
@@ -41,7 +42,16 @@ Carrito crearCarrito(sqlite3 *db, int idCompra, int idComprador) {
         i++;
     } 
 
-    Carrito carrito = {idCompra, idComprador, total};
+    time_t t= time(NULL);
+    struct tm tiempoLocal = *localtime(&t);
+    char fechaHora[70];
+    char *formato ="%Y-%m-%d %H:%M-%S";
+
+    int bytesEscritos = strftime(fechaHora, sizeof fechaHora, formato, &tiempoLocal);
+    
+
+
+    Carrito carrito = {idCompra, idComprador, total, bytesEscritos};
 
     return carrito;
 }
