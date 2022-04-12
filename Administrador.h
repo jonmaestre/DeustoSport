@@ -2,10 +2,10 @@
 #define ADMINISTRADOR_H_
 
 typedef struct {
-    char nombre;
+    char* nombre;
     int identificativo;
-    char contrasena;
-    char funcion;
+    char* contrasena;
+    char* funcion;
 } Admin;
 
 

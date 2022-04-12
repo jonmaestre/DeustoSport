@@ -2,7 +2,7 @@
 #define MATERIALDEPORTIVO_H_
 
 typedef struct {
-    char* identificativo;
+    int identificativo;
     char* nombre;
     char* tipo;
     char* color;
