@@ -536,3 +536,63 @@ int* ventaPrincipal(sqlite3 *db)
 // FIN PARTE GRAFICA DE ELECCIONES
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
+
+
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+// COMIENZO MÉTODOS DE ADMINISTRADORES
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+
+
+void recargarProoducto (sqlite3 *db, Admin administrador) {
+
+    int* idP;
+    printf("¿Qué producto quiere recargar? \n");
+    printf("Por favor, esciba el identificativo del producto.\n");
+    printf("IDENTIFICATIVO: \n");
+    scanf("%i", iden);
+
+    bool existe = existeProducto (db, *iden);
+
+    while (existe == false) {
+        printf("El producto indicado no existe. \n");
+        printf("Por favor, esciba el identificativo del producto.\n");
+        printf("IDENTIFICATIVO: \n");
+        scanf("%i", iden);
+    }
+
+    char tipo = obtenerTipoProducto (db, *iden);
+    // C -> calzado		M -> material	P -> prenda 	S -> suplemento
+
+    int* cantidad;
+    cantidad = malloc(1*sizeof(int));
+
+    printf("Cuántas unidades desea recargar? \n");
+    printf("CANTIDAD: \n");
+    scanf("%i", cantidad);
+
+    if (tipo == 'C') {
+        subirStockCalzado (db, *id, *cant);
+    } else if (tipo == 'M') {
+        subirStockMD (db, *id, *cant);
+    } else if (tipo == 'P') {
+        subirStockCPrenda (db, *id, *cant);
+    } else if (tipo == 'S') {
+        subirStockSupl (db, *id, *cant);
+    }
+    
+}
+
+
+
+
+
+
+
+
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+// FIN PARTE MÉTODOS DE ADMINISTRADORES
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------

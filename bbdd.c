@@ -88,6 +88,30 @@ char obtenerTipoProducto (sqlite3 *db, int id){
 	return tipo[0];				// C -> calzado		M -> material	P -> prenda 	S -> suplemento
 }
 
+bool existeProducto (sqlite3 *db, int id) {
+	sqlite3_stmt *stmt;
+
+	char sql[100];
+	int* existe;
+	existe = malloc(sizeof(int));
+
+	sprintf(sql, "SELECT COUNT(*) FROM Producto WHERE idProducto = %i",id);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	existe = sqlite3_step(stmt);
+
+	sqlite3_finalize(stmt);
+
+	bool respuesta;
+
+	if (existe == 0) {
+		respuesta = false;
+	} else {
+		respuesta = true;
+	}
+
+	return respuesta;	
+}
+
 // *************************** CALZADO ***************************
 
 Calzado obtenerCalzado (sqlite3 *db, int id){
