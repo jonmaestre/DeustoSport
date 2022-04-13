@@ -256,41 +256,62 @@ Admin* iniciarAdmin (sqlite3 *db) {
 // INICIO PARTE GRAFICA DE ELECCIONES
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
+
 // Para inicio de la Zapatillas hombre
-int* iniciarZapatillasH(sqlite3 *db)
+
+void iniciarZapatillasH(sqlite3 *db)
 {
     int *respuesta;
     printf("Estas son las zapatillas para hombre que tenemos en este momento: \n");
     printf("\n");
-    printf("0. Ver zapatillas para hombre \n");
-    printf("1. Ver carrito \n");
-    printf("2. Volver a la pagina de atras \n");
+    printf("1. Ver zapatillas para hombre \n");
+    printf("2. Ver carrito \n");
+    printf("Pulsa 0 para salir. \n");
 
-    fflush(stdout);
-    scanf("%i", respuesta);
+    do {
+        printf("ELECCION: ");
+        fflush(stdout);
+        scanf("%i", respuesta);
+    } while (respuesta < 0 || respuesta > 2);
 
-    if (*respuesta == 0) 
+    if (*respuesta == 1)
     {
-
         ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos las Zapatillas para hombre que metas
 
-        int *respuesta0;
+        int *respuesta1;
+        respuesta1 = malloc(sizeof(int));
 
         printf("¿Te interesa alguna? \n");
-        printf("0. Comprar \n");
-        printf("1. Volver a la ventana principal \n"); 
-        scanf("%i", respuesta0); 
-    } 
-    else if (*respuesta == 1)
-    {
-        iniciarCarrito(db);
+        printf("1. Comprar \n");
+        printf("Pulsa 0 para salir.  \n"); 
+
+        do {
+            scanf("%i", respuesta1);
+            printf("\n"); 
+        } while (respuesta1 != 0 || respuesta1 != 1);
+
+        if (respuesta1 == 1) {
+
+            int* zapatillaHom;
+            zapatillaHom = malloc(sizeof(int));
+
+            printf ("¿Cuál? Por favor, indique su código. \n");
+            scanf("%i");
+
+
+
+            free(zapatillaHom);
+            zapatillaHom = NULL;
+        }
+        
     }
     else if (*respuesta == 2)
     {
-        ventaPrincipal(db);
+        iniciarCarrito(db);
     }
 
-    return respuesta;
+    free(respuesta);
+    respuesta = NULL;
 }
 
 
@@ -301,25 +322,43 @@ int* iniciarZapatillasM(sqlite3 *db)
     int *respuesta;
     printf("Estas son las zapatillas para mujer que tenemos en este momento: \n");
     printf("\n");
+    printf("1. Ver zapatillas para mujer \n");
+    printf("2. Ver carrito \n");
+    printf("Pulsa 0 para salir. \n");
 
-    printf("0. Ver carrito \n");
-    if (*respuesta == 0)
-    {
-        iniciarCarrito(db);
-    }
+    do {
+        printf("ELECCION: ");
+        fflush(stdout);
+        scanf("%i", respuesta);
+    } while (respuesta < 0 || respuesta > 2);
 
-    printf("1. Volver a la pagina de atras \n");
     if (*respuesta == 1)
     {
-        ventaPrincipal(db);
+
+        ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos las Zapatillas para mujer que metas
+
+        int* zapatillaMuj;
+        zapatillaMuj = malloc(sizeof(int));
+
+        printf ("¿Cuál? Por favor, indique su código. \n");
+        scanf("%i");
+
+
+
+        free(zapatillaMuj);
+        zapatillaMuj = NULL;
+    }
+
+    if (*respuesta == 2)
+    {
+        iniciarCarrito(db);
     }
 
 
     ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos las Zapatillas para mujer que metas
 
-    fflush(stdout);
-    scanf("%i", respuesta);
-	return respuesta;
+    free(respuesta);
+    respuesta = NULL;
 }
 
 
