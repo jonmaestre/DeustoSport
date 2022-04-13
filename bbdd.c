@@ -962,17 +962,16 @@ Carrito obtenerCarrito (sqlite3 *db, int idCompra){
 	sprintf(sql, "SELECT * FROM Carrito WHERE ID = %i", idCompra);
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	
-	// REVISAR FECHA
 	precioTotal = (float)sqlite3_column_double(stmt, 1);
 	idComprador = (int)sqlite3_column_int(stmt, 2);
-	fechaCompra = (Fecha)sqlite3_column_text(stmt, 3);
 
-	Carrito carrito = {idCompra, idComprador, precioTotal, fechaCompra};
+	Carrito carrito = {idCompra, idComprador, precioTotal};
 
 	sqlite3_finalize(stmt);
 
 	return carrito;
 }
+
 int sizeComprasconId(sqlite3* db, int idCompra){
 	sqlite3_stmt *stmt;
 
@@ -1061,7 +1060,7 @@ void agregarCarrito(sqlite3 *db, Carrito carrito) {
 
 	char sql[100];
 
-	sprintf(sql, "INSERT INTO Carrito VALUES (%i, %i, %f, %d)", carrito.idCompra, carrito.idComprador, carrito.precioTotal, carrito.fechaCompra);
+	sprintf(sql, "INSERT INTO Carrito VALUES (%i, %i, %f)", carrito.idCompra, carrito.idComprador, carrito.precioTotal);
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	sqlite3_step(stmt);
 
@@ -1080,4 +1079,68 @@ void agregarCompra(sqlite3 *db, Compra compra) {
 	sqlite3_finalize(stmt);
 }
 
+bool existeCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto) {
+	sqlite3_stmt *stmt;
+	char sql[100];
+
+	bool respuesta;
+
+	sprintf(sql, "SELECT COUNT(*) FROM Compra WHERE ID_Compra = %i AND idProducto = %i AND idComprador = %i", idCompra, idProducto, idComprador);
+	int size = sqlite3_step(stmt);
+
+	sqlite3_finalize(stmt);
+
+	if (size == 0) {
+		respuesta = false;
+	} else {
+		respuesta = true;
+	}
+
+	return respuesta;
+}
+
+void eliminarCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto) {
+
+	sqlite3_stmt *stmt;
+	char sql[100];
+
+	bool respuesta;
+
+	sprintf(sql, "DELETE FROM Compra WHERE ID_Compra = %i AND idProducto = %i AND idComprador = %i", idCompra, idProducto, idComprador);
+	sqlite3_step(stmt);
+
+	sqlite3_finalize(stmt);
+}
+
+
+Compra obtenerCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto) {
+
+	sqlite3_stmt *stmt;
+	char sql[100];
+
+	bool respuesta;
+
+	sprintf(sql, "SELECT * FROM Compra WHERE ID_Compra = %i AND idProducto = %i AND idComprador = %i", idCompra, idProducto, idComprador);
+	sqlite3_step(stmt);
+
+	Compra compra;
+
+	resul = sqlite3_step(stmt);
+
+	iden = sqlite3_column_int(stmt, 0);
+	idProd = sqlite3_column_int(stmt, 1);
+	idCompr = sqlite3_column_int(stmt, 2);
+	cant = sqlite3_column_int(stmt, 3);
+
+	compra.identificativo=iden;
+	compra.idProducto=idProd;
+	compra.idComprador=idCompr;
+	compra.cantidad=cant;
+
+	compras[resul] = compra;
+
+	sqlite3_finalize(stmt);
+
+	return compra;
+}
 

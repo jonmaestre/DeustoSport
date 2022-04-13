@@ -356,7 +356,37 @@ void iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int indice
 }
 
 
+void devolverCompra (sqlite3 *db, Comprador comprador, int idProducto, int idCompra) {
 
+    bool existe;
+    existe = existeCompra (db, idCompra, comprador.identificativo, idProducto);
+
+    if (existe == false) {
+        printf("¡Error! Esa compra no se ha hecho nunca. \n");
+    } else {
+
+        Compra compra =  obtenerCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto);
+        int cantidad = compra.cantidad;
+
+        eliminarCompra (db, idCompra, idComprador, idProducto);
+
+        char tipo = obtenerTipoProducto (db, idProducto);
+        // C -> calzado		M -> material	P -> prenda 	S -> suplemento
+
+        if (tipo == 'C') {
+            subirStockCalzado (db, *iden, cantidad);
+        } else if (tipo == 'M') {
+            subirStockMD (db, *iden, cantidad);
+        } else if (tipo == 'P') {
+            subirStockCPrenda (db, *iden, cantidad);
+        } else if (tipo == 'S') {
+            subirStockSupl (db, *iden, cantidad);
+        }
+
+        printf("Trámites de devolución completados. \n");
+    }
+
+}
 
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
@@ -832,13 +862,14 @@ void ventaPrincipal(sqlite3 *db, Comprador comprador, int** arrayProductos, int 
     printf("5. Suplementos deportivos\n");
     printf("6. Material especifico para deportes \n");
     printf("7. Ver carrito \n");
+    printf("8. Devolver producto");
     printf("Pulsa 0 para salir. \n");
 
     do {
         printf("ELECCION: ");
         fflush(stdout);
         scanf("%i", respuesta);
-    } while (respuesta < 1 || respuesta > 7);
+    } while (respuesta < 1 || respuesta > 8);
     
     while (respuesta != 0) {
         if (*respuesta == 1)
@@ -862,7 +893,10 @@ void ventaPrincipal(sqlite3 *db, Comprador comprador, int** arrayProductos, int 
         } else if (*respuesta == 7)
         {
             iniciarCarrito(db, comprador, arrayProductos, sizeArray);
-        } 
+        }  else if (*respuesta == 8) 
+        {
+            devolverCompra (db, comprador, idProducto, idCompra);
+        }
     }
 
     printf("¡Que pase un buen día!");

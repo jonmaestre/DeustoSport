@@ -6,7 +6,6 @@ typedef struct {
    int idCompra;
    int idComprador;
    float precioTotal;
-   Fecha fechaCompra;
 } Carrito;
 
 Carrito crearCarrito(sqlite3 *db, int idCompra, int idComprador);

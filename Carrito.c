@@ -42,16 +42,8 @@ Carrito crearCarrito(sqlite3 *db, int idCompra, int idComprador) {
         i++;
     } 
 
-    time_t t= time(NULL);
-    struct tm tiempoLocal = *localtime(&t);
-    char fechaHora[70];
-    char *formato ="%Y-%m-%d %H:%M-%S";
 
-    int bytesEscritos = strftime(fechaHora, sizeof fechaHora, formato, &tiempoLocal);
-    
-
-
-    Carrito carrito = {idCompra, idComprador, total, bytesEscritos};
+    Carrito carrito = {idCompra, idComprador, total};
 
     return carrito;
 }
