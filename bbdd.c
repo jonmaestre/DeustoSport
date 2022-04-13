@@ -178,6 +178,16 @@ void bajarStockCalzado(sqlite3 *db, int id, int cant){
 	sqlite3_finalize(stmt);
 }
 
+void eliminarCalzado(sqlite3 *db, int id){
+    sqlite3_stmt *stmt;
+	char sql[100];
+
+	sprintf(sql, "DELETE Calzado WHERE  ID_Calzado = %i", id);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+	sqlite3_finalize(stmt);
+}
+
 int showCalzadoH(sqlite3 *db) {
 	sqlite3_stmt *stmt;
 
@@ -340,6 +350,16 @@ void bajarStockPrenda(sqlite3 *db, int id, int cant){
 	sqlite3_finalize(stmt);
 }
 
+void eliminarPrenda(sqlite3 *db, int id){
+    sqlite3_stmt *stmt;
+	char sql[100];
+
+	sprintf(sql, "DELETE Prenda WHERE  ID_Prenda = %i", id);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+	sqlite3_finalize(stmt);
+}
+
 // *************************** MATERIAL ***************************
 
 MaterialDeportivo obtenerMaterial (sqlite3 *db, int id){
@@ -402,6 +422,16 @@ void bajarStockMD(sqlite3 *db, int id, int cant){
 	sqlite3_finalize(stmt);
 }
 
+void eliminarMD(sqlite3 *db, int id){
+    sqlite3_stmt *stmt;
+	char sql[100];
+
+	sprintf(sql, "DELETE Material_Deportivo WHERE ID_MD = %i", id);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+	sqlite3_finalize(stmt);
+}
+
 
 
 // *************************** SUPLEMENTO ***************************
@@ -456,6 +486,16 @@ void bajarStockSupl(sqlite3 *db, int id, int cant){
 	char sql[100];
 
 	sprintf(sql, "UPDATE Suplemento SET Stock_Sup = Stock_Sup + %i WHERE  ID_Sup = %i", cant, id);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+	sqlite3_finalize(stmt);
+}
+
+void eliminarSupl(sqlite3 *db, int id){
+    sqlite3_stmt *stmt;
+	char sql[100];
+
+	sprintf(sql, "DELETE Suplemento WHERE ID_Sup = %i", id);
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	sqlite3_step(stmt);
 	sqlite3_finalize(stmt);

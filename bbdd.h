@@ -18,24 +18,33 @@ bool existeProducto (sqlite3 *db, int id);
 Calzado obtenerCalzado (sqlite3 *db, int id);
 void agregarCalzado(sqlite3 *db, char* nom, char* tipo, char* color, char* talla, float precio, int sexo, int cantidad);
 void subirStockCalzado (sqlite3 *db, int id, int cant);
-void bajarStock(sqlite3 *db, int id);
+void bajarStock(sqlite3 *db, int id, int cant);
+void eliminarCalzado(sqlite3 *db, int id);
 int showCalzadoH(sqlite3 *db);
 int showCalzadoM(sqlite3 *db);
 
 Prenda obtenerPrenda (sqlite3 *db, int id);
 void agregarPrenda(sqlite3 *db, char* nom, char* tipo, char* color, char* talla, float precio, int sexo, int cantidad);
 void subirStockCPrenda (sqlite3 *db, int id, int cant);
-void bajarPrenda(sqlite3 *db, int id);
+void bajarStockPrenda(sqlite3 *db, int id, int cant);
+void eliminarPrenda(sqlite3 *db, int id);
+// SHOW
+// SHOW
 
 MaterialDeportivo obtenerMaterial (sqlite3 *db, int id);
-void agregarSupl(sqlite3 *db, char* nom, char* tipo, int cantidad, float precio);
-void subirStockSupl (sqlite3 *db, int id, int cant);
-void bajarSupl(sqlite3 *db, int id);
-
-Suplemento obtenerSuplemento (sqlite3 *db, int id);
 void agregarMD(sqlite3 *db, char* nom, char* tipo, char* color, char* talla, float precio, char* deporte, int cantidad);
 void subirStockMD (sqlite3 *db, int id, int cant);
-void bajarMD(sqlite3 *db, int id);
+void bajarStockMD(sqlite3 *db, int id, int cant);
+void eliminarMD(sqlite3 *db, int id);
+// SHOW
+
+Suplemento obtenerSuplemento (sqlite3 *db, int id);
+void agregarSupl(sqlite3 *db, char* nom, char* tipo, int cantidad, float precio);
+void subirStockSupl (sqlite3 *db, int id, int cant);
+void bajarStockSupl(sqlite3 *db, int id);
+void eliminarSupl(sqlite3 *db, int id);
+// SHOW
+
 
 // USUARIOS
 bool existeComprador (sqlite3 *db, char* correo);

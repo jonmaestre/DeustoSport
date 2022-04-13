@@ -547,7 +547,7 @@ int* ventaPrincipal(sqlite3 *db)
 
 void recargarProoducto (sqlite3 *db, Admin administrador) {
 
-    int* idP;
+    int* iden;
     printf("¿Qué producto quiere recargar? \n");
     printf("Por favor, esciba el identificativo del producto.\n");
     printf("IDENTIFICATIVO: \n");
@@ -585,7 +585,87 @@ void recargarProoducto (sqlite3 *db, Admin administrador) {
 }
 
 
+void eliminarProducto (sqlite3 *db, Admin administrador) {
 
+    int* iden;
+    printf("¿Qué producto quiere eliminar de DeustoSportKit? \n");
+    printf("Por favor, esciba el identificativo del producto.\n");
+    printf("IDENTIFICATIVO: \n");
+    scanf("%i", iden);
+
+    bool existe = existeProducto (db, *iden);
+
+    while (existe == false) {
+        printf("El producto indicado no existe. \n");
+        printf("Por favor, esciba el identificativo del producto.\n");
+        printf("IDENTIFICATIVO: \n");
+        scanf("%i", iden);
+    }
+
+    char tipo = obtenerTipoProducto (db, *iden);
+    // C -> calzado		M -> material	P -> prenda 	S -> suplemento
+
+    if (tipo == 'C') {
+        int* eleccion;
+
+        Calzado cal =  obtenerCalzado (db, *iden);
+        printf("El calzado %i es: %s. \n", iden, cal.nombre);
+        printf("¿Está seguro de que quiere eliminarlo?\n");
+        printf("1. Sí \n");
+        printf("2. No \n");
+        scanf("%i", eleccion);
+
+        if (*eleccion == 1) {
+            eliminarCalzado(db, iden);
+            printf("Producto eliminado correctamente. \n");
+        }
+
+    } else if (tipo == 'M') {
+        int* eleccion;
+
+        MaterialDeportivo matD =  obtenerMaterial (db, *iden);
+        printf("El material deportivo %i es: %s. \n", iden, matD.nombre);
+        printf("¿Está seguro de que quiere eliminarlo?\n");
+        printf("1. Sí \n");
+        printf("2. No \n");
+        scanf("%i", eleccion);
+
+        if (*eleccion == 1) {
+            eliminarMD(db, iden);
+            printf("Producto eliminado correctamente. \n");
+        }
+
+    } else if (tipo == 'P') {
+        int* eleccion;
+
+        Prenda pren =  obtenerPrenda (db, *iden);
+        printf("La prenda %i es: %s. \n", iden, pren.nombre);
+        printf("¿Está seguro de que quiere eliminarlo?\n");
+        printf("1. Sí \n");
+        printf("2. No \n");
+        scanf("%i", eleccion);
+
+        if (*eleccion == 1) {
+            eliminarPrenda(db, iden);
+            printf("Producto eliminado correctamente. \n");
+        }
+    } else if (tipo == 'S') {
+        int* eleccion;
+
+        Suplemento sup =  obtenerSuplemento (db, *iden);
+        printf("El suplemento %i es: %s. \n", iden, sup.nombre);
+        printf("¿Está seguro de que quiere eliminarlo?\n");
+        printf("1. Sí \n");
+        printf("2. No \n");
+        scanf("%i", eleccion);
+
+        if (*eleccion == 1) {
+            eliminarSupl(db, iden);
+            printf("Producto eliminado correctamente. \n");
+        }
+    }
+
+}
 
 
 
