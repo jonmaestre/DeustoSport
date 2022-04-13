@@ -31,6 +31,7 @@ int maxIdProducto(sqlite3 *db){
 	return maximo;
 }
 
+
 void eliminarProducto(sqlite3 *db, int id){
     sqlite3_stmt *stmt;
 	char sql[100];
@@ -40,36 +41,19 @@ void eliminarProducto(sqlite3 *db, int id){
 	sqlite3_finalize(stmt);
 }
 
-void agregarProducto(sqlite3 *db, int id, char *nom, float precio, int cantidad){
+void agregarProducto(sqlite3 *db, char* tipo){
     sqlite3_stmt *stmt;
 
 	char sql[100];
 
-	sprintf(sql, "insert into producto values(%d, %s, %f, %d)",id,nom, precio, cantidad);
+	int id = maxIdProducto(db);
+
+	sprintf(sql, "INSERT INTO Producto VALUES (%i, %s)", (id+1), *tipo);
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	sqlite3_step(stmt);
 	sqlite3_finalize(stmt);
 }
 
-void modificarCantidad(sqlite3 *db, int id, int cant){
-    sqlite3_stmt *stmt;
-	char sql[100];
-
-	sprintf(sql, "update producto set cantidad=%d where id=%d", cant, id);
-	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
-	sqlite3_step(stmt);
-	sqlite3_finalize(stmt);
-}
-
-void bajarStock(sqlite3 *db, int id){
-    sqlite3_stmt *stmt;
-	char sql[100];
-
-	sprintf(sql, "update producto set cantidad=cantidad-1 where id =%d", id);
-	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
-	sqlite3_step(stmt);
-	sqlite3_finalize(stmt);
-}
 
 char obtenerTipoProducto (sqlite3 *db, int id){
     sqlite3_stmt *stmt;

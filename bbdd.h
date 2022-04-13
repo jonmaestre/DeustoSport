@@ -8,9 +8,7 @@
 int maxIdProducto(sqlite3 *db);
 
 void eliminarProducto(sqlite3 *db, int id);
-void agregarProducto(sqlite3 *db, int id, char *nom, float precio, int cantidad);
-void modificarCantidad(sqlite3 *db, int id, int cant);
-void bajarStock(sqlite3 *db, int id);
+void agregarProducto(sqlite3 *db, char* tipo);
 
 char obtenerTipoProducto (sqlite3 *db, int id);
 bool existeProducto (sqlite3 *db, int id);
