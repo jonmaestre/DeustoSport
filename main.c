@@ -296,13 +296,13 @@ void iniciarZapatillasH(sqlite3 *db)
             zapatillaHom = malloc(sizeof(int));
 
             printf ("¿Cuál? Por favor, indique su código. \n");
-            scanf("%i");
+            scanf("%i"), zapatillaHom;
 
-
-
-            free(zapatillaHom);
-            zapatillaHom = NULL;
+            // METODO COMPRAR
         }
+
+        free(zapatillaHom);
+        zapatillaHom = NULL;
         
     }
     else if (*respuesta == 2)
@@ -317,7 +317,7 @@ void iniciarZapatillasH(sqlite3 *db)
 
 // Para inicio de la zapatillas mujer
 
-int* iniciarZapatillasM(sqlite3 *db)
+void iniciarZapatillasM(sqlite3 *db)
 {
     int *respuesta;
     printf("Estas son las zapatillas para mujer que tenemos en este momento: \n");
@@ -337,25 +337,39 @@ int* iniciarZapatillasM(sqlite3 *db)
 
         ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos las Zapatillas para mujer que metas
 
-        int* zapatillaMuj;
-        zapatillaMuj = malloc(sizeof(int));
 
-        printf ("¿Cuál? Por favor, indique su código. \n");
-        scanf("%i");
+        int *respuesta1;
+        respuesta1 = malloc(sizeof(int));
 
+        printf("¿Te interesa alguna? \n");
+        printf("1. Comprar \n");
+        printf("Pulsa 0 para salir.  \n"); 
 
+        do {
+            scanf("%i", respuesta1);
+            printf("\n"); 
+        } while (respuesta1 != 0 || respuesta1 != 1);
 
-        free(zapatillaMuj);
-        zapatillaMuj = NULL;
+        if (respuesta1 == 1) {
+
+            int* zapatillaMuj;
+            zapatillaMuj = malloc(sizeof(int));
+
+            printf ("¿Cuál? Por favor, indique su código. \n");
+            scanf("%i", zapatillaMuj);
+
+            // METODO COMPRAR
+        }
+
+        free(respuesta1);
+        respuesta1 = NULL;
+        
     }
-
-    if (*respuesta == 2)
+    else if (*respuesta == 2)
     {
         iniciarCarrito(db);
     }
 
-
-    ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos las Zapatillas para mujer que metas
 
     free(respuesta);
     respuesta = NULL;
@@ -364,154 +378,274 @@ int* iniciarZapatillasM(sqlite3 *db)
 
 // Para inicio de ropa hombre
 
-int* iniciarRopaH(sqlite3 *db)
+void iniciarRopaH(sqlite3 *db)
 {
     int* respuesta;
     printf("Esta es la ropa para hombre que tenemos en este momento: \n");
     printf("\n");
+    printf("1. Ver ropa para hombre \n");
+    printf("2. Ver carrito \n");
+    printf("Pulsa 0 para salir. \n");
 
-    printf("0. Ver carrito \n");
-    if (*respuesta == 0)
+    do {
+        printf("ELECCION: ");
+        fflush(stdout);
+        scanf("%i", respuesta);
+    } while (respuesta < 0 || respuesta > 2);
+
+    if (*respuesta == 1)
+    {
+        ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos la ropa para hombre que metas
+
+
+        int *respuesta1;
+        respuesta1 = malloc(sizeof(int));
+
+        printf("¿Te interesa alguna? \n");
+        printf("1. Comprar \n");
+        printf("Pulsa 0 para salir.  \n"); 
+
+        do {
+            scanf("%i", respuesta1);
+            printf("\n"); 
+        } while (respuesta1 != 0 || respuesta1 != 1);
+
+        if (respuesta1 == 1) {
+
+            int* ropaHombre;
+            ropaHombre = malloc(sizeof(int));
+
+            printf ("¿Cuál? Por favor, indique su código. \n");
+            scanf("%i", ropaHombre);
+
+            // METODO COMPRAR
+        }
+
+        free(respuesta1);
+        respuesta1 = NULL;
+    }
+    if (*respuesta == 2)
     {
         iniciarCarrito(db);
     }
 
-    printf("1. Volver a la pagina de atras \n");
-    if (*respuesta == 1)
-    {
-        ventaPrincipal(db);
-    }
 
-
-    ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos ropa de hombre que metas
-
-    fflush(stdout);
-    scanf("%i", respuesta);
-	return respuesta;
+    free(respuesta);
+    respuesta = NULL;
 }
 
 
 // Para inicio de ropa mujer
 
-int* iniciarRopaM(sqlite3 *db)
+void iniciarRopaM(sqlite3 *db)
 {
     int* respuesta;
     printf("Esta es la ropa para mujer que tenemos en este momento: \n");
     printf("\n");
+    printf("1. Ver ropa para mujer \n");
+    printf("2. Ver carrito \n");
+    printf("Pulsa 0 para salir. \n");
 
-    printf("0. Ver carrito \n");
-    if (*respuesta == 0)
+    do {
+        printf("ELECCION: ");
+        fflush(stdout);
+        scanf("%i", respuesta);
+    } while (respuesta < 0 || respuesta > 2);
+    
+
+    if (*respuesta == 1)
+    {
+
+        ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos ropa de mujer que metas
+
+        int *respuesta1;
+        respuesta1 = malloc(sizeof(int));
+
+        printf("¿Te interesa alguna? \n");
+        printf("1. Comprar \n");
+        printf("Pulsa 0 para salir.  \n"); 
+
+        do {
+            scanf("%i", respuesta1);
+            printf("\n"); 
+        } while (respuesta1 != 0 || respuesta1 != 1);
+
+        if (respuesta1 == 1) {
+
+            int* ropaMujer;
+            ropaMujer = malloc(sizeof(int));
+
+            printf ("¿Cuál? Por favor, indique su código. \n");
+            scanf("%i", ropaMujer);
+
+            // METODO COMPRAR
+        }
+
+        free(respuesta1);
+        respuesta1 = NULL;
+
+    }
+    else if (*respuesta == 2)
     {
         iniciarCarrito(db);
     }
 
-    printf("1. Volver a la pagina de atras \n");
-    if (*respuesta == 1)
-    {
-        ventaPrincipal(db);
-    }
-
-
-    ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos ropa de mujer que metas
-
-    fflush(stdout);
-    scanf("%i", respuesta);
-	return respuesta;
+    free(respuesta);
+    respuesta = NULL;
 }
 
-// Para inicio de ropa mujer
 
-int* iniciarSuplementos(sqlite3 *db)
+// Para inicio de suplementos
+
+void iniciarSuplementos(sqlite3 *db)
 {
     int* respuesta;
     printf("Estos son los suplementos deportivos que tenemos en este momento: \n");
     printf("\n");
+    printf("1. Ver suplementos \n");
+    printf("2. Ver carrito \n");
+    printf("Pulsa 0 para salir. \n");
 
-    printf("0. Ver carrito \n");
-    if (*respuesta == 0)
+    do {
+        printf("ELECCION: ");
+        fflush(stdout);
+        scanf("%i", respuesta);
+    } while (respuesta < 0 || respuesta > 2);
+    
+
+    if (*respuesta == 1)
+    {
+
+        ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos los suplementos deportivos deportivos
+
+        int *respuesta1;
+        respuesta1 = malloc(sizeof(int));
+
+        printf("¿Te interesa alguna? \n");
+        printf("1. Comprar \n");
+        printf("Pulsa 0 para salir.  \n"); 
+
+        do {
+            scanf("%i", respuesta1);
+            printf("\n"); 
+        } while (respuesta1 != 0 || respuesta1 != 1);
+
+        if (respuesta1 == 1) {
+
+            int* suplem;
+            suplem = malloc(sizeof(int));
+
+            printf ("¿Cuál? Por favor, indique su código. \n");
+            scanf("%i", suplem);
+
+            // METODO COMPRAR
+        }
+
+        free(respuesta1);
+        respuesta1 = NULL;
+    }
+    else if (*respuesta == 2)
     {
         iniciarCarrito(db);
     }
 
-    printf("1. Volver a la pagina de atras \n");
-    if (*respuesta == 1)
-    {
-        ventaPrincipal(db);
-    }
-
-    ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos los suplementos deportivos deportivos
-
-    fflush(stdout);
-    scanf("%i", respuesta);
-	return respuesta;
+    free(respuesta);
+    respuesta = NULL;
 }
 
 // Para inicio de material deportivo especifico
 
-int* iniciarMaterialD(sqlite3 *db)
+void iniciarMaterialD(sqlite3 *db)
 {
     int* respuesta;
     printf("Estos son los materiales deportivos especificos que tenemos en este momento: \n");
     printf("\n");
+    printf("1. Ver material deportivo \n");
+    printf("2. Ver carrito \n");
+    printf("Pulsa 0 para salir. \n");
 
-    printf("0. Ver carrito \n");
-    if (*respuesta == 0)
+    do {
+        printf("ELECCION: ");
+        fflush(stdout);
+        scanf("%i", respuesta);
+    } while (respuesta < 0 || respuesta > 2);
+    
+
+    if (*respuesta == 1)
+    {
+
+        ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos los materiales especificos deportivos deportivos
+
+        int *respuesta1;
+        respuesta1 = malloc(sizeof(int));
+
+        printf("¿Te interesa alguna? \n");
+        printf("1. Comprar \n");
+        printf("Pulsa 0 para salir.  \n"); 
+
+        do {
+            scanf("%i", respuesta1);
+            printf("\n"); 
+        } while (respuesta1 != 0 || respuesta1 != 1);
+
+        if (respuesta1 == 1) {
+
+            int* matDep;
+            matDep = malloc(sizeof(int));
+
+            printf ("¿Cuál? Por favor, indique su código. \n");
+            scanf("%i", matDep);
+
+            // METODO COMPRAR
+        }
+
+        free(respuesta1);
+        respuesta1 = NULL;
+    }
+    else if (*respuesta == 2)
     {
         iniciarCarrito(db);
     }
 
-    printf("1. Volver a la pagina de atras \n");
-    if (*respuesta == 1)
-    {
-        ventaPrincipal(db);
-    }
-
-    ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos los materiales especificos deportivos deportivos
-
-    fflush(stdout);
-    scanf("%i", respuesta);
-	return respuesta;
+    free(respuesta);
+    respuesta = NULL;
 }
 
 
-int* iniciarCarrito(sqlite3 *db)
+void iniciarCarrito(sqlite3 *db)
 {
     int* respuesta;
-    printf("Estos son los productos que tienes en el carrito en este instante: \n");
+
+    ////<<<<<<<<------------------------------------ Mostrar carrito
+
+    printf("¿Qué deseas hacer? \n");
+    printf("1. Realizar la compra del carrito entero \n");
+    printf("2. Borrar un producto del carrito");
+    printf("Pulsa 0 para salir.");
     printf("\n");
 
-
-
-    ////<<<<<<<<------------------------------------ Se necesita funcion que almacene las compras para mostrarlas
-    printf("0. Volver atras \n");
-
-    if (*respuesta == 0)
-    {
-        ventaPrincipal();
-    }
-
-    printf("1. Comprar \n");
+    do {
+        printf("ELECCION: ");
+        fflush(stdout);
+        scanf("%i", respuesta);
+    } while (respuesta < 0 || respuesta > 2);
+    
 
     if (*respuesta == 1)
     {
-        //<<<<<<<<<<------------------------------Falta funcion de comprar en la que calcule el precio
+        ////<<<<<<<<------------------------------------ COMPRAR carrito
     }
-
-    printf("2. Borrar Producto \n");
-
-    if (*respuesta == 2)
+    else if (*respuesta == 2)
     {
-        //<<<<<<<<<<------------------------------Falta funcion de seleccionar producto y borrarlo
+        //<<<<<<<<<<------------------------------ELIMINAR PRODUCTO
     }
 
-
-    fflush(stdout);
-    scanf("%i", respuesta);
-	return respuesta;
+    free(respuesta);
+    respuesta = NULL;
 }
 
 
-int* ventaPrincipal(sqlite3 *db)
+void ventaPrincipal(sqlite3 *db)
 {
     int* respuesta;
 
@@ -524,10 +658,14 @@ int* ventaPrincipal(sqlite3 *db)
     printf("5. Suplementos deportivos\n");
     printf("6. Material especifico para deportes \n");
     printf("7. Ver carrito \n");
+    printf("Pulsa 0 para salir. \n");
 
-    printf("Eleccion: ");
-    fflush(stdout);
-    scanf("%i", respuesta);
+    do {
+        printf("ELECCION: ");
+        fflush(stdout);
+        scanf("%i", respuesta);
+    } while (respuesta < 1 || respuesta > 7);
+    
     if (*respuesta == 1)
     {
         iniciarZapatillasH(db);
@@ -549,8 +687,10 @@ int* ventaPrincipal(sqlite3 *db)
     } else if (*respuesta == 7)
     {
         iniciarCarrito(db);
+    } else if (*respuesta == 0) 
+    {
+        printf("¡Que pase un buen día!");
     }
-    return respuesta;
 }
 
 
