@@ -281,16 +281,37 @@ void comprarCarrito (sqlite3 *db, Comprador comprador, int** arrayProductos, int
 }
 
 
-void iniciarCarrito(sqlite3 *db, Comprador comprador)
-{
+void eliminarDeCarrito (sqlite3 *db, int** arrayProductos, int sizeArray, int indice) {
+
+}
+
+
+void iniciarCarrito(sqlite3 *db, Comprador comprador) {
     int* respuesta;
 
-    // -------------------------------- INICIALIZARLO
-
+    // -------------------------------- INICIALIZARLOS
     int** arrayProductos;
     int sizeArray;
 
-    ////<<<<<<<<------------------------------------ Mostrar carrito
+    int num = 0;
+    while (num < sizeArray) {
+        int idPr = arrayProductos[i][0];
+        char type = obtenerTipoProducto (db, arrayProductos[i][0]);
+        // C -> calzado		M -> material	P -> prenda 	S -> suplemento
+        if (type == 'C') {
+            Calzado calz = obtenerCalzado (db, arrayProductos[i][0]);
+            printf("%i: %s. X%i \n", num+1, calz.nombre, arrayProductos[i][1]);
+        } else if (type == 'M') {
+            MaterialDeportivo matD =  obtenerMaterial (db, arrayProductos[i][0]);
+            printf("%i: %s. X%i \n", num+1, matD.nombre, arrayProductos[i][1]);
+        } else if (type == 'P') {
+            Prenda pren = obtenerPrenda (db, arrayProductos[i][0]);
+            printf("%i: %s. X%i \n", num+1, pren.nombre, arrayProductos[i][1]);
+        } else if (type == 'S') {
+            Suplemento supl = obtenerSuplemento(db, arrayProductos[i][0]);
+            printf("%i: %s. X%i \n", num+1, supl.nombre, arrayProductos[i][1]);
+        }
+    }
 
     printf("¿Qué deseas hacer? \n");
     printf("1. Realizar la compra del carrito entero \n");
@@ -311,7 +332,16 @@ void iniciarCarrito(sqlite3 *db, Comprador comprador)
     }
     else if (*respuesta == 2)
     {
-        //<<<<<<<<<<------------------------------ELIMINAR PRODUCTO
+        printf("¿Qué producto deseas eliminar? \n");
+
+        int* indice;
+        do {
+            printf("ÍNDICE: ");
+            fflush(stdout);
+            scanf("%i", indice);
+        } while (indice < 0 || indice > size);
+
+        eliminarDeCarrito (db, arrayProductos, sizeArray, indice);
     }
 
     free(respuesta);
