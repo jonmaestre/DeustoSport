@@ -253,12 +253,12 @@ Admin* iniciarAdmin (sqlite3 *db) {
 
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
-// INICIO PARTE GRAFICA DE ELECCIONES
+// INICIO PARTE CRRITO / COMPRAS / DEVOLUCIONES
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
 
 
-int** añadirACarrito (sqlite3 *db, int** arrayProductos, int sizeArray, int idProd, int cant) {
+void añadirACarrito (sqlite3 *db, int** arrayProductos, int sizeArray, int idProd, int cant) {
 
     arrayProductos[sizeArray][0] = idProd;
     arrayProductos[sizeArray][1] = cant;
@@ -278,20 +278,27 @@ void comprarCarrito (sqlite3 *db, Comprador comprador, int** arrayProductos, int
 
     Carrito carritoNuevo = crearCarrito(db, idCarrito, comprador.identificativo);
     void agregarCarrito(db, carrito);
+
+    verTicket (db, idCarrito);
+    printf("Necesitará la información del ticket en caso de devoluciones. ");
 }
 
 
-void eliminarDeCarrito (sqlite3 *db, int** arrayProductos, int sizeArray, int indice) {
+void eliminarDeCarrito (sqlite3 *db, int** arrayProductos, int* sizeArray, int indice) {
+
+    indice = indice - 1;
+    int i;
+    for(i = indice; i<sizeArray-1; i++){
+        arrayProductos[i][0]= arrayProductos[i+1][0];
+        arrayProductos[i][1]= arrayProductos[i+1][1];
+    }
+    *sizeArray -= 1;
 
 }
 
 
-void iniciarCarrito(sqlite3 *db, Comprador comprador) {
+void iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int indice) {
     int* respuesta;
-
-    // -------------------------------- INICIALIZARLOS
-    int** arrayProductos;
-    int sizeArray;
 
     int num = 0;
     while (num < sizeArray) {
@@ -341,7 +348,7 @@ void iniciarCarrito(sqlite3 *db, Comprador comprador) {
             scanf("%i", indice);
         } while (indice < 0 || indice > size);
 
-        eliminarDeCarrito (db, arrayProductos, sizeArray, indice);
+        eliminarDeCarrito (db, arrayProductos, &sizeArray, indice);
     }
 
     free(respuesta);
@@ -350,9 +357,24 @@ void iniciarCarrito(sqlite3 *db, Comprador comprador) {
 
 
 
+
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+// FINAL PARTE CARRITO / COMPRAS / DEVOLUCIONES
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+
+
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+// INICIO PARTE GRAFICA DE ELECCIONES
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+
+
 // Para inicio de la Zapatillas hombre
 
-void iniciarZapatillasH(sqlite3 *db)
+void iniciarZapatillasH(sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray)
 {
     int *respuesta;
     printf("Estas son las zapatillas para hombre que tenemos en este momento: \n");
@@ -396,7 +418,14 @@ void iniciarZapatillasH(sqlite3 *db)
             printf ("¿Cuál? Por favor, indique su código. \n");
             scanf("%i"), zapatillaHom;
 
-            // METODO COMPRAR
+            if (comprador == NULL) {
+                printf("Primero debes iniciar sesión. \n");
+                comprador = iniciarCliente (db);
+            }
+
+            añadirACarrito (db, arrayProductos, sizeArray, idProd, cant);
+            sizeArray -= 1;
+
             free(zapatillaHom);
             zapatillaHom = NULL;
         }
@@ -407,7 +436,7 @@ void iniciarZapatillasH(sqlite3 *db)
     }
     else if (*respuesta == 2)
     {
-        iniciarCarrito(db);
+        iniciarCarrito(db, comprador, arrayProductos, sizeArray);
     }
 
     free(respuesta);
@@ -417,7 +446,7 @@ void iniciarZapatillasH(sqlite3 *db)
 
 // Para inicio de la zapatillas mujer
 
-void iniciarZapatillasM(sqlite3 *db)
+void iniciarZapatillasM(sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray)
 {
     int *respuesta;
     printf("Estas son las zapatillas para mujer que tenemos en este momento: \n");
@@ -461,7 +490,16 @@ void iniciarZapatillasM(sqlite3 *db)
             printf ("¿Cuál? Por favor, indique su código. \n");
             scanf("%i", zapatillaMuj);
 
-            // METODO COMPRAR
+            if (comprador == NULL) {
+                printf("Primero debes iniciar sesión. \n");
+                comprador = iniciarCliente (db);
+            }
+
+            añadirACarrito (db, arrayProductos, sizeArray, idProd, cant);
+            sizeArray -= 1;
+
+            free(zapatillaMuj);
+            zapatillaMuj = NULL;
         }
 
         free(respuesta1);
@@ -471,7 +509,7 @@ void iniciarZapatillasM(sqlite3 *db)
     }
     else if (*respuesta == 2)
     {
-        iniciarCarrito(db);
+        iniciarCarrito(db, comprador, arrayProductos, sizeArray);
     }
 
 
@@ -482,7 +520,7 @@ void iniciarZapatillasM(sqlite3 *db)
 
 // Para inicio de ropa hombre
 
-void iniciarRopaH(sqlite3 *db)
+void iniciarRopaH(sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray)
 {
     int* respuesta;
     printf("Esta es la ropa para hombre que tenemos en este momento: \n");
@@ -527,7 +565,16 @@ void iniciarRopaH(sqlite3 *db)
             printf ("¿Cuál? Por favor, indique su código. \n");
             scanf("%i", ropaHombre);
 
-            // METODO COMPRAR
+            if (comprador == NULL) {
+                printf("Primero debes iniciar sesión. \n");
+                comprador = iniciarCliente (db);
+            }
+
+            añadirACarrito (db, arrayProductos, sizeArray, idProd, cant);
+            sizeArray -= 1;
+
+            free(ropaHombre);
+            ropaHombre = NULL;
         }
 
         free(respuesta1);
@@ -537,7 +584,7 @@ void iniciarRopaH(sqlite3 *db)
     }
     if (*respuesta == 2)
     {
-        iniciarCarrito(db);
+        iniciarCarrito(db, comprador, arrayProductos, sizeArray);
     }
 
 
@@ -548,7 +595,7 @@ void iniciarRopaH(sqlite3 *db)
 
 // Para inicio de ropa mujer
 
-void iniciarRopaM(sqlite3 *db)
+void iniciarRopaM(sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray)
 {
     int* respuesta;
     printf("Esta es la ropa para mujer que tenemos en este momento: \n");
@@ -595,7 +642,16 @@ void iniciarRopaM(sqlite3 *db)
             printf ("¿Cuál? Por favor, indique su código. \n");
             scanf("%i", ropaMujer);
 
-            // METODO COMPRAR
+            if (comprador == NULL) {
+                printf("Primero debes iniciar sesión. \n");
+                comprador = iniciarCliente (db);
+            }
+
+            añadirACarrito (db, arrayProductos, sizeArray, idProd, cant);
+            sizeArray -= 1;
+
+            free(ropaMujer);
+            ropaMujer = NULL;
         }
 
         free(respuesta1);
@@ -606,7 +662,7 @@ void iniciarRopaM(sqlite3 *db)
     }
     else if (*respuesta == 2)
     {
-        iniciarCarrito(db);
+        iniciarCarrito(db, comprador, arrayProductos, sizeArray);
     }
 
     free(respuesta);
@@ -616,7 +672,7 @@ void iniciarRopaM(sqlite3 *db)
 
 // Para inicio de suplementos
 
-void iniciarSuplementos(sqlite3 *db)
+void iniciarSuplementos(sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray)
 {
     int* respuesta;
     printf("Estos son los suplementos deportivos que tenemos en este momento: \n");
@@ -662,7 +718,16 @@ void iniciarSuplementos(sqlite3 *db)
             printf ("¿Cuál? Por favor, indique su código. \n");
             scanf("%i", suplem);
 
-            // METODO COMPRAR
+            if (comprador == NULL) {
+                printf("Primero debes iniciar sesión. \n");
+                comprador = iniciarCliente (db);
+            }
+
+            añadirACarrito (db, arrayProductos, sizeArray, idProd, cant);
+            sizeArray -= 1;
+
+            free(suplem);
+            suplem = NULL;
         }
 
         free(respuesta1);
@@ -672,16 +737,17 @@ void iniciarSuplementos(sqlite3 *db)
     }
     else if (*respuesta == 2)
     {
-        iniciarCarrito(db);
+        iniciarCarrito(db, comprador, arrayProductos, sizeArray);
     }
 
     free(respuesta);
     respuesta = NULL;
 }
 
+
 // Para inicio de material deportivo especifico
 
-void iniciarMaterialD(sqlite3 *db)
+void iniciarMaterialD(sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray)
 {
     int* respuesta;
     printf("Estos son los materiales deportivos especificos que tenemos en este momento: \n");
@@ -726,7 +792,16 @@ void iniciarMaterialD(sqlite3 *db)
             printf ("¿Cuál? Por favor, indique su código. \n");
             scanf("%i", matDep);
 
-            // METODO COMPRAR
+            if (comprador == NULL) {
+                printf("Primero debes iniciar sesión. \n");
+                comprador = iniciarCliente (db);
+            }
+
+            añadirACarrito (db, arrayProductos, sizeArray, idProd, cant);
+            sizeArray -= 1;
+
+            free(matDep);
+            matDep = NULL;
         }
 
         free(respuesta1);
@@ -736,7 +811,7 @@ void iniciarMaterialD(sqlite3 *db)
     }
     else if (*respuesta == 2)
     {
-        iniciarCarrito(db);
+        iniciarCarrito(db, comprador, arrayProductos, sizeArray);
     }
 
     free(respuesta);
@@ -744,7 +819,7 @@ void iniciarMaterialD(sqlite3 *db)
 }
 
 
-void ventaPrincipal(sqlite3 *db, Comprador comprador)
+void ventaPrincipal(sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray)
 {
     int* respuesta;
 
@@ -765,31 +840,32 @@ void ventaPrincipal(sqlite3 *db, Comprador comprador)
         scanf("%i", respuesta);
     } while (respuesta < 1 || respuesta > 7);
     
-    if (*respuesta == 1)
-    {
-        iniciarZapatillasH(db);
-    } else if (*respuesta == 2)
-    {
-        iniciarZapatillasM(db);
-    } else if (*respuesta == 3)
-    {
-        iniciarRopaH(db);
-    } else if (*respuesta == 4)
-    {
-        iniciarRopaM(db);
-    } else if (*respuesta == 5)
-    {
-        iniciarSuplementos(db);
-    } else if (*respuesta == 6)
-    {
-        iniciarMaterialD(db);
-    } else if (*respuesta == 7)
-    {
-        iniciarCarrito(db);
-    } else if (*respuesta == 0) 
-    {
-        printf("¡Que pase un buen día!");
+    while (respuesta != 0) {
+        if (*respuesta == 1)
+        {
+            iniciarZapatillasH(db, comprador, arrayProductos, sizeArray);
+        } else if (*respuesta == 2)
+        {
+            iniciarZapatillasM(db, comprador, arrayProductos, sizeArray);
+        } else if (*respuesta == 3)
+        {
+            iniciarRopaH(db, comprador, arrayProductos, sizeArray);
+        } else if (*respuesta == 4)
+        {
+            iniciarRopaM(db, comprador, arrayProductos, sizeArray);
+        } else if (*respuesta == 5)
+        {
+            iniciarSuplementos(db, comprador, arrayProductos, sizeArray);
+        } else if (*respuesta == 6)
+        {
+            iniciarMaterialD(db, comprador, arrayProductos, sizeArray);
+        } else if (*respuesta == 7)
+        {
+            iniciarCarrito(db, comprador, arrayProductos, sizeArray);
+        } 
     }
+
+    printf("¡Que pase un buen día!");
 }
 
 
@@ -1228,13 +1304,17 @@ int main (void) {
 
         if (comienzo == 1) {
             comprador = *iniciarCliente (db);
-            ventaPrincipal(db, comprador);
+            int** arrayProductos;
+            int sizeArray = 0;
+            ventaPrincipal(db, comprador, arrayProductos, sizeArray);
         } else if (comienzo == 2) {
             comprador = *registrar (db);
-            ventaPrincipal(db, comprador)
+            int** arrayProductos;
+            int sizeArray = 0;
+            ventaPrincipal(db, comprador, arrayProductos, sizeArray)
         } else {
             comprador = NULL;
-            ventaPrincipal(db, comprador)
+            ventaPrincipal(db, comprador, NULL, NULL)
         }
 
     } else if (comienzo == 4) {
@@ -1247,8 +1327,6 @@ int main (void) {
         }
 
     }
-
-
 
 
 }

@@ -1040,16 +1040,16 @@ void verTicket (sqlite3* db, int idCompra) {
         // C -> calzado		M -> material	P -> prenda 	S -> suplemento
         if (type == 'C') {
             Calzado calz = obtenerCalzado (db, compras[i].idProducto);
-            printf("%i: %s. X%i \n", num, calz.nombre, compras[i].cantidad);
+            printf("%i: %s. X%i (ID: %i)\n", num, calz.nombre, compras[i].cantidad, calz.id);
         } else if (type == 'M') {
             MaterialDeportivo matD =  obtenerMaterial (db, compras[i].idProducto);
-            printf("%i: %s. X%i \n", num, matD.nombre, compras[i].cantidad);
+            printf("%i: %s. X%i (ID: %i)\n", num, matD.nombre, compras[i].cantidad, matD.);
         } else if (type == 'P') {
             Prenda pren = obtenerPrenda (db, compras[i].idProducto);
-            printf("%i: %s. X%i \n", num, pren.nombre, compras[i].cantidad);
+            printf("%i: %s. X%i (ID: %i)\n", num, pren.nombre, compras[i].cantidad);
         } else if (type == 'S') {
             Suplemento supl = obtenerSuplemento(db, compras[i].idProducto);
-            printf("%i: %s. X%i \n", num, supl.nombre, compras[i].cantidad);
+            printf("%i: %s. X%i (ID: %i)\n", num, supl.nombre, compras[i].cantidad);
         }
 	}
 
