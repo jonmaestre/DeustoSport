@@ -853,7 +853,7 @@ void ventaPrincipal(sqlite3 *db, Comprador comprador, int** arrayProductos, int 
 {
     int* respuesta;
 
-    printf("¿Qué Tipo de producto esta buscando? Eliga el numero del tipo de producto que busca \n");
+    printf("¿Qué Tipo de producto esta buscando? Eliga el numero del tipo de producto que busca o lo que quiera hacer \n");
     printf("\n");
     printf("1. Zapatillas (Hombre)\n");
     printf("2. Zapatillas (Mujer)\n");
@@ -895,7 +895,18 @@ void ventaPrincipal(sqlite3 *db, Comprador comprador, int** arrayProductos, int 
             iniciarCarrito(db, comprador, arrayProductos, sizeArray);
         }  else if (*respuesta == 8) 
         {
-            devolverCompra (db, comprador, idProducto, idCompra);
+            if (comprador == NULL) {
+                comprador = *iniciarCliente (db);
+            }
+            int* idCompra;
+            idCompra = malloc(sizeof(int));
+            printf("IDENTIFICATIVO DE LA COMPRA: \n");
+            scanf("%i", idCompra);
+            int* idProducto;
+            idProducto = malloc(sizeof(int));
+            printf("IDENTIFICATIVO DEL PRODUCTO: \n");
+            scanf("%i", idProducto);
+            devolverCompra (db, comprador, *idProducto, *idCompra);
         }
     }
 
