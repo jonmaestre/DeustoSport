@@ -14,7 +14,7 @@ char obtenerTipoProducto (sqlite3 *db, int id);
 bool existeProducto (sqlite3 *db, int id);
 
 Calzado obtenerCalzado (sqlite3 *db, int id);
-void agregarCalzado(sqlite3 *db, char* nom, char* tipo, char* color, char* talla, float precio, int sexo, int cantidad);
+void agregarCalzado(sqlite3 *db, char* nom, char* tipo, char* color, float talla, float precio, int sexo, int cantidad);
 void subirStockCalzado (sqlite3 *db, int id, int cant);
 void bajarStock(sqlite3 *db, int id, int cant);
 void eliminarCalzado(sqlite3 *db, int id);
@@ -39,7 +39,7 @@ void eliminarMD(sqlite3 *db, int id);
 Suplemento obtenerSuplemento (sqlite3 *db, int id);
 void agregarSupl(sqlite3 *db, char* nom, char* tipo, int cantidad, float precio);
 void subirStockSupl (sqlite3 *db, int id, int cant);
-void bajarStockSupl(sqlite3 *db, int id);
+void bajarStockSupl(sqlite3 *db, int id, int cant);
 void eliminarSupl(sqlite3 *db, int id);
 // SHOW
 
@@ -47,7 +47,7 @@ void eliminarSupl(sqlite3 *db, int id);
 // USUARIOS
 bool existeComprador (sqlite3 *db, char* correo);
 Comprador obtenerComprador (sqlite3 *db, char* correo);
-void registrarComprador(sqlite3 *db, char nom, int id, int tlf, char correo, char dir, char cont);
+void registrarComprador(sqlite3 *db, char* nom, int tlf, char* correo, char* dir, char* cont);
 Admin obtenerAdmin(sqlite3 *db, int id);
 bool existeAdmin(sqlite3 *db, int id);
 

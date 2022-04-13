@@ -48,7 +48,7 @@ void agregarProducto(sqlite3 *db, char* tipo){
 
 	int id = maxIdProducto(db);
 
-	sprintf(sql, "INSERT INTO Producto VALUES (%i, %s)", (id+1), *tipo);
+	sprintf(sql, "INSERT INTO Producto VALUES (%i, %s)", (id+1), tipo);
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	sqlite3_step(stmt);
 	sqlite3_finalize(stmt);
@@ -76,8 +76,7 @@ bool existeProducto (sqlite3 *db, int id) {
 	sqlite3_stmt *stmt;
 
 	char sql[100];
-	int* existe;
-	existe = malloc(sizeof(int));
+	int existe;
 
 	sprintf(sql, "SELECT COUNT(*) FROM Producto WHERE idProducto = %i",id);
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
@@ -129,13 +128,13 @@ Calzado obtenerCalzado (sqlite3 *db, int id){
 	return zapatilla;
 }
 
-void agregarCalzado(sqlite3 *db, char* nom, char* tipo, char* color, char* talla, float precio, int sexo, int cantidad){
+void agregarCalzado(sqlite3 *db, char* nom, char* tipo, char* color, float talla, float precio, int sexo, int cantidad){
     sqlite3_stmt *stmt;
 
 	char sql[100];
 	int maxId = maxIdProducto(db);
 
-	sprintf(sql, "INSERT INTO Calzado VALUES (%i, %s, %s, %s, %s, %f, %i, %i)", maxId+1, nom, tipo, color, talla, precio, sexo, cantidad);
+	sprintf(sql, "INSERT INTO Calzado VALUES (%i, %s, %s, %s, %f, %f, %i, %i)", maxId+1, nom, tipo, color, talla, precio, sexo, cantidad);
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	sqlite3_step(stmt);
 
@@ -495,13 +494,14 @@ void eliminarSupl(sqlite3 *db, int id){
 bool existeComprador (sqlite3 *db, char* correo) {
 	sqlite3_stmt *stmt;
 
-	int resultado;
+	int* resultado;
+	resultado = malloc(sizeof(int));
 	bool respuesta;
 	char sql[100];
 
-	sprintf(sql, "SELECT * FROM Comprador WHERE Correo = %s", correo);
+	sprintf(sql, "SELECT COUNT(*) FROM Comprador WHERE Correo = %s", correo);
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
-	resultado = sqlite3_step(stmt);
+	*resultado = sqlite3_step(stmt);
 
 	if (resultado == NULL) {
 		respuesta = false;
@@ -535,7 +535,7 @@ Comprador obtenerComprador (sqlite3 *db, char* correo) {
 	strcpy(direccion, (char*)sqlite3_column_text(stmt, 4));
 	strcpy(contrasena, (char*)sqlite3_column_text(stmt, 5));
 
-	persona = {nombre, iden, telf, correo, direccion, contrasena};
+	persona = {*nombre, iden, telf, *correo, *direccion, *contrasena};
 
 	sqlite3_finalize(stmt);
 	return persona;
@@ -545,7 +545,7 @@ void registrarComprador(sqlite3 *db, char* nom, int tlf, char* correo, char* dir
     sqlite3_stmt *stmt;
 	char sql[100];
 
-	sprintf(sql, "INSERT INTO Comprador (Nombre_Comprador, Telefono_Comprador, Correo_Comprador, Direccion_Comprador, Contrasena_Comprador) values(%c,%d,%c,%c,%c)", nom, tlf, correo, dir, cont);
+	sprintf(sql, "INSERT INTO Comprador (Nombre_Comprador, Telefono_Comprador, Correo_Comprador, Direccion_Comprador, Contrasena_Comprador) values(%s,%i,%s,%s,%s)", nom, tlf, correo, dir, cont);
 	
     sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	sqlite3_step(stmt);
@@ -672,7 +672,7 @@ Compra* comprasConId (sqlite3* db, int idCompra) {
 	sqlite3_finalize(stmt);
 
 	// para saber cuándo llega al final
-	compras[size] = NULL;
+	compras[size] = *NULL;
 
 	return compras;
 }
@@ -689,7 +689,7 @@ void verTicket (sqlite3* db, int idCompra) {
 	printf("--------------------\n");
 
 	int i = 0;
-	while (compras[i] != NULL) {
+	while (compras[i] != *NULL) {
 		int num = i + 1;
 		char type = obtenerTipoProducto (db, compras[i].idProducto);
         // C -> calzado		M -> material	P -> prenda 	S -> suplemento

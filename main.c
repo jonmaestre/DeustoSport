@@ -95,7 +95,7 @@ Comprador registrar (sqlite3 *db) {
         scanf("%c", contrasena2);
     }
 
-    registrarComprador(db, nombre, telefono, correo, direccion, contrasena1);
+    registrarComprador(db, nombre, *telefono, correo, direccion, contrasena1);
 
     Comprador comprador = obtenerComprador(db, correo);
 
@@ -103,7 +103,7 @@ Comprador registrar (sqlite3 *db) {
 }
 
 
-Comprador iniciarCliente (sqlite3 *db) {
+Comprador* iniciarCliente (sqlite3 *db) {
 
     char* correo;
     correo = malloc(100*sizeof(char));
@@ -166,7 +166,7 @@ Comprador iniciarCliente (sqlite3 *db) {
                         char* contra = persona.contrasena;
                     }
 
-                    return persona;
+                    return &persona;
                 }
             } 
         }
@@ -187,12 +187,12 @@ Comprador iniciarCliente (sqlite3 *db) {
             char* correito = persona.correo;
             char* contra = persona.contrasena;
         }
-        return persona;
+        return &persona;
     }
 }
 
 
-Admin iniciarAdmin (sqlite3 *db) {
+Admin* iniciarAdmin (sqlite3 *db) {
 
     // revisar los char*
     int* identificativo;
@@ -211,21 +211,21 @@ Admin iniciarAdmin (sqlite3 *db) {
 	printf("CONTRASEÑA: \n");
     scanf("%c", contrasena);
     printf("¿CUÁNTOS PROGRAMADORES HAY EN 'DeustoSportKit'?: \n");
-    scanf("%i", &respuestaPregunta);
+    scanf("%i", respuestaPregunta);
 
-    if (respuestaPregunta != PROGRAMADORES) {
+    if (*respuestaPregunta != PROGRAMADORES) {
         printf("¡ERROR! Tú no eres un administrador.");
         return NULL;            // si returnea null, se cierra el programa
 
     } else {
         bool existe;
-        existe = bool existeAdmin(db, identificativo);
+        existe = existeAdmin(db, *identificativo);
         if (existe == false) {
             printf("¡USTED NO ES UN ADMINISTRADOR! \n");
             return NULL;
         } else {
             Admin administrador;
-            administrador = obtenerAdmin(db, id);
+            administrador = obtenerAdmin(db, *identificativo);
             if (administrador.contrasena != contrasena) {
                 printf("Algo ha ido mal. Vuelva a introducir los datos.\n");
                 printf("Recuerde que solo tiene una oportunidad más \n");
@@ -238,7 +238,7 @@ Admin iniciarAdmin (sqlite3 *db) {
                 }
             } else {
                 printf("Bienvenido, %s", administrador.nombre);
-                return administrador;
+                return &administrador;
             }
         }
     }
@@ -262,7 +262,7 @@ int* iniciarZapatillasH(sqlite3 *db)
     int *respuesta;
     printf("Estas son las zapatillas para hombre que tenemos en este momento: \n");
     printf("\n");
-    printf("0. Ver zapatillas para hombre \n")
+    printf("0. Ver zapatillas para hombre \n");
     printf("1. Ver carrito \n");
     printf("2. Volver a la pagina de atras \n");
 
@@ -277,7 +277,7 @@ int* iniciarZapatillasH(sqlite3 *db)
         int *respuesta0;
 
         printf("¿Te interesa alguna? \n");
-        printf("0. Comprar \n")
+        printf("0. Comprar \n");
         printf("1. Volver a la ventana principal \n"); 
         scanf("%i", respuesta0); 
     } 
@@ -534,38 +534,7 @@ int* ventaPrincipal(sqlite3 *db)
 //---------------------------------------------------------------------------------------------
 
 
-void ventanaAdmin (sqlite3 *db, Admin administrador) {
-    
-    int* eleccion;
-    eleccion = malloc(1*sizeof(int));
-
-    do {
-
-        printf("1. Meter un producto nuevo \n");
-        printf("2. Recargar un producto \n");
-        printf("3. Eliminar un producto");
-        printf("Pulsa 0 para salir");
-        printf("\n");
-
-        do {
-            printf("¿Qué desea hacer, %i? \n", administrador);
-            scanf("%i", eleccion);
-        } while (!(*eleccion>= 0 && *eleccion<=3));
-
-        if (*eleccion == 0) {
-            printf("¡Que pase un buen día!");
-        } else if (eleccion == 1) {
-            crearProducto(db, administrador);
-        } else if (eleccion == 2) {
-            recargarProoducto (db, administrador);
-        } else if (eleccion == 3) {
-            eliminarProducto (db, administrador);
-        }
-
-    } while (*eleccion != 0);
-}
-
-void crearProducto (sqlite3 *db, Admin administrador) {
+void crearProductoAdmin (sqlite3 *db, Admin administrador) {
 
     int* tipo;
     tipo = malloc(10*sizeof(int));
@@ -628,7 +597,7 @@ void crearProducto (sqlite3 *db, Admin administrador) {
             printf("1. Mujer \n");
             sexo = malloc(1*sizeof(int));
             scanf("%i", sexo);
-        } while (sexo != 0 || sexo != 1);
+        } while (*sexo != 0 || *sexo != 1);
 
         printf("STOCK: \n");
         stock = malloc(1*sizeof(int));
@@ -670,7 +639,7 @@ void crearProducto (sqlite3 *db, Admin administrador) {
 
         printf("TALLA: \n");
         talla = malloc(1*sizeof(int));
-        scanf("%s", talla);
+        scanf("%f", talla);
 
         printf("PRECIO: \n");
         precio = malloc(1*sizeof(float));
@@ -682,13 +651,13 @@ void crearProducto (sqlite3 *db, Admin administrador) {
             printf("1. Mujer \n");
             sexo = malloc(1*sizeof(int));
             scanf("%i", sexo);
-        } while (sexo != 0 || sexo != 1);
+        } while (*sexo != 0 || *sexo != 1);
 
         printf("STOCK: \n");
         stock = malloc(1*sizeof(int));
         scanf("%i", stock);
 
-        agregarCalzado(db, nombre, tipoCal, color, talla, *precio, *sexo, *stock);
+        agregarCalzado(db, nombre, tipoCal, color, *talla, *precio, *sexo, *stock);
     
     } else if (*tipo == 3) {
         
@@ -787,7 +756,7 @@ void crearProducto (sqlite3 *db, Admin administrador) {
 
 } 
 
-void recargarProoducto (sqlite3 *db, Admin administrador) {
+void recargarProoductoAdmin (sqlite3 *db, Admin administrador) {
 
     int* iden;
     iden = malloc(1*sizeof(int));
@@ -817,19 +786,19 @@ void recargarProoducto (sqlite3 *db, Admin administrador) {
     scanf("%i", cantidad);
 
     if (tipo == 'C') {
-        subirStockCalzado (db, *id, *cant);
+        subirStockCalzado (db, *iden, *cant);
     } else if (tipo == 'M') {
-        subirStockMD (db, *id, *cant);
+        subirStockMD (db, *iden, *cant);
     } else if (tipo == 'P') {
-        subirStockCPrenda (db, *id, *cant);
+        subirStockCPrenda (db, *iden, *cant);
     } else if (tipo == 'S') {
-        subirStockSupl (db, *id, *cant);
+        subirStockSupl (db, *iden, *cant);
     }
     
 }
 
 
-void eliminarProducto (sqlite3 *db, Admin administrador) {
+void eliminarProductoAdmin (sqlite3 *db, Admin administrador) {
 
     int* iden;
     printf("¿Qué producto quiere eliminar de DeustoSportKit? \n");
@@ -853,14 +822,14 @@ void eliminarProducto (sqlite3 *db, Admin administrador) {
         int* eleccion;
 
         Calzado cal =  obtenerCalzado (db, *iden);
-        printf("El calzado %i es: %s. \n", iden, cal.nombre);
+        printf("El calzado %i es: %s. \n", *iden, cal.nombre);
         printf("¿Está seguro de que quiere eliminarlo?\n");
         printf("1. Sí \n");
         printf("2. No \n");
         scanf("%i", eleccion);
 
         if (*eleccion == 1) {
-            eliminarCalzado(db, iden);
+            eliminarCalzado(db, *iden);
             printf("Producto eliminado correctamente. \n");
         }
 
@@ -868,14 +837,14 @@ void eliminarProducto (sqlite3 *db, Admin administrador) {
         int* eleccion;
 
         MaterialDeportivo matD =  obtenerMaterial (db, *iden);
-        printf("El material deportivo %i es: %s. \n", iden, matD.nombre);
+        printf("El material deportivo %i es: %s. \n", *iden, matD.nombre);
         printf("¿Está seguro de que quiere eliminarlo?\n");
         printf("1. Sí \n");
         printf("2. No \n");
         scanf("%i", eleccion);
 
         if (*eleccion == 1) {
-            eliminarMD(db, iden);
+            eliminarMD(db, *iden);
             printf("Producto eliminado correctamente. \n");
         }
 
@@ -883,34 +852,65 @@ void eliminarProducto (sqlite3 *db, Admin administrador) {
         int* eleccion;
 
         Prenda pren =  obtenerPrenda (db, *iden);
-        printf("La prenda %i es: %s. \n", iden, pren.nombre);
+        printf("La prenda %i es: %s. \n", *iden, pren.nombre);
         printf("¿Está seguro de que quiere eliminarlo?\n");
         printf("1. Sí \n");
         printf("2. No \n");
         scanf("%i", eleccion);
 
         if (*eleccion == 1) {
-            eliminarPrenda(db, iden);
+            eliminarPrenda(db, *iden);
             printf("Producto eliminado correctamente. \n");
         }
     } else if (tipo == 'S') {
         int* eleccion;
 
         Suplemento sup =  obtenerSuplemento (db, *iden);
-        printf("El suplemento %i es: %s. \n", iden, sup.nombre);
+        printf("El suplemento %i es: %s. \n", *iden, sup.nombre);
         printf("¿Está seguro de que quiere eliminarlo?\n");
         printf("1. Sí \n");
         printf("2. No \n");
         scanf("%i", eleccion);
 
         if (*eleccion == 1) {
-            eliminarSupl(db, iden);
+            eliminarSupl(db, *iden);
             printf("Producto eliminado correctamente. \n");
         }
     }
 
 }
 
+
+void ventanaAdmin (sqlite3 *db, Admin administrador) {
+    
+    int* eleccion;
+    eleccion = malloc(1*sizeof(int));
+
+    do {
+
+        printf("1. Meter un producto nuevo \n");
+        printf("2. Recargar un producto \n");
+        printf("3. Eliminar un producto");
+        printf("Pulsa 0 para salir");
+        printf("\n");
+
+        do {
+            printf("¿Qué desea hacer, %s? \n", administrador.nombre);
+            scanf("%i", eleccion);
+        } while (!(*eleccion>= 0 && *eleccion<=3));
+
+        if (*eleccion == 0) {
+            printf("¡Que pase un buen día!");
+        } else if (*eleccion == 1) {
+            crearProductoAdmin (db, administrador);
+        } else if (*eleccion == 2) {
+            recargarProoductoAdmin (db, administrador);
+        } else if (*eleccion == 3) {
+            eliminarProductoAdmin (db, administrador);
+        }
+
+    } while (*eleccion != 0);
+}
 
 
 //---------------------------------------------------------------------------------------------
@@ -949,9 +949,9 @@ int main (void) {
         Comprador comprador;
 
         if (comienzo == 1) {
-            comprador = iniciarCliente (db);
+            comprador = *iniciarCliente (db);
         } else if (comienzo == 2) {
-            comprador = registrar (db);
+            comprador = *registrar (db);
         } else {
             comprador = NULL;
         }
@@ -959,7 +959,7 @@ int main (void) {
     } else if (comienzo == 4) {
 
         Admin administrador;
-        administrador = iniciarAdmin (db);
+        administrador = *iniciarAdmin (db);
 
         if (administrador != NULL) {
             ventanaAdmin (db, administrador);
