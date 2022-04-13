@@ -276,8 +276,13 @@ void iniciarZapatillasH(sqlite3 *db)
 
     if (*respuesta == 1)
     {
-        ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos las Zapatillas para hombre que metas
-
+        int size=sizeCalzadoH(db);
+        int i=0;
+        Calzado* listaCalzadoH=showCalzadoH(db);
+        do{
+            printf("%i. %s %s Precio:%2f\n",(i+1),listaCalzadoH[i].tipo,listaCalzadoH[i].nombre,listaCalzadoH[i].precio);
+        }while (i<size);
+        
         int *respuesta1;
         respuesta1 = malloc(sizeof(int));
 
@@ -303,7 +308,8 @@ void iniciarZapatillasH(sqlite3 *db)
 
         free(zapatillaHom);
         zapatillaHom = NULL;
-        
+        free(listaCalzadoH);
+        listaCalzadoH=NULL;
     }
     else if (*respuesta == 2)
     {
@@ -334,9 +340,12 @@ void iniciarZapatillasM(sqlite3 *db)
 
     if (*respuesta == 1)
     {
-
-        ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos las Zapatillas para mujer que metas
-
+        int size=sizeCalzadoM(db);
+        int i=0;
+        Calzado* listaCalzadoM=showCalzadoM(db);
+        do{
+            printf("%i. %s %s Precio:%2f\n",(i+1),listaCalzadoM[i].tipo,listaCalzadoM[i].nombre,listaCalzadoM[i].precio);
+        }while (i<size);
 
         int *respuesta1;
         respuesta1 = malloc(sizeof(int));
@@ -363,7 +372,8 @@ void iniciarZapatillasM(sqlite3 *db)
 
         free(respuesta1);
         respuesta1 = NULL;
-        
+        free(listaCalzadoM);
+        listaCalzadoM=NULL;
     }
     else if (*respuesta == 2)
     {
@@ -395,7 +405,12 @@ void iniciarRopaH(sqlite3 *db)
 
     if (*respuesta == 1)
     {
-        ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos la ropa para hombre que metas
+        int size=sizePrendaH(db);
+        int i=0;
+        Prenda* listaPrendaH=showPrendaH(db);
+        do{
+            printf("%i. %s %s Precio:%2f\n",(i+1),listaPrendaH[i].tipo,listaPrendaH[i].nombre,listaPrendaH[i].precio);
+        }while (i<size);
 
 
         int *respuesta1;
@@ -423,6 +438,8 @@ void iniciarRopaH(sqlite3 *db)
 
         free(respuesta1);
         respuesta1 = NULL;
+        free(listaPrendaH);
+        listaPrendaH=NULL;
     }
     if (*respuesta == 2)
     {
@@ -456,7 +473,13 @@ void iniciarRopaM(sqlite3 *db)
     if (*respuesta == 1)
     {
 
-        ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos productos ropa de mujer que metas
+        
+        int size=sizePrendaM(db);
+        int i=0;
+        Prenda* listaPrendaM=showPrendaM(db);
+        do{
+            printf("%i. %s %s Precio:%2f\n",(i+1),listaPrendaM[i].tipo,listaPrendaM[i].nombre,listaPrendaM[i].precio);
+        }while (i<size);
 
         int *respuesta1;
         respuesta1 = malloc(sizeof(int));
@@ -483,6 +506,8 @@ void iniciarRopaM(sqlite3 *db)
 
         free(respuesta1);
         respuesta1 = NULL;
+        free(listaPrendaM);
+        listaPrendaM=NULL;
 
     }
     else if (*respuesta == 2)
@@ -516,7 +541,12 @@ void iniciarSuplementos(sqlite3 *db)
     if (*respuesta == 1)
     {
 
-        ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos los suplementos deportivos deportivos
+        int size=sizeSupl(db);
+        int i=0;
+        Suplemento* listaSupl=showSupl(db);
+        do{
+            printf("%i. %s %s Precio:%2f\n",(i+1),listaSupl[i].tipo,listaSupl[i].nombre,listaSupl[i].precio);
+        }while (i<size);
 
         int *respuesta1;
         respuesta1 = malloc(sizeof(int));
@@ -543,6 +573,8 @@ void iniciarSuplementos(sqlite3 *db)
 
         free(respuesta1);
         respuesta1 = NULL;
+        free(listaSupl);
+        listaSupl=NULL;
     }
     else if (*respuesta == 2)
     {
@@ -573,8 +605,12 @@ void iniciarMaterialD(sqlite3 *db)
 
     if (*respuesta == 1)
     {
-
-        ////<<<<<<<<------------------------------------Intxausti simplemente printea desde la base de datos los materiales especificos deportivos deportivos
+        int size=sizeMD(db);
+        int i=0;
+        MaterialDeportivo* listaMD=showMD(db);
+        do{
+            printf("%i. %s %s Precio:%2f\n",(i+1),listaMD[i].tipo,listaMD[i].nombre,listaMD[i].precio);
+        }while (i<size);
 
         int *respuesta1;
         respuesta1 = malloc(sizeof(int));
@@ -601,6 +637,8 @@ void iniciarMaterialD(sqlite3 *db)
 
         free(respuesta1);
         respuesta1 = NULL;
+        free(listaMD);
+        listaMD=NULL;
     }
     else if (*respuesta == 2)
     {
