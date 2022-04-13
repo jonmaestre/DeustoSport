@@ -205,7 +205,7 @@ Calzado* showCalzadoH(sqlite3 *db) {
 	if (result != SQLITE_OK) {
 		printf("Error preparing statement (SELECT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
-		return result;
+		
 	}
 	int i=0;
 	Calzado newCalzado;
@@ -250,7 +250,7 @@ Calzado* showCalzadoH(sqlite3 *db) {
 	if (result != SQLITE_OK) {
 		printf("Error finalizing statement (SELECT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
-		return result;
+		
 	}
 
 	return listaCalzado;
@@ -268,7 +268,7 @@ Calzado* showCalzadoM(sqlite3 *db) {
 	if (result != SQLITE_OK) {
 		printf("Error preparing statement (SELECT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
-		return result;
+		
 	}
 	int i=0;
 	Calzado newCalzado;
@@ -313,7 +313,7 @@ Calzado* showCalzadoM(sqlite3 *db) {
 	if (result != SQLITE_OK) {
 		printf("Error finalizing statement (SELECT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
-		return result;
+		
 	}
 
 	return listaCalzado;
@@ -423,7 +423,7 @@ Prenda* showPrendaH(sqlite3 *db) {
 	if (result != SQLITE_OK) {
 		printf("Error preparing statement (SELECT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
-		return result;
+		
 	}
 	int i=0;
 	Prenda newPrenda;
@@ -468,7 +468,7 @@ Prenda* showPrendaH(sqlite3 *db) {
 	if (result != SQLITE_OK) {
 		printf("Error finalizing statement (SELECT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
-		return result;
+		
 	}
 
 	return listaPrenda;
@@ -486,7 +486,7 @@ Prenda* showPrendaM(sqlite3 *db) {
 	if (result != SQLITE_OK) {
 		printf("Error preparing statement (SELECT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
-		return result;
+		
 	}
 	int i=0;
 	Prenda newPrenda;
@@ -531,7 +531,7 @@ Prenda* showPrendaM(sqlite3 *db) {
 	if (result != SQLITE_OK) {
 		printf("Error finalizing statement (SELECT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
-		return result;
+		
 	}
 
 	return listaPrenda;
@@ -630,7 +630,7 @@ MaterialDeportivo* showMD(sqlite3 *db) {
 	if (result != SQLITE_OK) {
 		printf("Error preparing statement (SELECT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
-		return result;
+		
 	}
 	int i=0;
 	MaterialDeportivo MD;
@@ -677,7 +677,7 @@ MaterialDeportivo* showMD(sqlite3 *db) {
 	if (result != SQLITE_OK) {
 		printf("Error finalizing statement (SELECT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
-		return result;
+		
 	}
 
 	return listaMD;
@@ -773,7 +773,7 @@ Suplemento* showSupl(sqlite3 *db) {
 	if (result != SQLITE_OK) {
 		printf("Error preparing statement (SELECT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
-		return result;
+		
 	}
 	int i=0;
 	Suplemento supl;
@@ -812,7 +812,7 @@ Suplemento* showSupl(sqlite3 *db) {
 	if (result != SQLITE_OK) {
 		printf("Error finalizing statement (SELECT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
-		return result;
+		
 	}
 
 	return listaSupl;
