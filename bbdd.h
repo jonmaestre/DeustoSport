@@ -28,8 +28,10 @@ void agregarPrenda(sqlite3 *db, char* nom, char* tipo, char* color, char* talla,
 void subirStockCPrenda (sqlite3 *db, int id, int cant);
 void bajarStockPrenda(sqlite3 *db, int id, int cant);
 void eliminarPrenda(sqlite3 *db, int id);
-int showPrendaH(sqlite3 *db);
-int showPrendaM(sqlite3 *db);
+int sizePrendaH(sqlite3 *db);
+int sizePrendaM(sqlite3 *db);
+Prenda* showPrendaH(sqlite3 *db);
+Prenda* showPrendaM(sqlite3 *db);
 
 
 MaterialDeportivo obtenerMaterial (sqlite3 *db, int id);
@@ -37,14 +39,16 @@ void agregarMD(sqlite3 *db, char* nom, char* tipo, char* color, char* talla, flo
 void subirStockMD (sqlite3 *db, int id, int cant);
 void bajarStockMD(sqlite3 *db, int id, int cant);
 void eliminarMD(sqlite3 *db, int id);
-// SHOW
+int sizeMD(sqlite3 *db);
+MaterialDeportivo* showMD(sqlite3 *db);
 
 Suplemento obtenerSuplemento (sqlite3 *db, int id);
 void agregarSupl(sqlite3 *db, char* nom, char* tipo, int cantidad, float precio);
 void subirStockSupl (sqlite3 *db, int id, int cant);
 void bajarStockSupl(sqlite3 *db, int id, int cant);
 void eliminarSupl(sqlite3 *db, int id);
-// SHOW
+int sizeSupl(sqlite3 *db);
+Suplemento* showSupl(sqlite3 *db);
 
 
 // USUARIOS
