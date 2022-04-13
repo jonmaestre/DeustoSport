@@ -397,10 +397,11 @@ void iniciarZapatillasH(sqlite3 *db)
             scanf("%i"), zapatillaHom;
 
             // METODO COMPRAR
+            free(zapatillaHom);
+            zapatillaHom = NULL;
         }
 
-        free(zapatillaHom);
-        zapatillaHom = NULL;
+        
         free(listaCalzadoH);
         listaCalzadoH=NULL;
     }
@@ -1063,13 +1064,13 @@ void recargarProoductoAdmin (sqlite3 *db, Admin administrador) {
     scanf("%i", cantidad);
 
     if (tipo == 'C') {
-        subirStockCalzado (db, *iden, *cant);
+        subirStockCalzado (db, *iden, *cantidad);
     } else if (tipo == 'M') {
-        subirStockMD (db, *iden, *cant);
+        subirStockMD (db, *iden, *cantidad);
     } else if (tipo == 'P') {
-        subirStockCPrenda (db, *iden, *cant);
+        subirStockCPrenda (db, *iden, *cantidad);
     } else if (tipo == 'S') {
-        subirStockSupl (db, *iden, *cant);
+        subirStockSupl (db, *iden, *cantidad);
     }
     
 }
