@@ -695,4 +695,28 @@ void verTicket (sqlite3* db, int idCompra) {
 	printf("TOTAL: %f \n", carrito.precioTotal);
 }
 
+void agregarCarrito(sqlite3 *db, Carrito carrito) {
+	sqlite3_stmt *stmt;
+
+	char sql[100];
+
+	sprintf(sql, "INSERT INTO Carrito VALUES (%i, %i, %f, %d)", carrito.idCompra, carrito.idComprador, carrito.precioTotal, carrito.fechaCompra);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+
+	sqlite3_finalize(stmt);
+}
+
+void agregarCompra(sqlite3 *db, Compra compra) {
+	sqlite3_stmt *stmt;
+
+	char sql[100];
+
+	sprintf(sql, "INSERT INTO Compra VALUES (%i, %i, %i, %i)", compra.identificativo, compra.idProducto, compra.idComprador, compra.cantidad);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+
+	sqlite3_finalize(stmt);
+}
+
 

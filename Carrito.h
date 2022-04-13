@@ -9,5 +9,7 @@ typedef struct {
    Fecha fechaCompra;
 } Carrito;
 
+Carrito crearCarrito(sqlite3 *db, int idCompra, int idComprador);
+
 
 #endif

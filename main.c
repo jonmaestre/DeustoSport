@@ -257,6 +257,69 @@ Admin* iniciarAdmin (sqlite3 *db) {
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
 
+
+int** añadirACarrito (sqlite3 *db, int** arrayProductos, int sizeArray, int idProd, int cant) {
+
+    arrayProductos[sizeArray][0] = idProd;
+    arrayProductos[sizeArray][1] = cant;
+
+    return arrayProductos;
+}
+
+
+void comprarCarrito (sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray) {
+    
+    int idCarrito = ultimoCarrito (db);
+    int i = 0;
+    while (i < sizeArray) {
+        Compra compra = {idCarrito, arrayProductos[i][0], comprador.identificativo, arrayProductos[i][1]};
+        void agregarCompra(db, compra);
+    }
+
+    Carrito carritoNuevo = crearCarrito(db, idCarrito, comprador.identificativo);
+    void agregarCarrito(db, carrito);
+}
+
+
+void iniciarCarrito(sqlite3 *db, Comprador comprador)
+{
+    int* respuesta;
+
+    // -------------------------------- INICIALIZARLO
+
+    int** arrayProductos;
+    int sizeArray;
+
+    ////<<<<<<<<------------------------------------ Mostrar carrito
+
+    printf("¿Qué deseas hacer? \n");
+    printf("1. Realizar la compra del carrito entero \n");
+    printf("2. Borrar un producto del carrito");
+    printf("Pulsa 0 para salir.");
+    printf("\n");
+
+    do {
+        printf("ELECCION: ");
+        fflush(stdout);
+        scanf("%i", respuesta);
+    } while (respuesta < 0 || respuesta > 2);
+    
+
+    if (*respuesta == 1)
+    {
+        comprarCarrito(db, comprador, arrayProductos, sizeArray);
+    }
+    else if (*respuesta == 2)
+    {
+        //<<<<<<<<<<------------------------------ELIMINAR PRODUCTO
+    }
+
+    free(respuesta);
+    respuesta = NULL;
+}
+
+
+
 // Para inicio de la Zapatillas hombre
 
 void iniciarZapatillasH(sqlite3 *db)
@@ -612,40 +675,7 @@ void iniciarMaterialD(sqlite3 *db)
 }
 
 
-void iniciarCarrito(sqlite3 *db)
-{
-    int* respuesta;
-
-    ////<<<<<<<<------------------------------------ Mostrar carrito
-
-    printf("¿Qué deseas hacer? \n");
-    printf("1. Realizar la compra del carrito entero \n");
-    printf("2. Borrar un producto del carrito");
-    printf("Pulsa 0 para salir.");
-    printf("\n");
-
-    do {
-        printf("ELECCION: ");
-        fflush(stdout);
-        scanf("%i", respuesta);
-    } while (respuesta < 0 || respuesta > 2);
-    
-
-    if (*respuesta == 1)
-    {
-        ////<<<<<<<<------------------------------------ COMPRAR carrito
-    }
-    else if (*respuesta == 2)
-    {
-        //<<<<<<<<<<------------------------------ELIMINAR PRODUCTO
-    }
-
-    free(respuesta);
-    respuesta = NULL;
-}
-
-
-void ventaPrincipal(sqlite3 *db)
+void ventaPrincipal(sqlite3 *db, Comprador comprador)
 {
     int* respuesta;
 
@@ -1129,10 +1159,13 @@ int main (void) {
 
         if (comienzo == 1) {
             comprador = *iniciarCliente (db);
+            ventaPrincipal(db, comprador);
         } else if (comienzo == 2) {
             comprador = *registrar (db);
+            ventaPrincipal(db, comprador)
         } else {
             comprador = NULL;
+            ventaPrincipal(db, comprador)
         }
 
     } else if (comienzo == 4) {
