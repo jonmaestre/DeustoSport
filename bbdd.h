@@ -18,16 +18,19 @@ void agregarCalzado(sqlite3 *db, char* nom, char* tipo, char* color, float talla
 void subirStockCalzado (sqlite3 *db, int id, int cant);
 void bajarStock(sqlite3 *db, int id, int cant);
 void eliminarCalzado(sqlite3 *db, int id);
-int showCalzadoH(sqlite3 *db);
-int showCalzadoM(sqlite3 *db);
+int sizeCalzadoH(sqlite3 *db);
+int sizeCalzadoM(sqlite3 *db);
+Calzado* showCalzadoH(sqlite3 *db);
+Calzado* showCalzadoM(sqlite3 *db);
 
 Prenda obtenerPrenda (sqlite3 *db, int id);
 void agregarPrenda(sqlite3 *db, char* nom, char* tipo, char* color, char* talla, float precio, int sexo, int cantidad);
 void subirStockCPrenda (sqlite3 *db, int id, int cant);
 void bajarStockPrenda(sqlite3 *db, int id, int cant);
 void eliminarPrenda(sqlite3 *db, int id);
-// SHOW
-// SHOW
+int showPrendaH(sqlite3 *db);
+int showPrendaM(sqlite3 *db);
+
 
 MaterialDeportivo obtenerMaterial (sqlite3 *db, int id);
 void agregarMD(sqlite3 *db, char* nom, char* tipo, char* color, char* talla, float precio, char* deporte, int cantidad);

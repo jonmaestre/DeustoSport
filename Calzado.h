@@ -6,7 +6,7 @@ typedef struct {
     char* nombre;
     char* tipo;
     char* color;
-    float talla;
+    char* talla;
     float precio;
     int genero;
     int stock;
