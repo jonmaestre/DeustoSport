@@ -11,7 +11,7 @@ void devolucionClienteSocket (SOCKET s) {
 
 	char sendBuff[512], recvBuff[512];
 
-	printf("Receiving message... \n");
+	printf("Recibiendo mensaje... \n");
 	recv(s, recvBuff, sizeof(recvBuff), 0);
 	printf("Mensaje recibido: %s \n", recvBuff);
 
@@ -21,7 +21,7 @@ void devolucionClienteSocket (SOCKET s) {
 	fgets(str, 1000, stdin);
 	sscanf(str, "%i", &id);
 
-	printf("Sending message... \n");
+	printf("Enviando mensaje... \n");
 	strcpy(sendBuff, id);
 	send(s, sendBuff, sizeof(sendBuff), 0);
 	printf("Mensaje enviado: %s \n", sendBuff);
@@ -36,12 +36,12 @@ void devolucionClienteSocket (SOCKET s) {
 		fgets(str, 1000, stdin);
 		sscanf(str, "%s", &razon);
 
-		printf("Sending message... \n");
+		printf("Enviando mensaje... \n");
 		strcpy(sendBuff, razon);
 		send(s, sendBuff, sizeof(sendBuff), 0);
 		printf("Mensaje enviado: %s \n", sendBuff);	
 
-		printf("Receiving message... \n");
+		printf("Recibiendo mensaje... \n");
 		recv(s, recvBuff, sizeof(recvBuff), 0);
 		printf("Mensaje recibido: %s \n", recvBuff);
 
@@ -53,7 +53,7 @@ void problemaClienteSocket (SOCKET s) {
 
 	char sendBuff[512];
 
-	printf("Sending reply... \n");
+	printf("Enviando mensaje... \n");
 	strcpy(sendBuff, "¡Gracias!");
 	send(s, sendBuff, sizeof(sendBuff), 0);
 	printf("Mensaje enviado: %s \n", sendBuff);
@@ -63,11 +63,11 @@ void dudaClienteSocket (SOCKET s) {
 
 	char sendBuff[512], recvBuff[512];
 
-	printf("Receiving message... \n");
+	printf("Recibiendo mensaje... \n");
 	recv(s, recvBuff, sizeof(recvBuff), 0);
 	printf("Mensaje recibido: %s \n", recvBuff);
 
-	printf("Receiving message... \n");
+	printf("Recibiendo mensaje... \n");
 	recv(s, recvBuff, sizeof(recvBuff), 0);
 	printf("Mensaje recibido: %s \n", recvBuff);
 
@@ -78,22 +78,22 @@ void dudaClienteSocket (SOCKET s) {
 	fgets(str, 1000, stdin);
 	sscanf(str, "%s", &nombre);
 
-	printf("Sending reply... \n");
+	printf("Enviando mensaje... \n");
 	strcpy(sendBuff, nombre);
 	send(s, sendBuff, sizeof(sendBuff), 0);
 	printf("Mensaje enviado: %s \n", sendBuff);
 
 
-	printf("Receiving message... \n");
+	printf("Recibiendo mensaje... \n");
 	recv(s, recvBuff, sizeof(recvBuff), 0);
 	printf("Mensaje recibido: %s \n", recvBuff);
 
-	printf("Sending reply... \n");
+	printf("Enviando mensaje... \n");
 	strcpy(sendBuff, "¡Gracias!");
 	send(s, sendBuff, sizeof(sendBuff), 0);
 	printf("Mensaje enviado: %s \n", sendBuff);
 
-	printf("Receiving message... \n");
+	printf("Recibiendo mensaje... \n");
 	recv(s, recvBuff, sizeof(recvBuff), 0);
 	printf("Mensaje recibido: %s \n", recvBuff);
 
@@ -140,39 +140,12 @@ int main(int argc, char *argv[]) {
 
 
     // ********************************************************************************************************************************
-    // ********************************************************************************************************************************
+    // Este socket está hecho centrado en las dudas/problemas generales de los usuarios de DeustoSportKit.
+	// Aquí podrán resolverlas con ayuda de un ordenador que jugará el papel de server.
 
 
 	// SEND and RECEIVE data
-	printf("Sending message 1... \n");
-	strcpy(sendBuff, "Hello, server.");
-	send(s, sendBuff, sizeof(sendBuff), 0);
-
-	printf("Receiving message 1... \n");
-	recv(s, recvBuff, sizeof(recvBuff), 0);
-	printf("Data received: %s \n", recvBuff);
-
-	printf("Sending message 2... \n");
-	strcpy(sendBuff, "Hello again.");
-	send(s, sendBuff, sizeof(sendBuff), 0);
-	printf("Data sent: %s \n", sendBuff);
-
-	printf("Receiving message 2... \n");
-	recv(s, recvBuff, sizeof(recvBuff), 0);
-	printf("Data received: %s \n", recvBuff);
-
-	printf("Sending last message... \n");
-	strcpy(sendBuff, "Bye");
-	send(s, sendBuff, sizeof(sendBuff), 0);
-	printf("Data sent: %s \n", sendBuff);
-
-
-    // ********************************************************************************************************************************
-    // ********************************************************************************************************************************
-
-
-	// SEND and RECEIVE data
-	printf("Sending message \n");
+	printf("Enviando mensaje \n");
 	strcpy(sendBuff, "Hola. ¿Podrias ayudarme?");
 	send(s, sendBuff, sizeof(sendBuff), 0);
 
@@ -181,8 +154,8 @@ int main(int argc, char *argv[]) {
 		int bytes = recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
 
 		if (bytes > 0) {
-			printf("Receiving message... \n");
-			printf("Data received: %s \n", recvBuff);
+			printf("Recibiendo mensaje... \n");
+			printf("Mensaje recibido: %s \n", recvBuff);
 
             char primerMensaje[512];
             primerMensaje = "¡Claro! ¿En que puedo ayudarte? \n Devolución, problema tecnico, duda de stock";
@@ -199,7 +172,7 @@ int main(int argc, char *argv[]) {
 					opcion[indice] = toupper(opcion[indice]);
 				}
 
-                printf("Sending reply... \n");
+                printf("Enviando mensaje... \n");
                 strcpy(sendBuff, opcion);
                 send(s, sendBuff, sizeof(sendBuff), 0);
                 printf("Mensaje enviado: %s \n", sendBuff);

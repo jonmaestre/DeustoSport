@@ -20,9 +20,9 @@ void devolucionServerSocket (SOCKET comm_socket) {
 	printf("Mensaje enviado: %s \n", sendBuff);
 
 	
-	printf("Receiving id \n");
+	printf("Recibiendo mensaje \n");
 	recv(s, recvBuff, sizeof(recvBuff), 0);
-	printf("Data received: %s \n", recvBuff);
+	printf("Mensaje recibido : %s \n", recvBuff);
 
 	// ********************* FUNCIÓN BUSCA IDCOMPRA EN BD ***********
 
@@ -30,29 +30,29 @@ void devolucionServerSocket (SOCKET comm_socket) {
 
 	if (existe == FALSE) {
 
-		printf("Sending message... \n");
+		printf("Enviando mensaje... \n");
 		strcpy(sendBuff, "¡No existe dicha compra, mentiroso!");
 		send(s, sendBuff, sizeof(sendBuff), 0);
-		printf("Data sent: %s \n", sendBuff);
+		printf("Mensaje enviado: %s \n", sendBuff);
 
 	} else {
 
-		printf("Sending message... \n");
+		printf("Enviando mensaje... \n");
 		strcpy(sendBuff, "¿Podrias explicarnos la razon de tu devolucion?");
 		send(s, sendBuff, sizeof(sendBuff), 0);
-		printf("Data sent: %s \n", sendBuff);
+		printf("Mensaje enviado: %s \n", sendBuff);
 
 
-		printf("Receiving id \n");
+		printf("Recibiendo mensaje \n");
 		recv(s, recvBuff, sizeof(recvBuff), 0);
-		printf("Data received: %s \n", recvBuff);
+		printf("Mensaje recibido: %s \n", recvBuff);
 
 		// ***************** FUNCION CREAR DEVOLUCION **************
 
-		printf("Sending message... \n");
+		printf("Enviando mensaje... \n");
 		strcpy(sendBuff, "¡Muchas gracias! Será de gran ayuda tu aportacion. \n Por favor, manda de vuelta tu paquete a la direccion 'calle Ejemplo 1A'");
 		send(s, sendBuff, sizeof(sendBuff), 0);
-		printf("Data sent: %s \n", sendBuff);
+		printf("Mensaje enviado: %s \n", sendBuff);
 
 	}
 
@@ -62,13 +62,14 @@ void problemaServerSocket (SOCKET comm_socket) {
 	
 	char sendBuff[512]
 
-	printf("Sending reply... \n");
+	printf("Enviando mensaje... \n");
 	strcpy(sendBuff, "¡Sentimos las molestias! \n Puede contactar con el servicio tecnico de DeustoSportKit llamando al 600 000 000");
 	send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 	printf("Mensaje enviado: %s \n", sendBuff);
 
-	printf("Receiving message... \n");
-	printf("Data received: %s \n", recvBuff);
+	printf("Recibiendo mensaje... \n");
+	recv(s, recvBuff, sizeof(recvBuff), 0);
+	printf("Mensaje recibido: %s \n", recvBuff);
 
 }
 
@@ -84,7 +85,7 @@ void dudaServerSocket (SOCKET comm_socket, char recvBuff[512], char sendBuff[512
 	send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 	printf("Mensaje enviado: %s \n", sendBuff);
 
-	printf("Receiving message... \n");
+	printf("Recibiendo mensaje... \n");
 	recv(s, recvBuff, sizeof(recvBuff), 0);
 	printf("Mensaje recibido: %s \n", recvBuff);
 
@@ -94,10 +95,10 @@ void dudaServerSocket (SOCKET comm_socket, char recvBuff[512], char sendBuff[512
 
 	if (existe == FALSE) {
 
-		printf("Sending message... \n");
+		printf("Enviando mensaje... \n");
 		strcpy(sendBuff, "¡No existe dicho producto, mentiroso!");
 		send(s, sendBuff, sizeof(sendBuff), 0);
-		printf("Data sent: %s \n", sendBuff);
+		printf("Mensaje enviado: %s \n", sendBuff);
 
 	} else {
 
@@ -105,19 +106,19 @@ void dudaServerSocket (SOCKET comm_socket, char recvBuff[512], char sendBuff[512
 
 		int cuantos;
 
-		printf("Sending message... \n");
+		printf("Enviando mensaje... \n");
 		strcpy(sendBuff, ("Ahora mismo hay un total de %i productos en stock.", cuantos));
 		send(s, sendBuff, sizeof(sendBuff), 0);
-		printf("Data sent: %s \n", sendBuff);
+		printf("Mensaje enviado: %s \n", sendBuff);
 
-		printf("Receiving message... \n");
+		printf("Recibiendo mensaje... \n");
 		recv(s, recvBuff, sizeof(recvBuff), 0);
 		printf("Mensaje recibido: %s \n", recvBuff);
 
-		printf("Sending message... \n");
+		printf("Enviando mensaje... \n");
 		strcpy(sendBuff, "¡Que pase un buen dia!");
 		send(s, sendBuff, sizeof(sendBuff), 0);
-		printf("Data sent: %s \n", sendBuff);
+		printf("Mensaje enviado: %s \n", sendBuff);
 
 	}
 
@@ -193,46 +194,26 @@ int main(int argc, char *argv[]) {
 
 
     // ********************************************************************************************************************************
-    // ********************************************************************************************************************************
-
-
-	//SEND and RECEIVE data
-	printf("Waiting for incoming messages from client... \n");
-	do {
-		int bytes = recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-		if (bytes > 0) {
-			printf("Receiving message... \n");
-			printf("Data received: %s \n", recvBuff);
-
-			printf("Sending reply... \n");
-			strcpy(sendBuff, "ACK -> ");
-			strcat(sendBuff, recvBuff);
-			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			printf("Mensaje enviado: %s \n", sendBuff);
-
-			if (strcmp(recvBuff, "Bye") == 0)
-				break;
-		}
-	} while (1);
-
-
-    // ********************************************************************************************************************************
-    // ********************************************************************************************************************************
+    // El ServerSocket.c está hecho con el objetivo de ayudar a los clientes de esta plataforma con las dudas/problemas más frequentes
+	// Será el ordenador el que ayude con este proceso.
+	
 
     //SEND and RECEIVE data
     // No pongo acentos por si acaso
 	
-	printf("Waiting for incoming messages from client... \n");
+	printf("Esperando a mensajes por parte del cliente... \n");
+
 	do {
 
 		int bytes = recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
 		if (bytes > 0) {
-			printf("Receiving message... \n");
-			printf("Data received: %s \n", recvBuff);
+			printf("Recibiendo mensaje... \n");
+			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+			printf("Mensaje recibido: %s \n", recvBuff);
 
             if (strcmp(recvBuff, "Hola. ¿Podrias ayudarme?") == 0) {
 
-                printf("Sending reply... \n");
+                printf("Enviando mensaje... \n");
                 strcpy(sendBuff, "¡Claro! ¿En que puedo ayudarte? \n Devolución, problema tecnico, duda de stock");
                 send(comm_socket, sendBuff, sizeof(sendBuff), 0);
                 printf("Mensaje enviado: %s \n", sendBuff);
@@ -266,7 +247,7 @@ int main(int argc, char *argv[]) {
 					break;
 
 				} else {
-					printf("Sending reply... \n");
+					printf("Enviando mensaje... \n");
 					strcpy(sendBuff, "¡Hasta la proxima!");
 					send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 					printf("Mensaje enviado: %s \n", sendBuff);
@@ -275,10 +256,8 @@ int main(int argc, char *argv[]) {
 
             }
 		}
-	} while (1);
 
-    // ********************************************************************************************************************************
-    // ********************************************************************************************************************************
+	} while (1);
 
 
 	// CLOSING the sockets and cleaning Winsock...
