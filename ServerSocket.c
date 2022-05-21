@@ -1,4 +1,6 @@
 // IMPORTANT: Winsock Library ("ws2_32") should be linked
+#include "bbdd.h"
+#include "Devolucion.h"
 
 #include <stdio.h>
 #include <winsock2.h>
@@ -10,23 +12,47 @@
 
 void devolucionServerSocket (SOCKET comm_socket) {
 
+	sqlite3 *db;
+	int result = sqlite3_open("BaseDatos.db", &db);
+
 	char sendBuff[512], recvBuff[512];
 
 	printf("Contactando con el departamento de devoluciones... \n");
 
 
-	strcpy(sendBuff, "¿Que producto desea devolver? Por favor introduzca el identificativo de compra");
+	strcpy(sendBuff, "Por favor introduzca el identificativo de compra");
 	send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 	printf("Mensaje enviado: %s \n", sendBuff);
 
 	
 	printf("Recibiendo mensaje \n");
 	recv(s, recvBuff, sizeof(recvBuff), 0);
-	printf("Mensaje recibido : %s \n", recvBuff);
+	printf("Mensaje recibido : %i \n", recvBuff);
 
-	// ********************* FUNCIÓN BUSCA IDCOMPRA EN BD ***********
+	int idCompra = recvBuff;
 
-	bool existe;
+	bool existe = existeCompra(db, idCompra);
+
+	// Hacemos un bucle de 3 vueltas. Si a la tercera vuelve a introducir mal el identificador, pasará al siguiente if (primera parte)
+	int contador = 1;
+	while (contador <= 3 || existe == FALSE) {
+
+		printf("Enviando mensaje... \n");
+		strcpy(sendBuff, "Ha habido un error. No existe dicha compra. \n Por favor vuelva a introducir el identificativo.");
+		send(s, sendBuff, sizeof(sendBuff), 0);
+		printf("Mensaje enviado: %s \n", sendBuff);
+
+		printf("Recibiendo mensaje \n");
+		recv(s, recvBuff, sizeof(recvBuff), 0);
+		printf("Mensaje recibido: %s \n", recvBuff);
+
+		int idCompra = recvBuff;
+
+		bool existe = existeCompra(db, idCompra);
+
+		contador++;
+	}
+
 
 	if (existe == FALSE) {
 
@@ -37,22 +63,55 @@ void devolucionServerSocket (SOCKET comm_socket) {
 
 	} else {
 
-		printf("Enviando mensaje... \n");
-		strcpy(sendBuff, "¿Podrias explicarnos la razon de tu devolucion?");
-		send(s, sendBuff, sizeof(sendBuff), 0);
+		Carrito carrito = obtenerCarrito(db, idCompra);
+
+		strcpy(sendBuff, "Por favor introduzca el identificativo del producto");
+		send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 		printf("Mensaje enviado: %s \n", sendBuff);
 
-
+	
 		printf("Recibiendo mensaje \n");
 		recv(s, recvBuff, sizeof(recvBuff), 0);
-		printf("Mensaje recibido: %s \n", recvBuff);
+		printf("Mensaje recibido : %i \n", recvBuff);
 
-		// ***************** FUNCION CREAR DEVOLUCION **************
+		int idProd = recvBuff;
 
-		printf("Enviando mensaje... \n");
-		strcpy(sendBuff, "¡Muchas gracias! Será de gran ayuda tu aportacion. \n Por favor, manda de vuelta tu paquete a la direccion 'calle Ejemplo 1A'");
-		send(s, sendBuff, sizeof(sendBuff), 0);
-		printf("Mensaje enviado: %s \n", sendBuff);
+		int idComprador = carrito.getIdComprador();
+
+		bool existeCompra = existeCompra (db, idCompra, idComprador, idProd);
+
+
+		if (existeCompra == FALSE) {
+
+			printf("Enviando mensaje... \n");
+			strcpy(sendBuff, "¡No existe dicha compra, mentiroso!");
+			send(s, sendBuff, sizeof(sendBuff), 0);
+			printf("Mensaje enviado: %s \n", sendBuff);
+
+		} else {
+
+			printf("Enviando mensaje... \n");
+			strcpy(sendBuff, "¿Podrias explicarnos la razon de tu devolucion?");
+			send(s, sendBuff, sizeof(sendBuff), 0);
+			printf("Mensaje enviado: %s \n", sendBuff);
+
+
+			printf("Recibiendo mensaje \n");
+			recv(s, recvBuff, sizeof(recvBuff), 0);
+			printf("Mensaje recibido: %s \n", recvBuff);
+
+			Devolucion devolucion;
+			devolucion.Devolucion(idCompra, idComprador, idProd, recvBuff);
+
+			Compra compra = obtenerCompra (db, idCompra, idComprador, idProd);
+			agregarDevolucion (db, compra, recvBuff);
+
+			printf("Enviando mensaje... \n");
+			strcpy(sendBuff, "¡Muchas gracias! Será de gran ayuda tu aportacion. \n Por favor, manda de vuelta tu paquete a la direccion 'calle Ejemplo 1A'");
+			send(s, sendBuff, sizeof(sendBuff), 0);
+			printf("Mensaje enviado: %s \n", sendBuff);
+
+		}
 
 	}
 

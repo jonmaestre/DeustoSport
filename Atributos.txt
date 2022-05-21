@@ -74,6 +74,8 @@ CARRITO
 -----------------------------------
 
 DEVOLUCION
-- Identificativo (int) --> Identificativo de COMPRA
-- IdComprador (int)
-- Razon (text)
+- idCompra (int)
+- idComprador (int)
+- idProducto (int)
+- cantidad (int)
+- razon (text)

@@ -1099,13 +1099,45 @@ bool existeCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto) {
 	return respuesta;
 }
 
-void eliminarCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto) {
-
+bool existeCompra (sqlite3 *db, int idCompra) {
 	sqlite3_stmt *stmt;
 	char sql[100];
 
 	bool respuesta;
 
+	sprintf(sql, "SELECT COUNT(*) FROM Compra WHERE ID_Compra = %i", idCompra);
+	int size = sqlite3_step(stmt);
+
+	sqlite3_finalize(stmt);
+
+	if (size == 0) {
+		respuesta = false;
+	} else {
+		respuesta = true;
+	}
+
+	return respuesta;
+}
+
+void eliminarCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto) {
+
+	sqlite3_stmt *stmt;
+	char sql[100];
+
+	Compra compra = obtenerCompra (db, idCompra, idComprador, idProducto);
+
+	char tipo = obtenerTipoProducto (db, id);
+
+	if (strcmp(tipo, "C") == 0) {
+		bajarStockCalzado(db, idProducto, compra.cantidad);
+	} else if (strcmp(tipo, "P") == 0) {
+		bajarStockPrenda(db, idProducto, compra.cantidad);
+	} else if (strcmp(tipo, "M") == 0) {
+		bajarStockMD(db, idProducto, compra.cantidad);
+	} else if (strcmp(tipo, "S") == 0) {
+		bajarStockSupl(db, idProducto, compra.cantidad);
+	}
+	
 	sprintf(sql, "DELETE FROM Compra WHERE ID_Compra = %i AND idProducto = %i AND idComprador = %i", idCompra, idProducto, idComprador);
 	sqlite3_step(stmt);
 
@@ -1142,5 +1174,25 @@ Compra obtenerCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto
 	sqlite3_finalize(stmt);
 
 	return compra;
+}
+
+
+
+// DEVOLUCIONES
+
+void agregarDevolucion (sqlite3 *db, Compra compra, char* explicacion) {
+
+	eliminarCompra (db, compra.idCompra, compra.idComprador, compra.idProducto);
+
+	sqlite3_stmt *stmt;
+
+	char sql[100];
+
+	sprintf(sql, "INSERT INTO Devolucion VALUES (%i, %i, %i, %s)", compra.idCompra, compra.idComprador, compra.idProducto, explicacion);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	sqlite3_step(stmt);
+
+	sqlite3_finalize(stmt);
+
 }
 

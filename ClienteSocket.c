@@ -15,35 +15,93 @@ void devolucionClienteSocket (SOCKET s) {
 	recv(s, recvBuff, sizeof(recvBuff), 0);
 	printf("Mensaje recibido: %s \n", recvBuff);
 
-    char str[1000];
-	int id;
+    char str[512];
+	int idCompra;
 	fflush(stdout);
-	fgets(str, 1000, stdin);
-	sscanf(str, "%i", &id);
+	fgets(str, 512, stdin);
+	sscanf(str, "%i", &idCompra);
 
 	printf("Enviando mensaje... \n");
-	strcpy(sendBuff, id);
+	strcpy(sendBuff, idCompra);
 	send(s, sendBuff, sizeof(sendBuff), 0);
 	printf("Mensaje enviado: %s \n", sendBuff);
 
+	printf("Recibiendo mensaje... \n");
+	recv(s, recvBuff, sizeof(recvBuff), 0);
+	printf("Mensaje recibido: %s \n", recvBuff);
+
 	char mensaje[512];
-	strcpy(mensaje, "¡No existe dicha compra, mentiroso!");
+	strcpy(mensaje, "Ha habido un error. No existe dicha compra. \n Por favor vuelva a introducir el identificativo.");
 
-    if (strcmp(recvBuff, mensaje) != 0) {
+	while (strcmp(recvBuff, mensaje) != 0) {
 
-		char razon[1000];
+		int idCompra;
 		fflush(stdout);
-		fgets(str, 1000, stdin);
-		sscanf(str, "%s", &razon);
+		fgets(str, 512, stdin);
+		sscanf(str, "%i", &idCompra);
 
 		printf("Enviando mensaje... \n");
-		strcpy(sendBuff, razon);
+		strcpy(sendBuff, idCompra);
 		send(s, sendBuff, sizeof(sendBuff), 0);
-		printf("Mensaje enviado: %s \n", sendBuff);	
+		printf("Mensaje enviado: %s \n", sendBuff);
 
 		printf("Recibiendo mensaje... \n");
 		recv(s, recvBuff, sizeof(recvBuff), 0);
 		printf("Mensaje recibido: %s \n", recvBuff);
+
+		char mensaje[512];
+		strcpy(mensaje, "Ha habido un error. No existe dicha compra. \n Por favor vuelva a introducir el identificativo.");
+
+	}
+
+
+	char mensaje1[512], mensaje2[512];
+	strcpy(mensaje1, "¡No existe dicha compra, mentiroso!");
+	strcpy(mensaje2, "Por favor introduzca el identificativo del producto");
+
+
+    if (strcmp(recvBuff, mensaje1) != 0) {
+
+		break;
+
+	} else if (strcmp(recvBuff, mensaje2) != 0) {
+
+
+		int idCompra;
+		fflush(stdout);
+		fgets(str, 512, stdin);
+		sscanf(str, "%i", &idCompra);
+
+		printf("Enviando mensaje... \n");
+		strcpy(sendBuff, idCompra);
+		send(s, sendBuff, sizeof(sendBuff), 0);
+		printf("Mensaje enviado: %s \n", sendBuff);
+
+		printf("Recibiendo mensaje... \n");
+		recv(s, recvBuff, sizeof(recvBuff), 0);
+		printf("Mensaje recibido: %s \n", recvBuff);
+
+		if (strcmp(recvBuff, "¡No existe dicha compra, mentiroso!") != 0) {
+			
+			break;
+
+		} else {
+
+			char razon[512];
+			fflush(stdout);
+			fgets(str, 512, stdin);
+			sscanf(str, "%s", &razon);
+
+			printf("Enviando mensaje... \n");
+			strcpy(sendBuff, razon);
+			send(s, sendBuff, sizeof(sendBuff), 0);
+			printf("Mensaje enviado: %s \n", sendBuff);	
+
+			printf("Recibiendo mensaje... \n");
+			recv(s, recvBuff, sizeof(recvBuff), 0);
+			printf("Mensaje recibido: %s \n", recvBuff);
+
+		}
 
 	}
 
@@ -72,10 +130,10 @@ void dudaClienteSocket (SOCKET s) {
 	printf("Mensaje recibido: %s \n", recvBuff);
 
 
-	char str[1000];
+	char str[512];
 	int nombre;
 	fflush(stdout);
-	fgets(str, 1000, stdin);
+	fgets(str, 512, stdin);
 	sscanf(str, "%s", &nombre);
 
 	printf("Enviando mensaje... \n");

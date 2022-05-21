@@ -16,7 +16,7 @@ bool existeProducto (sqlite3 *db, int id);
 Calzado obtenerCalzado (sqlite3 *db, int id);
 void agregarCalzado(sqlite3 *db, char* nom, char* tipo, char* color, float talla, float precio, int sexo, int cantidad);
 void subirStockCalzado (sqlite3 *db, int id, int cant);
-void bajarStock(sqlite3 *db, int id, int cant);
+void bajarStockCalzado(sqlite3 *db, int id, int cant);
 void eliminarCalzado(sqlite3 *db, int id);
 int sizeCalzadoH(sqlite3 *db);
 int sizeCalzadoM(sqlite3 *db);
@@ -68,7 +68,12 @@ void verTicket (sqlite3* db, int idCompra);
 void agregarCarrito(sqlite3 *db, Carrito carrito);
 void agregarCompra(sqlite3 *db, Compra compra);
 bool existeCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto);
+bool existeCompra (sqlite3 *db, int idCompra);
 void eliminarCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto);
 Compra obtenerCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto);
+
+
+// DEVOLUCIONES
+void agregarDevolucion (sqlite3 *db, Compra compra);
 
 #endif 

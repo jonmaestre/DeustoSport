@@ -62,10 +62,10 @@ int main(int argc, char *argv[]) {
             recv(s, recvBuff, sizeof(recvBuff), 0);
 			printf("Mensaje recibido: %s \n", recvBuff);
 
-            char str[1000];
+            char str[512];
 	        int texto;
 	        fflush(stdout);
-	        fgets(str, 1000, stdin);
+	        fgets(str, 512, stdin);
 	        sscanf(str, "%i", &texto);
 
 	        printf("Enviando mensaje... \n");
