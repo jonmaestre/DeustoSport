@@ -71,4 +71,9 @@ CARRITO
 - Identificativo (int) --> Identificativo de COMPRA
 - IdComprador
 - PrecioTotal (float)
-- Fecha
+-----------------------------------
+
+DEVOLUCION
+- Identificativo (int) --> Identificativo de COMPRA
+- IdComprador (int)
+- Razon (text)
