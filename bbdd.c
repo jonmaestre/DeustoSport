@@ -80,7 +80,7 @@ int obtenerIdProducto (sqlite3 *db, char* nombre) {
 	sprintf(sql, "SELECT idProducto FROM Producto WHERE nombre = %s", nombre);
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	
-	id = (int)sqlite3_column_text(stmt, 0);
+	id = (sqlite3_column_int(stmt, 0));
 
 	sqlite3_finalize(stmt);
 
@@ -259,10 +259,10 @@ Calzado* showCalzadoH(sqlite3 *db) {
 		result = sqlite3_step(stmt) ;
 		if (result == SQLITE_ROW) {
 			idM=sqlite3_column_int(stmt,0);
-			sprintf(nombreM, (char *) sqlite3_column_text(stmt, 1));
-			sprintf(tipoM, (char *) sqlite3_column_text(stmt, 2));
-			sprintf(colorM, (char *) sqlite3_column_text(stmt, 3));
-			sprintf(tallaM, (char *) sqlite3_column_text(stmt, 4));
+			strcpy(nombreM, (char *) sqlite3_column_text(stmt, 1));
+			strcpy(tipoM, (char *) sqlite3_column_text(stmt, 2));
+			strcpy(colorM, (char *) sqlite3_column_text(stmt, 3));
+			strcpy(tallaM, (char *) sqlite3_column_text(stmt, 4));
 			precioM = sqlite3_column_double(stmt,5);
 			StockM=sqlite3_column_int(stmt,7);
 
@@ -322,10 +322,10 @@ Calzado* showCalzadoM(sqlite3 *db) {
 		result = sqlite3_step(stmt) ;
 		if (result == SQLITE_ROW) {
 			idM=sqlite3_column_int(stmt,0);
-			sprintf(nombreM, (char *) sqlite3_column_text(stmt, 1));
-			sprintf(tipoM, (char *) sqlite3_column_text(stmt, 2));
-			sprintf(colorM, (char *) sqlite3_column_text(stmt, 3));
-			sprintf(tallaM, (char *) sqlite3_column_text(stmt, 4));
+			strcpy(nombreM, (char *) sqlite3_column_text(stmt, 1));
+			strcpy(tipoM, (char *) sqlite3_column_text(stmt, 2));
+			strcpy(colorM, (char *) sqlite3_column_text(stmt, 3));
+			strcpy(tallaM, (char *) sqlite3_column_text(stmt, 4));
 			precioM = sqlite3_column_double(stmt,5);
 			StockM=sqlite3_column_int(stmt,7);
 
@@ -477,12 +477,12 @@ Prenda* showPrendaH(sqlite3 *db) {
 		result = sqlite3_step(stmt) ;
 		if (result == SQLITE_ROW) {
 			idM=sqlite3_column_int(stmt,0);
-			sprintf(nombreM, (char *) sqlite3_column_text(stmt, 1));
-			sprintf(tipoM, (char *) sqlite3_column_text(stmt, 2));
-			sprintf(colorM, (char *) sqlite3_column_text(stmt, 3));
-			sprintf(tallaM, (char *) sqlite3_column_text(stmt, 4));
+			strcpy(nombreM, (char *) sqlite3_column_text(stmt, 1));
+			strcpy(tipoM, (char *) sqlite3_column_text(stmt, 2));
+			strcpy(colorM, (char *) sqlite3_column_text(stmt, 3));
+			strcpy(tallaM, (char *) sqlite3_column_text(stmt, 4));
 			precioM = sqlite3_column_double(stmt,6);
-			StockM=sqlite3_column_int(stmt,7);
+			StockM = sqlite3_column_int(stmt,7);
 
 			newPrenda.identificativo=idM;
 			newPrenda.nombre=nombreM;
@@ -540,10 +540,10 @@ Prenda* showPrendaM(sqlite3 *db) {
 		result = sqlite3_step(stmt) ;
 		if (result == SQLITE_ROW) {
 			idM=sqlite3_column_int(stmt,0);
-			sprintf(nombreM, (char *) sqlite3_column_text(stmt, 1));
-			sprintf(tipoM, (char *) sqlite3_column_text(stmt, 2));
-			sprintf(colorM, (char *) sqlite3_column_text(stmt, 3));
-			sprintf(tallaM, (char *) sqlite3_column_text(stmt, 4));
+			strcpy(nombreM, (char *) sqlite3_column_text(stmt, 1));
+			strcpy(tipoM, (char *) sqlite3_column_text(stmt, 2));
+			strcpy(colorM, (char *) sqlite3_column_text(stmt, 3));
+			strcpy(tallaM, (char *) sqlite3_column_text(stmt, 4));
 			precioM = sqlite3_column_double(stmt,6);
 			StockM=sqlite3_column_int(stmt,7);
 
@@ -685,12 +685,12 @@ MaterialDeportivo* showMD(sqlite3 *db) {
 		result = sqlite3_step(stmt) ;
 		if (result == SQLITE_ROW) {
 			idM=sqlite3_column_int(stmt,0);
-			sprintf(nombreM, (char *) sqlite3_column_text(stmt, 1));
-			sprintf(tipoM, (char *) sqlite3_column_text(stmt, 2));
-			sprintf(colorM, (char *) sqlite3_column_text(stmt, 3));
-			sprintf(tallaM, (char *) sqlite3_column_text(stmt, 4));
+			strcpy(nombreM, (char *) sqlite3_column_text(stmt, 1));
+			strcpy(tipoM, (char *) sqlite3_column_text(stmt, 2));
+			strcpy(colorM, (char *) sqlite3_column_text(stmt, 3));
+			strcpy(tallaM, (char *) sqlite3_column_text(stmt, 4));
 			precioM = sqlite3_column_double(stmt,5);
-			sprintf(deporteM, (char *) sqlite3_column_text(stmt, 6));
+			strcpy(deporteM, (char *) sqlite3_column_text(stmt, 6));
 			StockM=sqlite3_column_int(stmt,7);
 
 			MD.identificativo=idM;
@@ -825,10 +825,10 @@ Suplemento* showSupl(sqlite3 *db) {
 		result = sqlite3_step(stmt) ;
 		if (result == SQLITE_ROW) {
 			idM=sqlite3_column_int(stmt,0);
-			sprintf(nombreM, (char *) sqlite3_column_text(stmt, 1));
-			sprintf(tipoM, (char *) sqlite3_column_text(stmt, 2));
+			strcpy(nombreM, (char *) sqlite3_column_text(stmt, 1));
+			strcpy(tipoM, (char *) sqlite3_column_text(stmt, 2));
 			precioM = sqlite3_column_double(stmt,3);
-			StockM=sqlite3_column_int(stmt,4);
+			StockM = sqlite3_column_int(stmt,4);
 
 			supl.identificativo=idM;
 			supl.nombre=nombreM;
@@ -1082,10 +1082,10 @@ void verTicket (sqlite3* db, int idCompra) {
             printf("%i: %s. X%i (ID: %i)\n", num, matD.nombre, compras[i].cantidad, matD.identificativo);
         } else if (type == 'P') {
             Prenda pren = obtenerPrenda (db, compras[i].idProducto);
-            printf("%i: %s. X%i (ID: %i)\n", num, pren.nombre, compras[i].cantidad);
+            printf("%i: %s. X%i (ID: %i)\n", num, pren.nombre, compras[i].cantidad, pren.identificativo);
         } else if (type == 'S') {
             Suplemento supl = obtenerSuplemento(db, compras[i].idProducto);
-            printf("%i: %s. X%i (ID: %i)\n", num, supl.nombre, compras[i].cantidad);
+            printf("%i: %s. X%i (ID: %i)\n", num, supl.nombre, compras[i].cantidad, supl.identificativo);
         }
 	}
 
