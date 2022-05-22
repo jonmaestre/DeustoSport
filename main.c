@@ -265,7 +265,7 @@ void anadirACarrito (sqlite3 *db, int** arrayProductos, int sizeArray, int idPro
 }
 
 
-void comprarCarrito (sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray) {
+int comprarCarrito (sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray) {
     
     int idCarrito = ultimoCarrito (db);
     int i = 0;
@@ -282,7 +282,7 @@ void comprarCarrito (sqlite3 *db, Comprador comprador, int** arrayProductos, int
 }
 
 
-int *eliminarDeCarrito (sqlite3 *db, int** arrayProductos, int* sizeArray, int indice) {
+int eliminarDeCarrito (sqlite3 *db, int** arrayProductos, int* sizeArray, int indice) {
 
     indice = indice - 1;
     int i;
@@ -295,7 +295,7 @@ int *eliminarDeCarrito (sqlite3 *db, int** arrayProductos, int* sizeArray, int i
 }
 
 
-void iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** arrayProductos) {
+int *iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** arrayProductos) {
     int* respuesta;
 
     int num = 0;
@@ -330,7 +330,7 @@ void iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** arra
         printf("ELECCION: ");
         fflush(stdout);
         scanf("%i", respuesta);
-    } while (respuesta < 0 || respuesta => 2);
+    } while (respuesta < 0 || respuesta = 2);
     
 
     if (*respuesta == 1)
@@ -459,7 +459,7 @@ void iniciarZapatillasH(sqlite3 *db, Comprador comprador, int** arrayProductos, 
                 comprador = *iniciarCliente (db);
             }
 
-            añadirACarrito (db, arrayProductos, sizeArray, zapatillaHom, cant);
+            anadirACarrito (db, arrayProductos, sizeArray, zapatillaHom, cant);
             sizeArray -= 1;
 
             free(zapatillaHom);
@@ -495,7 +495,7 @@ void iniciarZapatillasM(sqlite3 *db, Comprador comprador, int** arrayProductos, 
         printf("ELECCION: ");
         fflush(stdout);
         scanf("%i", respuesta);
-    } while (respuesta < 0 || respuesta > 2);
+    } while (respuesta < 0 || *respuesta > 2);
 
     if (*respuesta == 1)
     {
@@ -516,9 +516,9 @@ void iniciarZapatillasM(sqlite3 *db, Comprador comprador, int** arrayProductos, 
         do {
             scanf("%i", respuesta1);
             printf("\n"); 
-        } while (respuesta1 != 0 || respuesta1 != 1);
+        } while (respuesta1 != 0 || *respuesta1 != 1);
 
-        if (respuesta1 == 1) {
+        if (*respuesta1 == 1) {
 
             int* zapatillaMuj;
             zapatillaMuj = malloc(sizeof(int));
@@ -537,7 +537,7 @@ void iniciarZapatillasM(sqlite3 *db, Comprador comprador, int** arrayProductos, 
                 comprador = *iniciarCliente (db);
             }
 
-            añadirACarrito (db, arrayProductos, sizeArray, zapatillaMuj, cant);
+            anadirACarrito (db, arrayProductos, sizeArray, zapatillaMuj, cant);
             sizeArray -= 1;
 
             free(zapatillaMuj);
@@ -551,7 +551,7 @@ void iniciarZapatillasM(sqlite3 *db, Comprador comprador, int** arrayProductos, 
     }
     else if (*respuesta == 2)
     {
-        iniciarCarrito(db, comprador, arrayProductos, sizeArray);
+        iniciarCarrito(db, comprador, *arrayProductos, &sizeArray);
     }
 
 
@@ -619,7 +619,7 @@ void iniciarRopaH(sqlite3 *db, Comprador comprador, int** arrayProductos, int si
                 comprador = *iniciarCliente (db);
             }
 
-            añadirACarrito (db, arrayProductos, sizeArray, ropaHombre, cant);
+            anadirACarrito (db, arrayProductos, sizeArray, ropaHombre, cant);
             sizeArray -= 1;
 
             free(ropaHombre);
@@ -702,7 +702,7 @@ void iniciarRopaM(sqlite3 *db, Comprador comprador, int** arrayProductos, int si
                 comprador = *iniciarCliente (db);
             }
 
-            añadirACarrito (db, arrayProductos, sizeArray, ropaMujer, cant);
+            anadirACarrito (db, arrayProductos, sizeArray, ropaMujer, cant);
             sizeArray -= 1;
 
             free(ropaMujer);
@@ -785,7 +785,7 @@ void iniciarSuplementos(sqlite3 *db, Comprador comprador, int** arrayProductos, 
                 comprador = *iniciarCliente (db);
             }
 
-            añadirACarrito (db, arrayProductos, sizeArray, suplem, cant);
+            anadirACarrito (db, arrayProductos, sizeArray, suplem, cant);
             sizeArray -= 1;
 
             free(suplem);
@@ -866,7 +866,7 @@ void iniciarMaterialD(sqlite3 *db, Comprador comprador, int** arrayProductos, in
                 comprador = *iniciarCliente (db);
             }
 
-            añadirACarrito (db, arrayProductos, sizeArray, matDep, cant);
+            anadirACarrito (db, arrayProductos, sizeArray, matDep, cant);
             sizeArray -= 1;
 
             free(matDep);
