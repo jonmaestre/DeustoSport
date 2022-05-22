@@ -165,7 +165,7 @@ Comprador* iniciarCliente (sqlite3 *db) {
                         char* contra = persona.contrasena;
                     }
 
-                    return &persona;
+                    return *persona;
                 }
             } 
         }
@@ -186,7 +186,7 @@ Comprador* iniciarCliente (sqlite3 *db) {
             char* correito = persona.correo;
             char* contra = persona.contrasena;
         }
-        return &persona;
+        return *persona;
     }
 }
 
@@ -237,7 +237,7 @@ Admin* iniciarAdmin (sqlite3 *db) {
                 }
             } else {
                 printf("Bienvenido, %s", administrador.nombre);
-                return &administrador;
+                return *administrador;
             }
         }
     }
@@ -257,12 +257,11 @@ Admin* iniciarAdmin (sqlite3 *db) {
 //---------------------------------------------------------------------------------------------
 
 
-void añadirACarrito (sqlite3 *db, int** arrayProductos, int sizeArray, int idProd, int cant) {
+void anadirACarrito (sqlite3 *db, int** arrayProductos, int sizeArray, int idProd, int cant) {
 
     arrayProductos[sizeArray][0] = idProd;
     arrayProductos[sizeArray][1] = cant;
 
-    return arrayProductos;
 }
 
 
@@ -272,22 +271,22 @@ void comprarCarrito (sqlite3 *db, Comprador comprador, int** arrayProductos, int
     int i = 0;
     while (i < sizeArray) {
         Compra compra = {idCarrito, arrayProductos[i][0], comprador.identificativo, arrayProductos[i][1]};
-        void agregarCompra(db, compra);
+        agregarCompra(db, compra);
     }
 
     Carrito carritoNuevo = crearCarrito(db, idCarrito, comprador.identificativo);
-    void agregarCarrito(db, carrito);
+    agregarCarrito(db, &carrito);
 
     verTicket (db, idCarrito);
     printf("Necesitará la información del ticket en caso de devoluciones. ");
 }
 
 
-void eliminarDeCarrito (sqlite3 *db, int** arrayProductos, int* sizeArray, int indice) {
+int *eliminarDeCarrito (sqlite3 *db, int** arrayProductos, int* sizeArray, int indice) {
 
     indice = indice - 1;
     int i;
-    for(i = indice; i<sizeArray-1; i++){
+    for(i = indice; i<i-1; i++){
         arrayProductos[i][0]= arrayProductos[i+1][0];
         arrayProductos[i][1]= arrayProductos[i+1][1];
     }
@@ -301,7 +300,7 @@ void iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** arra
 
     int num = 0;
     int i = 0;
-    while (num < sizeArray) {
+    while (num < &sizeArray) {
         int idPr = arrayProductos[i][0];
         char type = obtenerTipoProducto (db, arrayProductos[i][0]);
         // C -> calzado		M -> material	P -> prenda 	S -> suplemento
@@ -331,12 +330,12 @@ void iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** arra
         printf("ELECCION: ");
         fflush(stdout);
         scanf("%i", respuesta);
-    } while (respuesta < 0 || respuesta > 2);
+    } while (respuesta < 0 || respuesta => 2);
     
 
     if (*respuesta == 1)
     {
-        comprarCarrito(db, comprador, arrayProductos, sizeArray);
+        comprarCarrito(db, comprador, arrayProductos, &sizeArray);
     }
     else if (*respuesta == 2)
     {
@@ -349,7 +348,7 @@ void iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** arra
             scanf("%i", indice);
         } while (indice < 0 || indice > sizeArray);
 
-        eliminarDeCarrito (db, arrayProductos, &sizeArray, indice);
+        eliminarDeCarrito (db, arrayProductos, *sizeArray, *indice);
     }
 
     free(respuesta);
@@ -360,7 +359,7 @@ void iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** arra
 void devolverCompra (sqlite3 *db, Comprador comprador, int idProducto, int idCompra) {
 
     bool existe;
-    existe = existeCompra (db, idCompra);
+    //existe = existeCompra (db, idCompra);
 
     if (existe == false) {
         printf("¡Error! Esa compra no se ha hecho nunca. \n");
@@ -418,7 +417,7 @@ void iniciarZapatillasH(sqlite3 *db, Comprador comprador, int** arrayProductos, 
         printf("ELECCION: ");
         fflush(stdout);
         scanf("%i", respuesta);
-    } while (respuesta < 0 || respuesta > 2);
+    } while (respuesta < 0 || respuesta => 2);
 
     if (*respuesta == 1)
     {
