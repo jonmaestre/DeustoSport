@@ -137,7 +137,8 @@ Comprador* iniciarCliente (sqlite3 *db) {
             } while (deNuevo != 1 || deNuevo != 2);
 
             if (deNuevo == 1) {
-                registrar (db);
+                persona = registrar (db);
+                return &persona;
             } else if (deNuevo == 2) {
                 printf("CORREO ELECTRÓNICO: \n");
                 scanf("%c", correo);
@@ -160,12 +161,12 @@ Comprador* iniciarCliente (sqlite3 *db) {
                         scanf("%c", correo);
 	                    printf("CONTRASEÑA: \n");
                         scanf("%c", contrasena);
-                        Comprador persona = obtenerComprador (db, correo);
+                        persona = obtenerComprador (db, correo);
                         char* correito = persona.correo;
                         char* contra = persona.contrasena;
                     }
 
-                    return *persona;
+                    return &persona;
                 }
             } 
         }
@@ -182,11 +183,11 @@ Comprador* iniciarCliente (sqlite3 *db) {
             scanf("%c", correo);
 	        printf("CONTRASEÑA: \n");
             scanf("%c", contrasena);
-            Comprador persona = obtenerComprador (db, correo);
+            persona = obtenerComprador (db, correo);
             char* correito = persona.correo;
             char* contra = persona.contrasena;
         }
-        return *persona;
+        return &persona;
     }
 }
 
@@ -237,7 +238,7 @@ Admin* iniciarAdmin (sqlite3 *db) {
                 }
             } else {
                 printf("Bienvenido, %s", administrador.nombre);
-                return *administrador;
+                return &administrador;
             }
         }
     }
@@ -257,7 +258,7 @@ Admin* iniciarAdmin (sqlite3 *db) {
 //---------------------------------------------------------------------------------------------
 
 
-int *anadirACarrito (sqlite3 *db, int** arrayProductos, int sizeArray, int idProd, int cant) {
+void anadirACarrito (sqlite3 *db, int** arrayProductos, int sizeArray, int idProd, int cant) {
 
     arrayProductos[sizeArray][0] = idProd;
     arrayProductos[sizeArray][1] = cant;
@@ -265,7 +266,7 @@ int *anadirACarrito (sqlite3 *db, int** arrayProductos, int sizeArray, int idPro
 }
 
 
-int *comprarCarrito (sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray) {
+void comprarCarrito (sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray) {
     
     int idCarrito = ultimoCarrito (db);
     int i = 0;
@@ -275,14 +276,14 @@ int *comprarCarrito (sqlite3 *db, Comprador comprador, int** arrayProductos, int
     }
 
     Carrito carritoNuevo = crearCarrito(db, idCarrito, comprador.identificativo);
-    agregarCarrito(db, &carrito);
+    agregarCarrito(db, carritoNuevo);
 
     verTicket (db, idCarrito);
     printf("Necesitará la información del ticket en caso de devoluciones. ");
 }
 
 
-int *eliminarDeCarrito (sqlite3 *db, int** arrayProductos, int* sizeArray, int indice) {
+void eliminarDeCarrito (sqlite3 *db, int** arrayProductos, int* sizeArray, int indice) {
 
     indice = indice - 1;
     int i;
@@ -296,11 +297,11 @@ int *eliminarDeCarrito (sqlite3 *db, int** arrayProductos, int* sizeArray, int i
 
 
 int iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** arrayProductos) {
-    int* respuesta;
+    int respuesta;
 
     int num = 0;
     int i = 0;
-    while (num < &sizeArray) {
+    while (num < *sizeArray) {
         int idPr = arrayProductos[i][0];
         char type = obtenerTipoProducto (db, arrayProductos[i][0]);
         // C -> calzado		M -> material	P -> prenda 	S -> suplemento
@@ -330,14 +331,14 @@ int iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** array
         printf("ELECCION: ");
         fflush(stdout);
         scanf("%i", respuesta);
-    } while (respuesta < 0 || respuesta = 2);
+    } while (respuesta < 0 || respuesta == 2);
     
 
-    if (*respuesta == 1)
+    if (respuesta == 1)
     {
-        comprarCarrito(db, comprador, arrayProductos, &sizeArray);
+        comprarCarrito(db, comprador, arrayProductos, *sizeArray);
     }
-    else if (*respuesta == 2)
+    else if (respuesta == 2)
     {
         printf("¿Qué producto deseas eliminar? \n");
 
@@ -348,11 +349,10 @@ int iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** array
             scanf("%i", indice);
         } while (indice < 0 || indice > sizeArray);
 
-        eliminarDeCarrito (db, arrayProductos, *sizeArray, *indice);
+        eliminarDeCarrito (db, arrayProductos, sizeArray, *indice);
     }
 
-    free(respuesta);
-    respuesta = NULL;
+    return (respuesta);
 }
 
 
