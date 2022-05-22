@@ -257,7 +257,7 @@ Admin* iniciarAdmin (sqlite3 *db) {
 //---------------------------------------------------------------------------------------------
 
 
-void anadirACarrito (sqlite3 *db, int** arrayProductos, int sizeArray, int idProd, int cant) {
+int *anadirACarrito (sqlite3 *db, int** arrayProductos, int sizeArray, int idProd, int cant) {
 
     arrayProductos[sizeArray][0] = idProd;
     arrayProductos[sizeArray][1] = cant;
@@ -265,7 +265,7 @@ void anadirACarrito (sqlite3 *db, int** arrayProductos, int sizeArray, int idPro
 }
 
 
-int comprarCarrito (sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray) {
+int *comprarCarrito (sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray) {
     
     int idCarrito = ultimoCarrito (db);
     int i = 0;
@@ -282,7 +282,7 @@ int comprarCarrito (sqlite3 *db, Comprador comprador, int** arrayProductos, int 
 }
 
 
-int eliminarDeCarrito (sqlite3 *db, int** arrayProductos, int* sizeArray, int indice) {
+int *eliminarDeCarrito (sqlite3 *db, int** arrayProductos, int* sizeArray, int indice) {
 
     indice = indice - 1;
     int i;
@@ -295,7 +295,7 @@ int eliminarDeCarrito (sqlite3 *db, int** arrayProductos, int* sizeArray, int in
 }
 
 
-int *iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** arrayProductos) {
+int iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** arrayProductos) {
     int* respuesta;
 
     int num = 0;
@@ -619,7 +619,7 @@ void iniciarRopaH(sqlite3 *db, Comprador comprador, int** arrayProductos, int si
                 comprador = *iniciarCliente (db);
             }
 
-            anadirACarrito (db, arrayProductos, sizeArray, ropaHombre, cant);
+            anadirACarrito (db, arrayProductos, sizeArray, *ropaHombre, cant);
             sizeArray -= 1;
 
             free(ropaHombre);
@@ -633,7 +633,8 @@ void iniciarRopaH(sqlite3 *db, Comprador comprador, int** arrayProductos, int si
     }
     if (*respuesta == 2)
     {
-        iniciarCarrito(db, comprador, arrayProductos, sizeArray);
+        iniciarCarrito(db, comprador, *arrayProductos, sizeArray);
+
     }
 
 
@@ -907,8 +908,9 @@ void ventaPrincipal(sqlite3 *db, Comprador comprador, int** arrayProductos, int 
     do {
         printf("ELECCION: ");
         fflush(stdout);
-        scanf("%i", respuesta);
-    } while (respuesta < 1 || respuesta > 8);
+        scanf("%i", *respuesta);
+
+    } while (respuesta < 1 || *respuesta > 8);
     
     while (respuesta != 0) {
         if (*respuesta == 1)
@@ -984,7 +986,7 @@ void crearProductoAdmin (sqlite3 *db, Admin administrador) {
 
     do {
         printf("TIPO: \n");
-        scanf("%i", tipo);
+        scanf("%i", *tipo);
     } while (!(*tipo >= 1 && *tipo <= 4));
 
     char* typeProd;
@@ -999,7 +1001,7 @@ void crearProductoAdmin (sqlite3 *db, Admin administrador) {
         typeProd[4] = 'd';
         typeProd[5] = 'a';
 
-        agregarProducto(db, typeProd);
+        agregarProducto(db, *typeProd);
 
         char *nombre, *tipoPren, *color, *talla;
         float *precio;
