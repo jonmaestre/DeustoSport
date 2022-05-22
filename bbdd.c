@@ -7,7 +7,6 @@
 #include "Prenda.h"
 #include "Suplemento.h"
 #include "bbdd.h"
-#include "Fecha.h"
 #include "sqlite3.h"
 #include <stdio.h>
 #include <string.h>
@@ -957,7 +956,6 @@ Carrito obtenerCarrito (sqlite3 *db, int idCompra){
 
 	int idComprador;
 	float precioTotal;
-	Fecha fechaCompra;
 
 	sprintf(sql, "SELECT * FROM Carrito WHERE ID = %i", idCompra);
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
@@ -1033,7 +1031,7 @@ void verTicket (sqlite3* db, int idCompra) {
 	printf("--------------------\n");
 
 	int i = 0;
-	while (compras[i] != *NULL) {
+	while (&compras[i] != NULL) {
 		int num = i + 1;
 		char type = obtenerTipoProducto (db, compras[i].idProducto);
         // C -> calzado		M -> material	P -> prenda 	S -> suplemento
@@ -1042,7 +1040,7 @@ void verTicket (sqlite3* db, int idCompra) {
             printf("%i: %s. X%i (ID: %i)\n", num, calz.nombre, compras[i].cantidad, calz.id);
         } else if (type == 'M') {
             MaterialDeportivo matD =  obtenerMaterial (db, compras[i].idProducto);
-            printf("%i: %s. X%i (ID: %i)\n", num, matD.nombre, compras[i].cantidad, matD.);
+            printf("%i: %s. X%i (ID: %i)\n", num, matD.nombre, compras[i].cantidad, matD.identificativo);
         } else if (type == 'P') {
             Prenda pren = obtenerPrenda (db, compras[i].idProducto);
             printf("%i: %s. X%i (ID: %i)\n", num, pren.nombre, compras[i].cantidad);
@@ -1126,7 +1124,7 @@ void eliminarCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto)
 
 	Compra compra = obtenerCompra (db, idCompra, idComprador, idProducto);
 
-	char tipo = obtenerTipoProducto (db, id);
+	char tipo = obtenerTipoProducto (db, idProducto);
 
 	if (strcmp(tipo, "C") == 0) {
 		bajarStockCalzado(db, idProducto, compra.cantidad);
@@ -1150,14 +1148,16 @@ Compra obtenerCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto
 	sqlite3_stmt *stmt;
 	char sql[100];
 
-	bool respuesta;
-
 	sprintf(sql, "SELECT * FROM Compra WHERE ID_Compra = %i AND idProducto = %i AND idComprador = %i", idCompra, idProducto, idComprador);
 	sqlite3_step(stmt);
 
 	Compra compra;
 
-	resul = sqlite3_step(stmt);
+	int iden;
+	int idProd;
+	int idCompr;
+	int cant;
+
 
 	iden = sqlite3_column_int(stmt, 0);
 	idProd = sqlite3_column_int(stmt, 1);
@@ -1169,7 +1169,6 @@ Compra obtenerCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto
 	compra.idComprador=idCompr;
 	compra.cantidad=cant;
 
-	compras[resul] = compra;
 
 	sqlite3_finalize(stmt);
 
@@ -1182,13 +1181,13 @@ Compra obtenerCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto
 
 void agregarDevolucion (sqlite3 *db, Compra compra, char* explicacion) {
 
-	eliminarCompra (db, compra.idCompra, compra.idComprador, compra.idProducto);
+	eliminarCompra (db, compra.identificativo, compra.idComprador, compra.idProducto);
 
 	sqlite3_stmt *stmt;
 
 	char sql[100];
 
-	sprintf(sql, "INSERT INTO Devolucion VALUES (%i, %i, %i, %s)", compra.idCompra, compra.idComprador, compra.idProducto, explicacion);
+	sprintf(sql, "INSERT INTO Devolucion VALUES (%i, %i, %i, %s)", compra.identificativo, compra.idComprador, compra.idProducto, explicacion);
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	sqlite3_step(stmt);
 

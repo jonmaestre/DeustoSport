@@ -68,12 +68,12 @@ void verTicket (sqlite3* db, int idCompra);
 void agregarCarrito(sqlite3 *db, Carrito carrito);
 void agregarCompra(sqlite3 *db, Compra compra);
 bool existeCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto);
-bool existeCompra (sqlite3 *db, int idCompra);
+bool existeCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto);
 void eliminarCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto);
 Compra obtenerCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto);
 
 
 // DEVOLUCIONES
-void agregarDevolucion (sqlite3 *db, Compra compra);
+void agregarDevolucion (sqlite3 *db, Compra compra, char* explicacion);
 
 #endif 

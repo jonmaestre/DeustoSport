@@ -7,7 +7,6 @@
 #include "Prenda.h"
 #include "Suplemento.h"
 #include "bbdd.h"
-#include "Fecha.h"
 #include "sqlite3.h"
 #include "bbdd.h"
 #include <stdio.h>
@@ -21,7 +20,7 @@ Carrito crearCarrito(sqlite3 *db, int idCompra, int idComprador) {
     
     int i = 0;
     float total = 0;
-    while (compra[i] != *NULL) {
+    while (&compra[i] != NULL) {
 
         char type = obtenerTipoProducto (db, compra[i].idProducto);
         // C -> calzado		M -> material	P -> prenda 	S -> suplemento

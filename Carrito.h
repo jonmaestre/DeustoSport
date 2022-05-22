@@ -1,6 +1,7 @@
 #ifndef CARRITO_H_
 #define CARRITO_H_
-#include "Fecha.h"
+
+#include "sqlite3.h"
 
 typedef struct {
    int idCompra;

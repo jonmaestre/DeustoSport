@@ -12,7 +12,6 @@
 #include "Prenda.h"
 #include "Suplemento.h"
 #include "bbdd.h"
-#include "Fecha.h"
 #include "sqlite3.h"
 
 #define PROGRAMADORES 5
@@ -297,10 +296,11 @@ void eliminarDeCarrito (sqlite3 *db, int** arrayProductos, int* sizeArray, int i
 }
 
 
-void iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int indice) {
+void iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** arrayProductos) {
     int* respuesta;
 
     int num = 0;
+    int i = 0;
     while (num < sizeArray) {
         int idPr = arrayProductos[i][0];
         char type = obtenerTipoProducto (db, arrayProductos[i][0]);
@@ -318,6 +318,7 @@ void iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int indice
             Suplemento supl = obtenerSuplemento(db, arrayProductos[i][0]);
             printf("%i: %s. X%i \n", num+1, supl.nombre, arrayProductos[i][1]);
         }
+        i++;
     }
 
     printf("¿Qué deseas hacer? \n");
@@ -346,7 +347,7 @@ void iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int indice
             printf("ÍNDICE: ");
             fflush(stdout);
             scanf("%i", indice);
-        } while (indice < 0 || indice > size);
+        } while (indice < 0 || indice > sizeArray);
 
         eliminarDeCarrito (db, arrayProductos, &sizeArray, indice);
     }
@@ -359,28 +360,28 @@ void iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int indice
 void devolverCompra (sqlite3 *db, Comprador comprador, int idProducto, int idCompra) {
 
     bool existe;
-    existe = existeCompra (db, idCompra, comprador.identificativo, idProducto);
+    existe = existeCompra (db, idCompra);
 
     if (existe == false) {
         printf("¡Error! Esa compra no se ha hecho nunca. \n");
     } else {
 
-        Compra compra =  obtenerCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto);
+        Compra compra =  obtenerCompra (db, idCompra, comprador.identificativo, idProducto);
         int cantidad = compra.cantidad;
 
-        eliminarCompra (db, idCompra, idComprador, idProducto);
+        eliminarCompra (db, idCompra, comprador.identificativo, idProducto);
 
         char tipo = obtenerTipoProducto (db, idProducto);
         // C -> calzado		M -> material	P -> prenda 	S -> suplemento
 
         if (tipo == 'C') {
-            subirStockCalzado (db, *iden, cantidad);
+            subirStockCalzado (db, idProducto, cantidad);
         } else if (tipo == 'M') {
-            subirStockMD (db, *iden, cantidad);
+            subirStockMD (db, idProducto, cantidad);
         } else if (tipo == 'P') {
-            subirStockCPrenda (db, *iden, cantidad);
+            subirStockCPrenda (db, idProducto, cantidad);
         } else if (tipo == 'S') {
-            subirStockSupl (db, *iden, cantidad);
+            subirStockSupl (db, idProducto, cantidad);
         }
 
         printf("Trámites de devolución completados. \n");
@@ -448,12 +449,18 @@ void iniciarZapatillasH(sqlite3 *db, Comprador comprador, int** arrayProductos, 
             printf ("¿Cuál? Por favor, indique su código. \n");
             scanf("%i"), zapatillaHom;
 
-            if (comprador == NULL) {
+            int* cant;
+            cant = malloc(sizeof(int));
+
+            printf ("¿Cuántas zapatillas desea? \n");
+            scanf("%i"), cant;
+
+            if (&comprador == NULL) {
                 printf("Primero debes iniciar sesión. \n");
-                comprador = iniciarCliente (db);
+                comprador = *iniciarCliente (db);
             }
 
-            añadirACarrito (db, arrayProductos, sizeArray, idProd, cant);
+            añadirACarrito (db, arrayProductos, sizeArray, zapatillaHom, cant);
             sizeArray -= 1;
 
             free(zapatillaHom);
@@ -466,7 +473,7 @@ void iniciarZapatillasH(sqlite3 *db, Comprador comprador, int** arrayProductos, 
     }
     else if (*respuesta == 2)
     {
-        iniciarCarrito(db, comprador, arrayProductos, sizeArray);
+        iniciarCarrito(db, comprador, sizeArray, arrayProductos);
     }
 
     free(respuesta);
@@ -520,12 +527,18 @@ void iniciarZapatillasM(sqlite3 *db, Comprador comprador, int** arrayProductos, 
             printf ("¿Cuál? Por favor, indique su código. \n");
             scanf("%i", zapatillaMuj);
 
-            if (comprador == NULL) {
+            int* cant;
+            cant = malloc(sizeof(int));
+
+            printf ("¿Cuántas zapatillas desea? \n");
+            scanf("%i"), cant;
+
+            if (&comprador == NULL) {
                 printf("Primero debes iniciar sesión. \n");
-                comprador = iniciarCliente (db);
+                comprador = *iniciarCliente (db);
             }
 
-            añadirACarrito (db, arrayProductos, sizeArray, idProd, cant);
+            añadirACarrito (db, arrayProductos, sizeArray, zapatillaMuj, cant);
             sizeArray -= 1;
 
             free(zapatillaMuj);
@@ -595,12 +608,19 @@ void iniciarRopaH(sqlite3 *db, Comprador comprador, int** arrayProductos, int si
             printf ("¿Cuál? Por favor, indique su código. \n");
             scanf("%i", ropaHombre);
 
-            if (comprador == NULL) {
+            int* cant;
+            cant = malloc(sizeof(int));
+
+            printf ("¿Cuántas desea comprar? \n");
+            scanf("%i"), cant;
+
+
+            if (&comprador == NULL) {
                 printf("Primero debes iniciar sesión. \n");
-                comprador = iniciarCliente (db);
+                comprador = *iniciarCliente (db);
             }
 
-            añadirACarrito (db, arrayProductos, sizeArray, idProd, cant);
+            añadirACarrito (db, arrayProductos, sizeArray, ropaHombre, cant);
             sizeArray -= 1;
 
             free(ropaHombre);
@@ -672,12 +692,18 @@ void iniciarRopaM(sqlite3 *db, Comprador comprador, int** arrayProductos, int si
             printf ("¿Cuál? Por favor, indique su código. \n");
             scanf("%i", ropaMujer);
 
-            if (comprador == NULL) {
+            int* cant;
+            cant = malloc(sizeof(int));
+
+            printf ("¿Cuántas desea comprar? \n");
+            scanf("%i"), cant;
+
+            if (&comprador == NULL) {
                 printf("Primero debes iniciar sesión. \n");
-                comprador = iniciarCliente (db);
+                comprador = *iniciarCliente (db);
             }
 
-            añadirACarrito (db, arrayProductos, sizeArray, idProd, cant);
+            añadirACarrito (db, arrayProductos, sizeArray, ropaMujer, cant);
             sizeArray -= 1;
 
             free(ropaMujer);
@@ -748,12 +774,19 @@ void iniciarSuplementos(sqlite3 *db, Comprador comprador, int** arrayProductos, 
             printf ("¿Cuál? Por favor, indique su código. \n");
             scanf("%i", suplem);
 
-            if (comprador == NULL) {
+            int* cant;
+            cant = malloc(sizeof(int));
+
+            printf ("Indique la cantidad \n");
+            scanf("%i"), cant;
+
+
+            if (&comprador == NULL) {
                 printf("Primero debes iniciar sesión. \n");
-                comprador = iniciarCliente (db);
+                comprador = *iniciarCliente (db);
             }
 
-            añadirACarrito (db, arrayProductos, sizeArray, idProd, cant);
+            añadirACarrito (db, arrayProductos, sizeArray, suplem, cant);
             sizeArray -= 1;
 
             free(suplem);
@@ -822,12 +855,19 @@ void iniciarMaterialD(sqlite3 *db, Comprador comprador, int** arrayProductos, in
             printf ("¿Cuál? Por favor, indique su código. \n");
             scanf("%i", matDep);
 
-            if (comprador == NULL) {
+            int* cant;
+            cant = malloc(sizeof(int));
+
+            printf ("Indique la cantidad \n");
+            scanf("%i"), cant;
+
+
+            if (&comprador == NULL) {
                 printf("Primero debes iniciar sesión. \n");
-                comprador = iniciarCliente (db);
+                comprador = *iniciarCliente (db);
             }
 
-            añadirACarrito (db, arrayProductos, sizeArray, idProd, cant);
+            añadirACarrito (db, arrayProductos, sizeArray, matDep, cant);
             sizeArray -= 1;
 
             free(matDep);
@@ -895,7 +935,7 @@ void ventaPrincipal(sqlite3 *db, Comprador comprador, int** arrayProductos, int 
             iniciarCarrito(db, comprador, arrayProductos, sizeArray);
         }  else if (*respuesta == 8) 
         {
-            if (comprador == NULL) {
+            if (&comprador == NULL) {
                 comprador = *iniciarCliente (db);
             }
             int* idCompra;
@@ -1353,13 +1393,13 @@ int main (void) {
             int sizeArray = 0;
             ventaPrincipal(db, comprador, arrayProductos, sizeArray);
         } else if (comienzo == 2) {
-            comprador = *registrar (db);
+            comprador = registrar (db);
             int** arrayProductos;
             int sizeArray = 0;
-            ventaPrincipal(db, comprador, arrayProductos, sizeArray)
-        } else {
-            comprador = NULL;
-            ventaPrincipal(db, comprador, NULL, NULL)
+            ventaPrincipal(db, comprador, arrayProductos, sizeArray);
+            } else {
+//            comprador = NULL;
+            ventaPrincipal(db, comprador, NULL, NULL);
         }
 
     } else if (comienzo == 4) {
@@ -1367,7 +1407,7 @@ int main (void) {
         Admin administrador;
         administrador = *iniciarAdmin (db);
 
-        if (administrador != NULL) {
+        if (&administrador != NULL) {
             ventanaAdmin (db, administrador);
         }
 
