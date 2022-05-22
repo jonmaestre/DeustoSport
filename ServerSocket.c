@@ -48,7 +48,7 @@ void devolucionServerSocket (SOCKET comm_socket) {
 
 		int idCompra = recvBuff;
 
-		bool existe = existeCompra(db, idCompra);
+		existe = existeCompra(db, idCompra);
 
 		contador++;
 	}
@@ -148,9 +148,26 @@ void dudaServerSocket (SOCKET comm_socket, char recvBuff[512], char sendBuff[512
 	recv(s, recvBuff, sizeof(recvBuff), 0);
 	printf("Mensaje recibido: %s \n", recvBuff);
 
-	// ************************************* FUNCION BUSCAR POR NOMBRE *****************
 
-	bool existe;
+	bool existe = existeProducto (db, recvBuff);
+
+	// Hacemos un bucle de 3 vueltas. Si a la tercera vuelve a introducir mal el nombre, pasará al siguiente if (primera parte)
+	int contador = 1;
+	while (contador <= 3 || existe == FALSE) {
+
+		printf("Enviando mensaje... \n");
+		strcpy(sendBuff, "Ha habido un error. No existe dicho producto. \n Por favor vuelva a introducir el nombre.");
+		send(s, sendBuff, sizeof(sendBuff), 0);
+		printf("Mensaje enviado: %s \n", sendBuff);
+
+		printf("Recibiendo mensaje \n");
+		recv(s, recvBuff, sizeof(recvBuff), 0);
+		printf("Mensaje recibido: %s \n", recvBuff);
+
+		existe = existeProducto (db, recvBuff);
+
+		contador++;
+	}
 
 	if (existe == FALSE) {
 
@@ -161,9 +178,20 @@ void dudaServerSocket (SOCKET comm_socket, char recvBuff[512], char sendBuff[512
 
 	} else {
 
-		// ******************************* CALLCULAR CUANTOS ********************
+		int idProd = obtenerIdProducto (db, recvBuff);
+		char tipo = obtenerTipoProducto (db, id);;
 
-		int cuantos;
+		if (strcmp(tipo, 'C') == 0) {
+			Calzado prod = obtenerCalzado(bd, idProd);
+		} else if (strcmp(tipo, 'P') == 0) {
+			Prenda prod = obtenerPrenda(bd, idProd);
+		} else if (strcmp(tipo, 'M') == 0) {
+			MaterialDeportivo prod = obtenerMaterial(bd, idProd);
+		} else if (strcmp(tipo, 'S') == 0) {
+			Suplemento prod = obtenerSuplemento(bd, idProd);
+		}
+
+		int cuantos = prod.cantidad;
 
 		printf("Enviando mensaje... \n");
 		strcpy(sendBuff, ("Ahora mismo hay un total de %i productos en stock.", cuantos));
