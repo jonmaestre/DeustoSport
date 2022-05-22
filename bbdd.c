@@ -80,14 +80,14 @@ int obtenerIdProducto (sqlite3 *db, char* nombre) {
 	sprintf(sql, "SELECT idProducto FROM Producto WHERE nombre = %s", nombre);
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	
-	id = sqlite3_column_text(stmt, 0);
+	id = (int)sqlite3_column_text(stmt, 0);
 
 	sqlite3_finalize(stmt);
 
 	return id;	
 }
 
-bool existeProducto (sqlite3 *db, int id) {
+bool existeProducto1 (sqlite3 *db, int id) {
 	sqlite3_stmt *stmt;
 
 	char sql[100];
@@ -110,7 +110,7 @@ bool existeProducto (sqlite3 *db, int id) {
 	return respuesta;	
 }
 
-bool existeProducto (sqlite3 *db, char* nombre) {
+bool existeProducto2 (sqlite3 *db, char* nombre) {
 	sqlite3_stmt *stmt;
 
 	char sql[100];
@@ -1116,7 +1116,7 @@ void agregarCompra(sqlite3 *db, Compra compra) {
 	sqlite3_finalize(stmt);
 }
 
-bool existeCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto) {
+bool existeCompra1 (sqlite3 *db, int idCompra, int idComprador, int idProducto) {
 	sqlite3_stmt *stmt;
 	char sql[100];
 
@@ -1136,7 +1136,7 @@ bool existeCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto) {
 	return respuesta;
 }
 
-bool existeCompra (sqlite3 *db, int idCompra) {
+bool existeCompra2 (sqlite3 *db, int idCompra) {
 	sqlite3_stmt *stmt;
 	char sql[100];
 
@@ -1165,13 +1165,13 @@ void eliminarCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto)
 
 	char tipo = obtenerTipoProducto (db, idProducto);
 
-	if (strcmp(tipo, "C") == 0) {
+	if (strcmp(&tipo, "C") == 0) {
 		bajarStockCalzado(db, idProducto, compra.cantidad);
-	} else if (strcmp(tipo, "P") == 0) {
+	} else if (strcmp(&tipo, "P") == 0) {
 		bajarStockPrenda(db, idProducto, compra.cantidad);
-	} else if (strcmp(tipo, "M") == 0) {
+	} else if (strcmp(&tipo, "M") == 0) {
 		bajarStockMD(db, idProducto, compra.cantidad);
-	} else if (strcmp(tipo, "S") == 0) {
+	} else if (strcmp(&tipo, "S") == 0) {
 		bajarStockSupl(db, idProducto, compra.cantidad);
 	}
 	

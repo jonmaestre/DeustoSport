@@ -12,8 +12,8 @@ void agregarProducto(sqlite3 *db, char* tipo);
 
 char obtenerTipoProducto (sqlite3 *db, int id);
 int obtenerIdProducto (sqlite3 *db, char* nombre);
-bool existeProducto (sqlite3 *db, int id);
-bool existeProducto (sqlite3 *db, char* nombre);
+bool existeProducto1 (sqlite3 *db, int id);
+bool existeProducto2 (sqlite3 *db, char* nombre);
 
 Calzado obtenerCalzado (sqlite3 *db, int id);
 void agregarCalzado(sqlite3 *db, char* nom, char* tipo, char* color, float talla, float precio, int sexo, int cantidad);
@@ -69,8 +69,8 @@ Compra* comprasConId (sqlite3* db, int idCompra);
 void verTicket (sqlite3* db, int idCompra);
 void agregarCarrito(sqlite3 *db, Carrito carrito);
 void agregarCompra(sqlite3 *db, Compra compra);
-bool existeCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto);
-bool existeCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto);
+bool existeCompra1 (sqlite3 *db, int idCompra, int idComprador, int idProducto);
+bool existeCompra2 (sqlite3 *db, int idCompra);
 void eliminarCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto);
 Compra obtenerCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto);
 
