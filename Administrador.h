@@ -1,12 +1,27 @@
 #ifndef ADMINISTRADOR_H_
 #define ADMINISTRADOR_H_
 
-typedef struct {
+
+class Administrador
+{
+private:
     char* nombre;
     int identificativo;
     char* contrasena;
     char* funcion;
-} Admin;
+public:
+    Administrador(/* args */);
+    ~Administrador();
+};
+
+Administrador::Administrador(/* args */)
+{
+}
+
+Administrador::~Administrador()
+{
+}
+
 
 
 #endif
