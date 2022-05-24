@@ -9,4 +9,22 @@ typedef struct {
 } Compra;
 
 
+class Compra
+{
+private:
+   int identificativo;
+   int idProducto;
+   int idComprador;
+   int cantidad;
+public:
+   Compra(/* args */);
+   ~Compra();
+   int getidentificativo();
+   int getidProducto();
+   int getidComprador();
+   int getcantidad();
+
+};
+
+
 #endif

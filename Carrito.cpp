@@ -44,5 +44,19 @@ Carrito crearCarrito(sqlite3 *db, int idCompra, int idComprador) {
 
     Carrito carrito = {idCompra, idComprador, total};
 
+    int getIdCompra(int idCompra)
+    {
+
+    }
+    int getidComprador(int idComprador)
+    {
+
+    }
+    float getprecioTotal(float precioTotal)
+    {
+
+    }
+
+
     return carrito;
 }
