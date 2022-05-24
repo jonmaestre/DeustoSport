@@ -75,6 +75,7 @@
     void registrarComprador(sqlite3 *db, char* nom, int tlf, char* correo, char* dir, char* cont);
     Admin obtenerAdmin(sqlite3 *db, int id);
     bool existeAdmin(sqlite3 *db, int id);
+    int idMaxAdmin(sqlite3 *db);
 
 
     // CARRITOS / COMPRAS

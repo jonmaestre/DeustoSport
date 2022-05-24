@@ -8,14 +8,21 @@ private:
     char* nombre;
     char* tipo;
     char* color;
-    char* talla;
+    int talla;
     float precio;
     int genero;
     int stock;
 public:
-    Calzado(/* args */);
-    Calzado(/*const Calzado& e*/);
+    Calzado(char* nombre, char* tipo, char* color, char* talla, float precio, int genero, int stock);
+    Calzado(const Calzado& c);
     ~Calzado();
+    char* getNombre();
+    char* getTipo();
+    char* getColor();
+    char* getTalla();
+    float getPrecio();
+    int getGenero();
+    int getStock();
 };
 
 

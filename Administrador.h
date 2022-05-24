@@ -10,10 +10,13 @@ class Administrador
         char* contrasena;
         char* funcion;
     public:
-        Administrador(/* args */);
+        Administrador(char* nombre, char* contrasena, char* funcion);
+        Administrador(const Administrador& a);
         ~Administrador();
+        char* getNombre();
+        int getIdentificativo();
+        char* getFuncion()
 };
-
 
 
 

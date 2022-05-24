@@ -965,6 +965,20 @@ bool existeAdmin(sqlite3 *db, int id){
 	return respuesta;
 }
 
+int idMaxAdmin(sqlite3 *db) {
+	sqlite3_stmt *stmt;
+	char sql[100];
+
+	bool respuesta;
+
+	sprintf(sql, "SELECT MAX(Identificativo) FROM Administrador");
+	int max = sqlite3_column_int(stmt, 0);
+
+	sqlite3_finalize(stmt);
+
+	return max;
+}
+
 
 
 
