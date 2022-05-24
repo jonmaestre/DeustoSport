@@ -15,7 +15,7 @@ class Administrador
         ~Administrador();
         char* getNombre();
         int getIdentificativo();
-        char* getFuncion()
+        char* getFuncion();
 };
 
 

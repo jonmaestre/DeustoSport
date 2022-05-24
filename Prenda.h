@@ -14,7 +14,7 @@ private:
     int stock;
 public:
     Prenda(char* nombre, char* tipo, char* color, char* talla, float precio, int sexo, int stock);
-    Prenda(const Predna& p);
+    Prenda(const Prenda& p);
     ~Prenda();
     int getidentificativo();
     char* getnombre();
