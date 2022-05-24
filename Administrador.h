@@ -4,23 +4,16 @@
 
 class Administrador
 {
-private:
-    char* nombre;
-    int identificativo;
-    char* contrasena;
-    char* funcion;
-public:
-    Administrador(/* args */);
-    ~Administrador();
+    private:
+        char* nombre;
+        int identificativo;
+        char* contrasena;
+        char* funcion;
+    public:
+        Administrador(/* args */);
+        ~Administrador();
 };
 
-Administrador::Administrador(/* args */)
-{
-}
-
-Administrador::~Administrador()
-{
-}
 
 
 

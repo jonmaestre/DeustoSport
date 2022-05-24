@@ -1,7 +1,9 @@
 #ifndef CALZADO_H_
 #define CALZADO_H_
 
-typedef struct {
+class Calzado
+{
+private:
     int id;
     char* nombre;
     char* tipo;
@@ -10,8 +12,11 @@ typedef struct {
     float precio;
     int genero;
     int stock;
-} Calzado;
-
+public:
+    Calzado(/* args */);
+    Calzado(/*const Calzado& e*/);
+    ~Calzado();
+};
 
 
 #endif
