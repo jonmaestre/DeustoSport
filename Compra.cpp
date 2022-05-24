@@ -1,27 +1,34 @@
 #include "Compra.h"
 
 
-Compra::Compra(/* args */)
-{
+Compra::Compra(int idProducto, int idComprador, int cantidad) {
+    this->idProducto = idProducto;
+    this->idComprador = idComprador;
+    this->cantidad = cantidad;
 }
 
-Compra::~Compra()
-{
+Compra::Compra(const Compra& c) {
+    this->idProducto = c.idProducto;
+    this->idComprador = c.idComprador;
+    this->cantidad = c.cantidad;
 }
 
-int getidentificativo()
-{
-    
-}
-int getidProducto()
-{
+Compra::~Compra() {
 
 }
-int getidComprador()
-{
 
+int Compra::getidentificativo() {
+    return this->identificativo;
 }
-int getcantidad()
-{
 
+int Compra::getidProducto() {
+    return this->idProducto;
+}
+
+int Compra::getidComprador() {
+    return this->idComprador;
+}
+
+int Compra::getCantidad() {
+    return this->cantidad;
 }

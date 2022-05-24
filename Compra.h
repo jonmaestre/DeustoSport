@@ -17,12 +17,13 @@ private:
    int idComprador;
    int cantidad;
 public:
-   Compra(/* args */);
+   Compra(int idProducto, int idComprador, int cantidad);
+   Compra(const Compra& c);
    ~Compra();
-   int getidentificativo();
-   int getidProducto();
-   int getidComprador();
-   int getcantidad();
+   int getIdentificativo();
+   int getIdProducto();
+   int getIdComprador();
+   int getCantidad();
 
 };
 
