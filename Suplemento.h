@@ -10,4 +10,33 @@ typedef struct {
 } Suplemento;
 
 
+class Suplemento
+{
+private:
+   int identificativo;
+   char* nombre;
+   char* tipo;
+   float precio;
+   int stock;
+
+public:
+   Suplemento(/* args */);
+   ~Suplemento();
+   int getidentificativo();
+   char* getnombre();
+   char* gettipo();
+   float getprecio();
+   int getstock();
+
+};
+
+Suplemento::Suplemento(/* args */)
+{
+}
+
+Suplemento::~Suplemento()
+{
+}
+
+
 #endif
