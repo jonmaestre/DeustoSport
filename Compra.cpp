@@ -11,7 +11,7 @@ Compra::~Compra()
 
 int getidentificativo()
 {
-
+    
 }
 int getidProducto()
 {
@@ -23,5 +23,5 @@ int getidComprador()
 }
 int getcantidad()
 {
-    
+
 }
