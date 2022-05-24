@@ -1,6 +1,8 @@
 #include "MaterialDeportivo.h"
 
-
+namespace producto
+{
+    
 MaterialDeportivo::MaterialDeportivo(/* args */)
 {
 }
@@ -40,4 +42,5 @@ char getdeporte()
 int getstock()
 {
     
+}
 }

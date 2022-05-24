@@ -13,7 +13,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-Carrito crearCarrito(sqlite3 *db, int idCompra, int idComprador) {
+namespace producto
+{
+    Carrito crearCarrito(sqlite3 *db, int idCompra, int idComprador) {
 
     Compra* compra;
     compra = comprasConId (db, idCompra);
@@ -59,4 +61,6 @@ Carrito crearCarrito(sqlite3 *db, int idCompra, int idComprador) {
 
 
     return carrito;
+}
+
 }

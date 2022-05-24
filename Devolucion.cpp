@@ -5,8 +5,9 @@
 using namespace std;
 
 
-
-Devolucion::Devolucion(int idCompra, int idComprado, int idProducto, char* explicacion) {
+namespace acciones 
+{
+    Devolucion::Devolucion(int idCompra, int idComprado, int idProducto, char* explicacion) {
     this->idCompra = idCompra;
     this->idComprador = idComprador;
     this->idProducto = idProducto;
@@ -22,5 +23,7 @@ Devolucion::Devolucion(const Devolucion& d) {
 
 Devolucion::~Devolucion() {
     delete[] this->explicacion;
+}
+
 }
 

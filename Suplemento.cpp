@@ -1,6 +1,9 @@
 #include "Suplemento.h"
 #include "bbdd.h"
 
+namespace productos
+{
+    
 Suplemento::Suplemento(char* nombre, char* tipo, float precio, int stock) {
     sqlite *db;
     this->id = maxIdProducto(db);
@@ -9,6 +12,7 @@ Suplemento::Suplemento(char* nombre, char* tipo, float precio, int stock) {
     this->precio = precio;
     this->stock = stock;
 }
+
 
 Suplemento::Suplemento(const Suplemento& s) {
     sqlite *db;
@@ -42,4 +46,6 @@ float Suplemento::getprecio() {
 
 int Suplemento::getstock() {
     return this->stock;
+}
+
 }

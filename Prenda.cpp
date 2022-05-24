@@ -1,5 +1,8 @@
 #include "Prenda.h"
 
+namespace producto
+{
+    
 Prenda::Prenda(char* nombre, char* tipo, char* color, char* talla, float precio, int sexo, int stock) {
     sqlite *db;
     this->id = maxIdProducto(db);
@@ -61,4 +64,6 @@ int Prenda::getsexo() {
 
 int Prenda::getstock() {
     return this->stock;
+}
+
 }

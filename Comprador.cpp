@@ -1,35 +1,39 @@
 #include "Comprador.h"
 
-Comprador::Comprador(/* args */)
+namespace usuario
 {
-}
+            
+    Comprador::Comprador(/* args */)
+    {
+    }
 
-Comprador::~Comprador()
-{
-}
+    Comprador::~Comprador()
+    {
+    }
 
 
-char getnombre()
-{
-    
-}
-int getidentificativo()
-{
-    
-}
-int gettelefono()
-{
+    char getnombre()
+    {
+        
+    }
+    int getidentificativo()
+    {
+        
+    }
+    int gettelefono()
+    {
 
-}
-char getcorreo()
-{
+    }
+    char getcorreo()
+    {
 
-}
-char getdireccion()
-{
+    }
+    char getdireccion()
+    {
 
-}
-char getcontrasena()
-{
+    }
+    char getcontrasena()
+    {
 
+    }
 }
