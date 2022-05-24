@@ -3,13 +3,26 @@
 
 #include "sqlite3.h"
 
-typedef struct {
+
+
+class Carrito
+{
+private:
    int idCompra;
    int idComprador;
    float precioTotal;
-} Carrito;
+public:
+   Carrito(/* args */);
+   ~Carrito();
+   Carrito crearCarrito(sqlite3 *db, int idCompra, int idComprador);
+   Carrito (const Carrito& e );
+   int getIdCompra(int idCompra);
+   int getidComprador(int idComprador);
+   float getprecioTotal(float precioTotal);
+   
 
-Carrito crearCarrito(sqlite3 *db, int idCompra, int idComprador);
+};
+
 
 
 #endif

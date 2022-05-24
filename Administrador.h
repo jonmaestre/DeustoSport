@@ -11,6 +11,7 @@ class Administrador
         char* funcion;
     public:
         Administrador(/* args */);
+        Administrador(/* args */);
         ~Administrador();
 };
 
