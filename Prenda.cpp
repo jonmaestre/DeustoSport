@@ -8,35 +8,35 @@ Prenda::~Prenda()
 {
 
 }
-int getidentificativo()
+int getIdentificativo()
 {
 
 }
-char* getnombre()
+char* getNombre()
 {
 
 }
-char* gettipo()
+char* getTipo()
 {
 
 }
-char* getcolor()
+char* getColor()
 {
 
 }
-char* gettalla()
+char* getTalla()
 {
 
 }
-float getprecio()
+float getPrecio()
 {
 
 }
-int getsexo()
+int getSexo()
 {
 
 }
-int getstock()
+int getStock()
 {
 
 }
