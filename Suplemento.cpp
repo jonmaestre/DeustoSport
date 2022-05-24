@@ -1,38 +1,45 @@
 #include "Suplemento.h"
+#include "bbdd.h"
 
-
-Suplemento::Suplemento(/* args */)
-{
-
+Suplemento::Suplemento(char* nombre, char* tipo, float precio, int stock) {
+    sqlite *db;
+    this->id = maxIdProducto(db);
+    this->nombre = new char[strlen(nombre)+1];;
+    this->tipo = new char[strlen(tipo)+1];;
+    this->precio = precio;
+    this->stock = stock;
 }
 
-Suplemento::~Suplemento()
-{
-
+Suplemento::Suplemento(const Suplemento& s) {
+    sqlite *db;
+    this->id = maxIdProducto(db);
+    this->nombre = new char[strlen(s.nombre)+1];;
+    this->tipo = new char[strlen(s.tipo)+1];;
+    this->precio = s.precio;
+    this->stock = s.stock;
 }
 
-
-int getidentificativo()
-{
-
+Suplemento::~Suplemento() {
+    delete[] this->nombre;
+    delete[] this->tipo;
 }
 
-char* getnombre()
-{
-
+int Suplemento::getidentificativo() {
+    return this->identificativo;
 }
 
-char* gettipo()
-{
-
+char* Suplemento::getnombre() {
+    return this->nombre;
 }
 
-float getprecio()
-{
-
+char* Suplemento::gettipo() {
+    return this->tipo;
 }
 
-int getstock()
-{
-    
+float Suplemento::getprecio() {
+    return this->precio;
+}
+
+int Suplemento::getstock() {
+    return this->stock;
 }

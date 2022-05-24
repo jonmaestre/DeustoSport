@@ -1,42 +1,64 @@
 #include "Prenda.h"
 
-Prenda::Prenda(/* args */)
-{
-
+Prenda::Prenda(char* nombre, char* tipo, char* color, char* talla, float precio, int sexo, int stock) {
+    sqlite *db;
+    this->id = maxIdProducto(db);
+    this->nombre = new char[strlen(nombre)+1];
+    this->tipo = new char[strlen(tipo)+1];
+    this->color = new char[strlen(color)+1];
+    this->talla = new char[strlen(talla)+1];
+    this->precio = precio;
+    this->sexo = sexo;
+    this->stock = stock;
 }
-Prenda::~Prenda()
-{
 
+Prenda::Prenda(const Predna& p) {
+    sqlite *db;
+    this->id = maxIdProducto(db);
+    this->nombre = new char[strlen(p.nombre)+1];
+    this->tipo = new char[strlen(p.tipo)+1];
+    this->color = new char[strlen(color)+1];
+    this->talla = new char[strlen(talla)+1];
+    this->precio = precio;
+    this->sexo = sexo;
+    this->stock = stock;
 }
-int getIdentificativo()
-{
 
+Prenda::~Prenda() {
+    delete[] this->nombre;
+    delete[] this->tipo;
+    delete[] this->color;
+    delete[] this->talla;
 }
-char* getNombre()
-{
 
+int Prenda::getidentificativo() {
+    return this->identificativo;
 }
-char* getTipo()
-{
 
+char* Prenda::getnombre() {
+    return this->nombre;
 }
-char* getColor()
-{
 
+char* Prenda::gettipo() {
+    return this->tipo;
 }
-char* getTalla()
-{
 
+char* Prenda::getcolor() {
+    return this->color;
 }
-float getPrecio()
-{
 
+char* Prenda::gettalla() {
+    return this->talla;
 }
-int getSexo()
-{
 
+float Prenda::getprecio() {
+    return this->precio;
 }
-int getStock()
-{
 
+int Prenda::getsexo() {
+    return this->sexo;
+}
+
+int Prenda::getstock() {
+    return this->stock;
 }
