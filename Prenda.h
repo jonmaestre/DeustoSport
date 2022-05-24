@@ -13,4 +13,31 @@ typedef struct {
 } Prenda;
 
 
+class Prenda
+{
+private:
+    int identificativo;
+    char* nombre;
+    char* tipo;
+    char* color;
+    char* talla;
+    float precio;
+    int sexo;
+    int stock;
+public:
+    Prenda(/* args */);
+    ~Prenda();
+    int getidentificativo();
+    char* getnombre();
+    char* gettipo();
+    char* getcolor();
+    char* gettalla();
+    float getprecio();
+    int getsexo();
+    int getstock();
+
+};
+
+
+
 #endif
