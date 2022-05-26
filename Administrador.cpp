@@ -30,6 +30,10 @@ namespace usuario
         return this->identificativo;
     }
 
+    char* getContrasena() {
+        return this->contrasena;
+    }
+
     char* Administrador::getFuncion() {
         return this->funcion;
     }

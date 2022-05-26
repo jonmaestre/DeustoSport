@@ -46,6 +46,7 @@ int inicio () {
 }
 
 
+
 Comprador registrar (sqlite3 *db) {
 
     char* nombre;
