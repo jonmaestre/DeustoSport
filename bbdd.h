@@ -11,6 +11,7 @@
 #include "MaterialDeportivo.h"
 #include "Prenda.h"
 #include "Suplemento.h"
+#include "Producto.h"
 #include "bbdd.h"
 #include "sqlite3.h"
 #include <stdio.h>

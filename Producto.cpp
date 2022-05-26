@@ -1,14 +1,15 @@
 #include "Producto.h"
+#include "stdio.h"
 
 namespace productos {
 
 
-    Producto::Producto(char* nombre, char* tipo, float precio, int stock) {
+    Producto::Producto(char* nombre, char* tipo, float precioBase, int stock) {
         sqlite3 *db;
         this->identificativo = maxIdProducto(db);
         this->nombre = new char[strlen(nombre)+1];
         this->tipo = new char[strlen(tipo)+1];
-        this->precio = precio;
+        this->precioBase = precioBase;
         this->stock = stock;
     }
 
@@ -17,7 +18,7 @@ namespace productos {
         this->identificativo = maxIdProducto(db);
         this->nombre = new char[strlen(p.nombre)+1];;
         this->tipo = new char[strlen(p.tipo)+1];;
-        this->precio = p.precio;
+        this->precioBase = p.precioBase;
         this->stock = p.stock;
     }
 
@@ -25,6 +26,8 @@ namespace productos {
         delete[] this->nombre;
         delete[] this->tipo;
     }
+
+    float Producto::precioFinal(){}
 
     int Producto::getIdentificativo() {
         return this->identificativo;
@@ -38,8 +41,8 @@ namespace productos {
         return this->tipo;
     }
 
-    float Producto::getPrecio() {
-        return this->precio;
+    float Producto::getPrecioBase() {
+        return this->precioBase;
     }
 
     int Producto::getStock() {
@@ -48,7 +51,7 @@ namespace productos {
 
 
 
-    Calzado::Calzado(char* nombre, char* tipo, char* color, int talla, float precio, int genero, int stock): Producto(nombre, tipo, precio, stock) {
+    Calzado::Calzado(char* nombre, char* tipo, char* color, int talla, float precioBase, int genero, int stock): Producto(nombre, tipo, precio, stock) {
         this->color = new char[strlen(color)+1];
         this->talla = talla;
         this->genero = genero;
@@ -62,6 +65,23 @@ namespace productos {
 
     Calzado::~Calzado() {
         delete[] color;
+    }
+
+    float Calzado::precioFinal(){
+        float precioF=0.0;
+        precioF+=this->getPrecioBase();
+        //tipo no se lo que hace si eso luego lo implemento
+        int talla=this->getTalla();
+        if(talla<=40){
+            precioF=precioF*1.25;
+        }else if (talla<=43)
+        {
+            precioF=precioF*1.75;
+        }else{
+            precioF=precioF*2;
+        }
+        
+        return precioF;
     }
 
     char* Calzado::getColor() {
@@ -78,7 +98,7 @@ namespace productos {
 
 
 
-    MaterialDeportivo::MaterialDeportivo(char* nombre, char* tipo, char* color, int talla, float precio, char* deporte, int stock): Producto(nombre, tipo, precio, stock) {
+    MaterialDeportivo::MaterialDeportivo(char* nombre, char* tipo, char* color, int talla, float precioBase, char* deporte, int stock): Producto(nombre, tipo, precio, stock) {
         this->color = new char[strlen(color)+1];
         this->talla = talla;
         this->deporte=new char[strlen(deporte)+1];
@@ -95,6 +115,24 @@ namespace productos {
         delete[] deporte;
     }
 
+        float MaterialDeportivo::precioFinal(){
+        float precioF=0.0;
+        precioF+=this->getPrecioBase();
+        //tipo no se lo que hace si eso luego lo implemento
+        //este por hacer ya que no se que tallas se van a usar más o menos
+        int talla=this->getTalla();
+        if(talla<=40){
+            precioF=precioF*1.25;
+        }else if (talla<=43)
+        {
+            precioF=precioF*1.75;
+        }else{
+            precioF=precioF*2;
+        }
+        
+        return precioF;
+    }
+
     char* MaterialDeportivo::getColor() {
        return this->color;
     }
@@ -109,7 +147,7 @@ namespace productos {
 
 
 
-    Prenda::Prenda(char* nombre, char* tipo, char* color, int talla, float precio, int sexo, int stock): Producto(nombre, tipo, precio, stock) {
+    Prenda::Prenda(char* nombre, char* tipo, char* color, int talla, float precioBase, int sexo, int stock): Producto(nombre, tipo, precio, stock) {
     this->color = new char[strlen(color)+1];
     this->talla = talla;
     this->sexo=sexo;
@@ -123,6 +161,31 @@ namespace productos {
 
     Prenda::~Prenda() {
         delete[] color;
+    }
+
+        float Prenda::precioFinal(){
+        float precioF=0.0;
+        precioF+=this->getPrecioBase();
+        //tipo no se lo que hace si eso luego lo implemento
+        //tallas a ver ya que no se si éstas commo van a ir
+        int talla=this->getTalla();
+        if(talla<=40){
+            precioF=precioF*1.25;
+        }else if (talla<=43)
+        {
+            precioF=precioF*1.75;
+        }else{
+            precioF=precioF*2;
+        }
+
+        int sexo=this->sexo;
+        if(sexo==0){
+            precioF==precioF*1.5;
+        }else{
+            precioF==precioF*1.75;
+        }
+        
+        return precioF;
     }
 
     char* Prenda::getColor() {
@@ -139,15 +202,33 @@ namespace productos {
 
 
 
-    Suplemento::Suplemento(char* nombre, char* tipo, float precio, int stock, int nivelEnergia): Producto(nombre, tipo, precio, stock): Producto(nombre, tipo, precio, stock) {
+    Suplemento::Suplemento(char* nombre, char* tipo, float precioBase, int stock, int nivelEnergia): Producto(nombre, tipo, precioBase, stock) {
         this->nivelEnergia = nivelEnergia;
     }
 
-    Suplemento::Suplemento(const Suplemento& s): Producto(p) {
+    Suplemento::Suplemento(const Suplemento& s): Producto(s) {
         this->nivelEnergia = nivelEnergia;
     }
 
     Suplemento::~Suplemento() {
+    }
+
+        float Suplemento::precioFinal(){
+        float precioF=0.0;
+        precioF+=this->getPrecioBase();
+        //tipo no se lo que hace si eso luego lo implemento
+        //niveles de energia a discutir
+        int nivEn=this->getNivelEnergia();
+        if(nivEn<=40){
+            precioF=precioF*1.25;
+        }else if (nivEn<=43)
+        {
+            precioF=precioF*1.75;
+        }else{
+            precioF=precioF*2;
+        }
+        
+        return precioF;
     }
 
     int Suplemento::getNivelEnergia() {
