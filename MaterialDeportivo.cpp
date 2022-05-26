@@ -4,7 +4,7 @@
 
 namespace prod{
 
-MD::MD(char* nombre, char* tipo, char* color, int talla, float precioBase, char* deporte, int stock): Producto(nombre,tipo,precioBase,stock)
+MaterialDeportivo::MaterialDeportivo(char* nombre, char* tipo, char* color, int talla, float precioBase, char* deporte, int stock): Producto(nombre,tipo,precioBase,stock)
 {
     
     this->color = new char[strlen(color)+1];
@@ -12,27 +12,27 @@ MD::MD(char* nombre, char* tipo, char* color, int talla, float precioBase, char*
     this->deporte=new char[strlen(deporte)+1];
 }
 
-MD::MD(const MD &md) : Producto(md) {
+MaterialDeportivo::MaterialDeportivo(const MaterialDeportivo &md) : Producto(md) {
         
         this->color = new char[strlen(md.color)+1];
         this->talla = md.talla;
         this->deporte = new char[strlen(md.deporte)+1];
     }
 
-MD::~MD() {
+MaterialDeportivo::~MaterialDeportivo() {
         delete[] color;
         delete[] deporte;
     }
 
-char* MD::getColor() {
+char* MaterialDeportivo::getColor() {
        return this->color;
 }
 
-int MD::getTalla() {
+int MaterialDeportivo::getTalla() {
         return this->talla;
 }
 
-char* MD::getDeporte() {
+char* MaterialDeportivo::getDeporte() {
         return this->deporte;
 }
 }

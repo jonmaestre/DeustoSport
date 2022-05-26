@@ -1,8 +1,7 @@
 #include "Administrador.h"
 #include "bbdd.h"
-namespace usuario
-{
-    Administrador::Administrador(char* nombre, char* contrasena, char* funcion) {
+
+Administrador::Administrador(char* nombre, char* contrasena, char* funcion) {
     sqlite3 *db;
     this->nombre = nombre;
     this->identificativo = idMaxAdmin(db);
@@ -10,31 +9,30 @@ namespace usuario
     this->funcion = new char[strlen(funcion)+1];
 }
 
-    Administrador::Administrador(const Administrador& a) {
-        sqlite3 *db;
-        this->nombre = a.nombre;
-        this->identificativo = idMaxAdmin(db);
-        this->contrasena = a.contrasena;
-        this->funcion = new char[strlen(a.funcion)+1];
-    }
+Administrador::Administrador(const Administrador& a) {
+    sqlite3 *db;
+    this->nombre = a.nombre;
+    this->identificativo = idMaxAdmin(db);
+    this->contrasena = a.contrasena;
+    this->funcion = new char[strlen(a.funcion)+1];
+}
 
-    Administrador::~Administrador() {
-        delete[] this->funcion;
-    }
+Administrador::~Administrador() {
+    delete[] this->funcion;
+}
 
-    char* Administrador::getNombre() {
-        return this->nombre;
-    }
+char* Administrador::getNombre() {
+    return this->nombre;
+}
 
-    int Administrador::getIdentificativo() {
-        return this->identificativo;
-    }
+int Administrador::getIdentificativo() {
+    return this->identificativo;
+}
 
-    char* getContrasena() {
-        return this->contrasena;
-    }
+char* Administrador::getContrasena() {
+    return this->contrasena;
+}
 
-    char* Administrador::getFuncion() {
-        return this->funcion;
-    }
+char* Administrador::getFuncion() {
+    return this->funcion;
 }

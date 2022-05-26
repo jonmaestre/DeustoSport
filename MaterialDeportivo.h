@@ -4,15 +4,15 @@
 
 #include "Productos.h"
 
-class MD : public Producto
+class MaterialDeportivo : public Producto
 {
     char *color;
     int talla;
     char *deporte;
 public:
-    MD(char* nombre, char* tipo, char* color, int talla, float precioBase, char* deporte, int stock);
-    MD(const MD& md);
-    virtual ~MD();
+    MaterialDeportivo(char* nombre, char* tipo, char* color, int talla, float precioBase, char* deporte, int stock);
+    MaterialDeportivo(const MaterialDeportivo& md);
+    virtual ~MaterialDeportivo();
     
     char* getColor();
     int getTalla();

@@ -5,7 +5,7 @@ namespace productos
 {
     
 Suplemento::Suplemento(char* nombre, char* tipo, float precio, int stock) {
-    sqlite *db;
+    sqlite3 *db;
     this->id = maxIdProducto(db);
     this->nombre = new char[strlen(nombre)+1];;
     this->tipo = new char[strlen(tipo)+1];;
@@ -15,7 +15,7 @@ Suplemento::Suplemento(char* nombre, char* tipo, float precio, int stock) {
 
 
 Suplemento::Suplemento(const Suplemento& s) {
-    sqlite *db;
+    sqlite3 *db;
     this->id = maxIdProducto(db);
     this->nombre = new char[strlen(s.nombre)+1];;
     this->tipo = new char[strlen(s.tipo)+1];;

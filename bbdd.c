@@ -580,8 +580,8 @@ MaterialDeportivo obtenerMaterial (sqlite3 *db, int id){
     sqlite3_stmt *stmt;
 	char sql[100];
 
-	int iden, stock;
-	char nombre[100], tipo[15], color[15], talla[3], deporte[20];
+	int iden, stock, talla;
+	char nombre[100], tipo[15], color[15], deporte[20];
 	float precio;
 
 	sprintf(sql, "SELECT * FROM Material_Deportivo WHERE idProducto = %i",id);
@@ -591,7 +591,7 @@ MaterialDeportivo obtenerMaterial (sqlite3 *db, int id){
 	strcpy(nombre, (char*)sqlite3_column_text(stmt, 1));
 	strcpy(tipo, (char*)sqlite3_column_text(stmt, 2));
 	strcpy(color, (char*)sqlite3_column_text(stmt, 3));
-	strcpy(talla, (char*)sqlite3_column_text(stmt, 4));
+	strcpy(talla, (int)sqlite3_column_int(stmt, 4));
 	precio = (float)sqlite3_column_double(stmt, 5);
 	strcpy(deporte, (char*)sqlite3_column_text(stmt, 6));
 	stock = (int)sqlite3_column_int(stmt, 7);
@@ -603,13 +603,13 @@ MaterialDeportivo obtenerMaterial (sqlite3 *db, int id){
 	return material;
 }
 
-void agregarMD(sqlite3 *db, char* nom, char* tipo, char* color, char* talla, float precio, char* deporte, int cantidad){
+void agregarMD(sqlite3 *db, char* nom, char* tipo, char* color, int talla, float precio, char* deporte, int cantidad){
     sqlite3_stmt *stmt;
 
 	char sql[100];
 	int maxId = maxIdProducto(db);
 
-	sprintf(sql, "INSERT INTO Material_Deportivo VALUES (%i, %s, %s, %s, %s, %f, %s, %i)", maxId+1, nom, tipo, color, talla, precio, deporte, cantidad);
+	sprintf(sql, "INSERT INTO Material_Deportivo VALUES (%i, %s, %s, %s, %i, %f, %s, %i)", maxId+1, nom, tipo, color, talla, precio, deporte, cantidad);
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	sqlite3_step(stmt);
 

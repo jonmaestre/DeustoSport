@@ -1,3 +1,20 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include <iostream>
+using namespace std;
+
+#include "Administrador.h"
+#include "Calzado.h"
+#include "Carrito.h"
+#include "Compra.h"
+#include "Comprador.h"
+#include "MaterialDeportivo.h"
+#include "Prenda.h"
+#include "Suplemento.h"
+#include "bbdd.h"
+#include "sqlite3.h"
 #include "funcionesAdmin.h"
 
 #define PROGRAMADORES 5
@@ -7,7 +24,7 @@ Administrador iniciarAdmin (sqlite3 *db) {
 
     // revisar los char*
     int identificativo;
-    char contrasena;
+    char* contrasena;
     int respuestaPregunta;
     // si realmente son administradores, sabrán la respuesta a una pregunta. siempre la misma.
 
@@ -18,7 +35,7 @@ Administrador iniciarAdmin (sqlite3 *db) {
     cout << "IDENTIFICATIVO PROPIO: " << endl;
     cin >> identificativo;
 	cout << "CONTRASEÑA: " << endl;
-    cin >> contrasena;
+    cin >> *contrasena;
     cout << "¿CUÁNTOS PROGRAMADORES HAY EN 'DeustoSportKit'?: " << endl;
     cin >> respuestaPregunta;
 
@@ -38,17 +55,16 @@ Administrador iniciarAdmin (sqlite3 *db) {
             return NULL;
         } else {
             // Si lo es, habrá que coger el administrador con dicho identificativo y comparar la informacion de este con la introducida
-            Administrador administrador;
-            administrador = obtenerAdmin(db, identificativo);
+            Administrador administrador = obtenerAdmin(db, identificativo);
 
-            if (administrador.getContrasena() != contrasena) {
+            if (strcmp(administrador.getContrasena(), contrasena) != 0) {
                 // Si no coincide la contrasena, podra volver a introducirla una vez mas.
                 cout << "Algo ha ido mal. Vuelva a introducir los datos." << endl;
                 cout << "Recuerde que solo tiene una oportunidad más " << endl;
                 cout << "CONTRASEÑA: " << endl;
-                cin >> contrasena;
+                cin >> *contrasena;
 
-                if (administrador.getContrasena() != contrasena) {
+                if (strcmp(administrador.getContrasena(), contrasena) != 0) {
                     // En caso de fallar la segunda vez, se devolvera null para que no siga adelante
                     cout << "¡ERROR!" << endl;
                     return NULL;
@@ -90,12 +106,7 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
 
     if (tipo == 1) {
         
-        typeProd[0] = 'P';
-        typeProd[1] = 'r';
-        typeProd[2] = 'e';
-        typeProd[3] = 'n';
-        typeProd[4] = 'd';
-        typeProd[5] = 'a';
+        strcpy(typeProd, "Prenda");
 
         agregarProducto(db, typeProd);
 
@@ -131,13 +142,13 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
             cout << "0. Hombre " << endl;
             cout << "1. Mujer " << endl;
             cin >> sexo;
-        } while (*sexo != 0 || *sexo != 1);
+        } while (sexo != 0 || sexo != 1);
 
         cout << "STOCK: " << endl;
         cin >> stock;
 
         // Se agrega el producto a la base de datos
-        agregarPrenda(db, nombre, tipoPren, color, talla, *precio, *sexo, *stock);
+        agregarPrenda(db, nombre, tipoPren, color, talla, precio, sexo, stock);
 
         // Se libera la memoria almacenada
         delete[] nombre;
@@ -146,13 +157,7 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
     
     } else if (tipo == 2) {
         
-        typeProd[0] = 'C';
-        typeProd[1] = 'a';
-        typeProd[2] = 'l';
-        typeProd[3] = 'z';
-        typeProd[4] = 'a';
-        typeProd[5] = 'd';
-        typeProd[6] = 'o';
+        strcpy(typeProd, "Calzado");
 
         agregarProducto(db, typeProd);
 
@@ -201,16 +206,7 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
     
     } else if (tipo == 3) {
         
-        typeProd[0] = 'M';
-        typeProd[1] = 'a';
-        typeProd[2] = 't';
-        typeProd[3] = 'e';
-        typeProd[4] = 'r';
-        typeProd[5] = 'D';
-        typeProd[6] = 'e';
-        typeProd[7] = 'p';
-        typeProd[8] = 'o';
-        typeProd[9] = 'r';
+        strcpy(typeProd, "MaterDepor");
 
         agregarProducto(db, typeProd);
 
@@ -255,16 +251,7 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
     
     } else if (tipo == 4) {
         
-        typeProd[0] = 'S';
-        typeProd[1] = 'u';
-        typeProd[2] = 'p';
-        typeProd[3] = 'l';
-        typeProd[4] = 'e';
-        typeProd[5] = 'm';
-        typeProd[6] = 'e';
-        typeProd[7] = 'n';
-        typeProd[8] = 't';
-        typeProd[9] = 'o';
+        strcpy(typeProd, "Suplemento");
 
         agregarProducto(db, typeProd);
 
@@ -363,10 +350,10 @@ void eliminarProductoAdmin (sqlite3 *db, Administrador administrador) {
     if (tipo == 'C') {
 
         Calzado cal =  obtenerCalzado (db, iden);
-        cout << "El calzado " << iden << " es: " << cal.getNombre << endl;
+        cout << "El calzado " << iden << " es: " << cal.getNombre() << endl;
         cout << "¿Está seguro de que quiere eliminarlo?\n" << endl;
         cout << "1. Sí " << endl;
-        endl << "2. No " << endl;
+        cout << "2. No " << endl;
         cin >> eleccion;
 
         if (eleccion == 1) {
@@ -377,7 +364,7 @@ void eliminarProductoAdmin (sqlite3 *db, Administrador administrador) {
     } else if (tipo == 'M') {
 
         MaterialDeportivo matD =  obtenerMaterial (db, iden);
-        cout << "El material deportivo " << iden << " es: " matD.getNombre << endl; 
+        cout << "El material deportivo " << iden << " es: " << matD.getNombre() << endl; 
         cout << "¿Está seguro de que quiere eliminarlo?" << endl;
         cout << "1. Sí " << endl;
         cout << "2. No " << endl;
@@ -391,7 +378,7 @@ void eliminarProductoAdmin (sqlite3 *db, Administrador administrador) {
     } else if (tipo == 'P') {
 
         Prenda pren =  obtenerPrenda (db, iden);
-        cout << "La prenda " << iden << " es: " pren.getNombre << endl; 
+        cout << "La prenda " << iden << " es: " zz pren.getNombre() << endl; 
         cout << "¿Está seguro de que quiere eliminarlo?" << endl;
         cout << "1. Sí " << endl;
         cout << "2. No " << endl;
@@ -405,7 +392,7 @@ void eliminarProductoAdmin (sqlite3 *db, Administrador administrador) {
     } else if (tipo == 'S') {
 
         Suplemento sup =  obtenerSuplemento (db, iden);
-        cout << "El suplemento " << iden << " es: " sup.getNombre << endl; 
+        cout << "El suplemento " << iden << " es: " << sup.getNombre() << endl; 
         cout << "¿Está seguro de que quiere eliminarlo?" << endl;
         cout << "1. Sí " << endl;
         cout << "2. No " << endl;
@@ -432,7 +419,7 @@ void ventanaAdmin (sqlite3 *db, Administrador administrador) {
         cout << "Pulsa 0 para salir" << endl;
 
         do {
-            cout << "¿Qué desea hacer, " << administrador.getNombre << "?" <<endl;
+            cout << "¿Qué desea hacer, " << administrador.getNombre() << "?" <<endl;
             cin >> eleccion;
         } while (!(eleccion>= 0 && eleccion<=3));
 
