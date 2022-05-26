@@ -1,64 +1,38 @@
 #include "Calzado.h"
 #include "bbdd.h"
 
-namespace producto
+
+namespace prod{
+
+Calzado::Calzado(char* nombre, char* tipo, char* color, int talla, float precioBase, int genero, int stock): Producto(nombre,tipo,precioBase,stock)
 {
-    Calzado(char* nombre, char* tipo, char* color, char* talla, float precio, int genero, int stock) {
-    sqlite *db;
-    this->id = maxIdProducto(db);
-    this->nombre = new char[strlen(nombre)+1];
-    this->tipo = new char[strlen(tipo)+1];
+    
     this->color = new char[strlen(color)+1];
-    this->talla = new char[strlen(talla)+1];
-    this->precio = precio;
-    this->genero = generao;
-    this->stock = stock;
+    this->talla = talla;
+    this->genero = genero;
 }
 
-    Calzado(const Calzado& c) {
-        sqlite *db;
-        this->id = maxIdProducto(db);
-        this->nombre = new char[strlen(c.nombre)+1];
-        this->tipo = new char[strlen(c.tipo)+1];
+Calzado::Calzado(const Calzado &c) : Producto(c) {
+        
         this->color = new char[strlen(c.color)+1];
-        this->talla = new char[strlen(c.talla)+1];
-        this->precio = c.precio;
-        this->genero = c.generao;
-        this->stock = c.stock;
+        this->talla = c.talla;
+        this->genero = c.genero;
     }
 
-    ~Calzado() {
-        delete[] this->nombre;
-        delete[] this->tipo;
-        delete[] this->color;
-        delete[] this->talla;
+Calzado::~Calzado() {
+        delete[] color;
+        delete this->talla;
     }
 
-    char* getNombre() {
-        return this->nombre;
-    }
+char* Calzado::getColor() {
+       return this->color;
+}
 
-    char* getTipo() {
-        return this->tipo;
-    }
-
-    char* getColor() {
-        return this->color;
-    }
-
-    int getTalla() {
+int Calzado::getTalla() {
         return this->talla;
-    }
+}
 
-    float getPrecio() {
-        return this->precio;
-    }
-
-    int getGenero() {
+int Calzado::getGenero() {
         return this->genero;
-    }
-
-    int getStock() {
-    return this->stock:
 }
 }

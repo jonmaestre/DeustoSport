@@ -1,32 +1,23 @@
 #ifndef PRENDA_H_
 #define PRENDA_H_
 
-class Prenda
+#include "Productos.h"
+
+class Prenda : public Producto
 {
-private:
-    int identificativo;
-    char* nombre;
-    char* tipo;
-    char* color;
-    char* talla;
-    float precio;
+    char *color;
+    int talla;
     int sexo;
-    int stock;
 public:
-    Prenda(char* nombre, char* tipo, char* color, char* talla, float precio, int sexo, int stock);
+    Prenda(char* nombre, char* tipo, char* color, int talla, float precioBase, int sexo, int stock);
     Prenda(const Prenda& p);
-    ~Prenda();
-    int getidentificativo();
-    char* getnombre();
-    char* gettipo();
-    char* getcolor();
-    char* gettalla();
-    float getprecio();
-    int getsexo();
-    int getstock();
-
+    virtual ~Prenda();
+    
+    char* getColor();
+    int getTalla();
+    int getSexo();
+    
 };
-
 
 
 #endif

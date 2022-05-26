@@ -1,28 +1,24 @@
 #ifndef MATERIALDEPORTIVO_H_
 #define MATERIALDEPORTIVO_H_
 
-class MaterialDeportivo
+
+#include "Productos.h"
+
+class MD : public Producto
 {
-private:
-    int identificativo;
-    char* nombre;
-    char* tipo;
-    char* color;
-    char* talla;
-    float precio;
-    char* deporte;
-    int stock;
+    char *color;
+    int talla;
+    char *deporte;
 public:
-    MaterialDeportivo(/* args */);
-    ~MaterialDeportivo();
-    int getidentificativo();
-    char getnombre();
-    char gettipo();
-    char getcolor();
-    char gettalla();
-    float getprecio();
-    char getdeporte();
-    int getstock();
+    MD(char* nombre, char* tipo, char* color, int talla, float precioBase, char* deporte, int stock);
+    MD(const MD& md);
+    virtual ~MD();
+    
+    char* getColor();
+    int getTalla();
+    char* getDeporte();
+    
 };
+
 
 #endif
