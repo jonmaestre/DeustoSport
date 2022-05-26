@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <iostream>
+using namespace std;
 
 #include "Administrador.h"
 #include "Calzado.h"
@@ -14,7 +15,7 @@
 #include "Suplemento.h"
 #include "bbdd.h"
 #include "sqlite3.h"
-#include "main.c"
+#include "funcionesAdmin.h"
 
 
 int main (void) {
@@ -36,7 +37,7 @@ int main (void) {
     } while (!(respuesta == 0 || respuesta <=1));
 
     if (respuesta == 0) {
-        cou << "¡Que pase un buen dia!";
+        cout << "¡Que pase un buen dia!";
     } else {
         Administrador administrador = iniciarAdmin (db);
     }
