@@ -1,11 +1,7 @@
 #include "Administrador.h"
-#include "Calzado.h"
 #include "Carrito.h"
 #include "Compra.h"
 #include "Comprador.h"
-#include "MaterialDeportivo.h"
-#include "Prenda.h"
-#include "Suplemento.h"
 #include "bbdd.h"
 #include "sqlite3.h"
 #include <stdio.h>

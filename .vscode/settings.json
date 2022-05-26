@@ -2,7 +2,9 @@
     "files.associations": {
         "vector": "cpp",
         "iostream": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "stdbool.h": "c",
+        "stdlib.h": "c"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

@@ -1,5 +1,6 @@
 #include "Producto.h"
 #include "string.h"
+#include "bbdd.h"
 
 
 namespace productos {
