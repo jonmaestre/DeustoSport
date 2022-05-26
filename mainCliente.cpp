@@ -44,6 +44,7 @@ int inicio () {
 //---------------------------------------------------------------------------------------------
 Comprador registrar (sqlite3 *db) {
 
+    // Reserva el espacio en memoria para cda uno de los aspectos a registrar
     char* nombre;
     nombre -> malloc(50*sizeof(char));
     int* telefono;
@@ -60,6 +61,7 @@ Comprador registrar (sqlite3 *db) {
     printf("REGISTRAR \n");
     printf("---------------------------------\n");
 
+    //Registra los aspectos que se piden y guarda las repuestas 
     printf("NOMBRE: \n");
     scanf("%c", nombre);
     printf("TELEFONO: \n");
@@ -73,6 +75,7 @@ Comprador registrar (sqlite3 *db) {
     printf("REPITA CONTRASEÑA: \n");
     scanf("%c", contrasena2);
 
+    //Comprueba si existe Un usario con el correo ya registrado 
     bool existe = existeComprador(db, correo);
     while (existe) {
         printf("El correo introducido ya existe. Por favor, introduzca otro. \n");
@@ -81,6 +84,7 @@ Comprador registrar (sqlite3 *db) {
         bool existe = existeComprador(db, correo);
     }
 
+    //En caso de no escribir la misma contraseña en Contraseña y en repita contraseña pide que se vuelva a escribir
     while (&contrasena1 != &contrasena2) {
         printf("¡Vaya! Parece que ha habido un error. \n");
         printf("Vuelve a introducir la contraseña. \n");
@@ -100,6 +104,7 @@ Comprador registrar (sqlite3 *db) {
 
 Comprador* iniciarCliente (sqlite3 *db) {
 
+    //En caso de que el cliente ya este registrado guarda spacio en memoria para el correo y contraseña
     char* correo;
     correo -> malloc(100*sizeof(char));
     char* contrasena;
@@ -108,6 +113,7 @@ Comprador* iniciarCliente (sqlite3 *db) {
     printf("INCIAR SESIÓN \n");
     printf("---------------------------------\n");
 
+    //Se pide su correo y contraseña y los guarda
     printf("CORREO ELECTRÓNICO: \n");
     scanf("%c", correo);
 	printf("CONTRASEÑA: \n");
@@ -115,6 +121,7 @@ Comprador* iniciarCliente (sqlite3 *db) {
 
     Comprador* persona;
 
+    //En caso de que no encuentre la informacion introducida pide que se registre o reintente meter la informacion de usuario
     bool existe = existeComprador(db, correo);
     if (existe == false) {
         int deNuevo;
@@ -168,7 +175,7 @@ Comprador* iniciarCliente (sqlite3 *db) {
         }
 
     } else {
-
+        
         *persona = obtenerComprador (db, correo);
         char* correito = (*persona)->correo;
         char* contra = (*persona)->contrasena;
@@ -187,7 +194,7 @@ Comprador* iniciarCliente (sqlite3 *db) {
     }
 }
 
-
+// Funcion para añadir al carrito el elemento deseado
 void anadirACarrito (sqlite3 *db, int** arrayProductos, int sizeArray, int idProd, int cant) {
 
     arrayProductos[sizeArray][0] = idProd;
@@ -195,7 +202,7 @@ void anadirACarrito (sqlite3 *db, int** arrayProductos, int sizeArray, int idPro
 
 }
 
-
+// Lo que se añadidp al carrito se compra 
 void comprarCarrito (sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray) {
     
     int idCarrito = ultimoCarrito (db);
@@ -213,7 +220,7 @@ void comprarCarrito (sqlite3 *db, Comprador comprador, int** arrayProductos, int
 }
 
 
-
+//Elimina lo que este añadido al carrito 
 void eliminarDeCarrito (sqlite3 *db, int** arrayProductos, int* sizeArray, int indice) {
 
     indice = indice - 1;
@@ -226,7 +233,7 @@ void eliminarDeCarrito (sqlite3 *db, int** arrayProductos, int* sizeArray, int i
 
 }
 
-
+// 
 int* iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** arrayProductos) {
     int* respuesta;
 
