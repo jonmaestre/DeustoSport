@@ -1,5 +1,6 @@
 #include "Producto.h"
-#include "stdio.h"
+#include "string.h"
+
 
 namespace productos {
 
@@ -51,7 +52,7 @@ namespace productos {
 
 
 
-    Calzado::Calzado(char* nombre, char* tipo, char* color, int talla, float precioBase, int genero, int stock): Producto(nombre, tipo, precio, stock) {
+    Calzado::Calzado(char* nombre, char* tipo, char* color, int talla, float precioBase, int genero, int stock): Producto(nombre, tipo, precioBase, stock) {
         this->color = new char[strlen(color)+1];
         this->talla = talla;
         this->genero = genero;
@@ -98,7 +99,7 @@ namespace productos {
 
 
 
-    MaterialDeportivo::MaterialDeportivo(char* nombre, char* tipo, char* color, int talla, float precioBase, char* deporte, int stock): Producto(nombre, tipo, precio, stock) {
+    MaterialDeportivo::MaterialDeportivo(char* nombre, char* tipo, char* color, int talla, float precioBase, char* deporte, int stock): Producto(nombre, tipo, precioBase, stock) {
         this->color = new char[strlen(color)+1];
         this->talla = talla;
         this->deporte=new char[strlen(deporte)+1];
@@ -147,7 +148,7 @@ namespace productos {
 
 
 
-    Prenda::Prenda(char* nombre, char* tipo, char* color, int talla, float precioBase, int sexo, int stock): Producto(nombre, tipo, precio, stock) {
+    Prenda::Prenda(char* nombre, char* tipo, char* color, int talla, float precioBase, int sexo, int stock): Producto(nombre, tipo, precioBase, stock) {
     this->color = new char[strlen(color)+1];
     this->talla = talla;
     this->sexo=sexo;
