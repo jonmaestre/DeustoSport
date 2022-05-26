@@ -1,69 +1,38 @@
 #include "Prenda.h"
+#include "bbdd.h"
 
-namespace producto
+
+namespace prod{
+
+Prenda::Prenda(char* nombre, char* tipo, char* color, int talla, float precioBase, int sexo, int stock): Producto(nombre,tipo,precioBase,stock)
 {
     
-Prenda::Prenda(char* nombre, char* tipo, char* color, char* talla, float precio, int sexo, int stock) {
-    sqlite *db;
-    this->id = maxIdProducto(db);
-    this->nombre = new char[strlen(nombre)+1];
-    this->tipo = new char[strlen(tipo)+1];
     this->color = new char[strlen(color)+1];
-    this->talla = new char[strlen(talla)+1];
-    this->precio = precio;
-    this->sexo = sexo;
-    this->stock = stock;
+    this->talla = talla;
+    this->sexo=sexo;
 }
 
-Prenda::Prenda(const Predna& p) {
-    sqlite *db;
-    this->id = maxIdProducto(db);
-    this->nombre = new char[strlen(p.nombre)+1];
-    this->tipo = new char[strlen(p.tipo)+1];
-    this->color = new char[strlen(color)+1];
-    this->talla = new char[strlen(talla)+1];
-    this->precio = precio;
-    this->sexo = sexo;
-    this->stock = stock;
-}
+Prenda::Prenda(const Prenda &p) : Producto(p) {
+        
+        this->color = new char[strlen(p.color)+1];
+        this->talla = p.talla;
+        this->sexo = p.sexo;
+    }
 
 Prenda::~Prenda() {
-    delete[] this->nombre;
-    delete[] this->tipo;
-    delete[] this->color;
-    delete[] this->talla;
+        delete[] color;
+        delete[] this->talla;
+    }
+
+char* Prenda::getColor() {
+       return this->color;
 }
 
-int Prenda::getidentificativo() {
-    return this->identificativo;
+int Prenda::getTalla() {
+        return this->talla;
 }
 
-char* Prenda::getnombre() {
-    return this->nombre;
+int Prenda::getSexo() {
+        return this->sexo;
 }
-
-char* Prenda::gettipo() {
-    return this->tipo;
-}
-
-char* Prenda::getcolor() {
-    return this->color;
-}
-
-char* Prenda::gettalla() {
-    return this->talla;
-}
-
-float Prenda::getprecio() {
-    return this->precio;
-}
-
-int Prenda::getsexo() {
-    return this->sexo;
-}
-
-int Prenda::getstock() {
-    return this->stock;
-}
-
 }

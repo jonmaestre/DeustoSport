@@ -1,28 +1,22 @@
 #ifndef CALZADO_H_
 #define CALZADO_H_
 
-class Calzado
+#include "Productos.h"
+
+class Calzado : public Producto
 {
-private:
-    int id;
-    char* nombre;
-    char* tipo;
-    char* color;
+    char *color;
     int talla;
-    float precio;
     int genero;
-    int stock;
 public:
-    Calzado(char* nombre, char* tipo, char* color, char* talla, float precio, int genero, int stock);
+    Calzado(char* nombre, char* tipo, char* color, int talla, float precioBase, int genero, int stock);
     Calzado(const Calzado& c);
-    ~Calzado();
-    char* getNombre();
-    char* getTipo();
+    virtual ~Calzado();
+    
     char* getColor();
-    char* getTalla();
-    float getPrecio();
+    int getTalla();
     int getGenero();
-    int getStock();
+    
 };
 
 
