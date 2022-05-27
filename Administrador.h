@@ -2,23 +2,23 @@
 #define ADMINISTRADOR_H_
 
 
-class Administrador
-{
-    private:
-        char* nombre;
-        int identificativo;
-        char* contrasena;
-        char* funcion;
-    public:
-        Administrador(char* nombre, char* contrasena, char* funcion);
-        Administrador(const Administrador& a);
-        ~Administrador();
-        char* getNombre();
-        int getIdentificativo();
-        char* getContrasena();
-        char* getFuncion();
-};
+typedef struct {
+	char* nombre;
+    int identificativo;
+    char* contrasena;
+    char* funcion;
+} Administrador;
 
+
+Administrador iniciarAdmin (sqlite3 *db);
+
+void crearProductoAdmin (sqlite3 *db, Administrador administrador);
+
+void recargarProoductoAdmin (sqlite3 *db, Administrador administrador);
+
+void eliminarProductoAdmin (sqlite3 *db, Administrador administrador);
+
+void ventanaAdmin (sqlite3 *db, Administrador administrador);
 
 
 #endif
