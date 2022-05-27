@@ -1,10 +1,7 @@
 #include "Compra.h"
 
 
-
-namespace acciones
-{
-    Compra::Compra(int idProducto, int idComprador, int cantidad) {
+Compra::Compra(int idProducto, int idComprador, int cantidad) {
     this->idProducto = idProducto;
     this->idComprador = idComprador;
     this->cantidad = cantidad;
@@ -20,19 +17,18 @@ Compra::~Compra() {
 
 }
 
-int Compra::getidentificativo() {
+int Compra::getIdentificativo() {
     return this->identificativo;
 }
 
-int Compra::getidProducto() {
+int Compra::getIdProducto() {
     return this->idProducto;
 }
 
-int Compra::getidComprador() {
+int Compra::getIdComprador() {
     return this->idComprador;
 }
 
 int Compra::getCantidad() {
     return this->cantidad;
-}
 }

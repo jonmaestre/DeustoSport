@@ -12,14 +12,15 @@ private:
     char* contrasena;
 
 public:
-    Comprador(/* args */);
+    Comprador(char* nombre, int identificativo, int telefono, char* correo, char* direccion, char* contrasena);
+    Comprador(const Comprador& c);
     ~Comprador();
-    char getnombre();
-    int getidentificativo();
-    int gettelefono();
-    char getcorreo();
-    char getdireccion();
-    char getcontrasena();
+    char getNombre();
+    int getIdentificativo();
+    int getTelefono();
+    char getCorreo();
+    char getDireccion();
+    char getContrasena();
 };
 
 
