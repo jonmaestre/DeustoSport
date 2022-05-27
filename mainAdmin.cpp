@@ -23,21 +23,21 @@ int main (void) {
     sqlite3 *db;
 	int result = sqlite3_open("BaseDatos.db", &db);
 
-    cout << "BIENVENIDX A DEUSTOSPORTKIT :) \n" << endl;
+    printf("BIENVENIDX A DEUSTOSPORTKIT :) \n");
 
-    cout << "1. Iniciar sesion como administrador" << endl;
-    cout << "Pulsar 0 para salir" << endl;
-    cout << "\n" << endl;
+    printf("1. Iniciar sesion como administrador \n");
+    printf("Pulsar 0 para salir \n");
+    printf("\n");
 
     int respuesta;
 
     do {
-	    cout << "Opción: " << endl;
-        cin >> respuesta;
+	    printf("Opción: \n");
+        scanf("i", &respuesta);
     } while (!(respuesta == 0 || respuesta <=1));
 
     if (respuesta == 0) {
-        cout << "¡Que pase un buen dia!";
+        printf("¡Que pase un buen dia!");
     } else {
         Administrador administrador = iniciarAdmin (db);
     }
