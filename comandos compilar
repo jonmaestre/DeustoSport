@@ -1,0 +1,16 @@
+Si sólo .c
+gcc [archivos .c] -o aplicacion
+
+Si sólo C++
+g++ [archivos .cpp] -o aplicacion
+
+
+Si tenemos c y c++
+extern 'C'{
+    #include"sqlite3.h"
+}
+gcc -c [archivo.c] -o archivo.o
+g++ -c [archivo.cpp] -o archivo.o
+
+al final
+g++ [archivos.o] -o aplicacion

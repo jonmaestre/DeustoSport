@@ -15,12 +15,12 @@ public:
     Comprador(char* nombre, int identificativo, int telefono, char* correo, char* direccion, char* contrasena);
     Comprador(const Comprador& c);
     ~Comprador();
-    char getNombre();
+    char* getNombre();
     int getIdentificativo();
     int getTelefono();
-    char getCorreo();
-    char getDireccion();
-    char getContrasena();
+    char* getCorreo();
+    char* getDireccion();
+    char* getContrasena();
 };
 
 

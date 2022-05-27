@@ -1,7 +1,7 @@
 #include "Comprador.h"
+#include<string.h>
 
-namespace usuario
-{
+
             
     Comprador::Comprador(char* nombre, int identificativo, int telefono, char* correo, char* direccion, char* contrasena) {
         this->nombre = new char[strlen(nombre)+1];
@@ -12,7 +12,7 @@ namespace usuario
         this->contrasena = new char[strlen(contrasena)+1];
     }
 
-    Comprador(const Comprador& c) {
+    Comprador::Comprador(const Comprador& c) {
         this->nombre = new char[strlen(c.nombre)+1];
         this->identificativo = c.identificativo;
         this->telefono = c.telefono;
@@ -28,22 +28,22 @@ namespace usuario
         delete[] contrasena;
     }
 
-    char getNombre() {
+    char* Comprador::getNombre() {
         return this->nombre;
     }
-    int getIdentificativo() {
+    int Comprador::getIdentificativo() {
         return this->identificativo;
     }
-    int getTelefono() {
+    int Comprador::getTelefono() {
         return this->telefono;
     }
-    char getCorreo() {
+    char* Comprador::getCorreo() {
         return this->correo;
     }
-    char getDireccion() {
+    char* Comprador::getDireccion() {
         return this->direccion;
     }
-    char getContrasena() {
+    char* Comprador::getContrasena() {
         return this->contrasena;
     }
-}
+
