@@ -1,4 +1,5 @@
 #include "Administrador.h"
+#include "Producto.h"
 #include "Carrito.h"
 #include "Compra.h"
 #include "Comprador.h"
@@ -131,7 +132,7 @@ bool existeProducto2 (sqlite3 *db, char* nombre) {
 
 // *************************** CALZADO ***************************
 
-Calzado obtenerCalzado (sqlite3 *db, int id){
+ obtenerCalzado (sqlite3 *db, int id){
     sqlite3_stmt *stmt;
 	char sql[100];
 

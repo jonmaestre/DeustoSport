@@ -1,3 +1,19 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include <iostream>
+using namespace std;
+
+#include "Calzado.h"
+#include "Carrito.h"
+#include "Compra.h"
+#include "Comprador.h"
+#include "MaterialDeportivo.h"
+#include "Prenda.h"
+#include "Suplemento.h"
+#include "bbdd.h"
+#include "sqlite3.h"
 #include "funcionesCliente.h"
 
 #define PROGRAMADORES 5
@@ -11,52 +27,55 @@ Comprador registrar (sqlite3 *db) {
 
     // Reserva el espacio en memoria para cda uno de los aspectos a registrar
     char* nombre;
-    nombre -> malloc(50*sizeof(char));
+    
     int* telefono;
-    telefono -> malloc(1*sizeof(int));
+    
     char* correo;
-    correo -> malloc(70*sizeof(char));
+    
     char* direccion;
-    direccion -> malloc(80*sizeof(char));
+    
     char* contrasena1;
-    contrasena1 -> malloc(25*sizeof(char));
+    
     char* contrasena2;
-    contrasena2 -> malloc(25*sizeof(char));
+    
 
-    printf("REGISTRAR \n");
-    printf("---------------------------------\n");
+
+    cout << "REGISTRAR \n" << endl;
+    cout << "---------------------------------\n" << endl;
+
 
     //Registra los aspectos que se piden y guarda las repuestas 
-    printf("NOMBRE: \n");
-    scanf("%c", nombre);
-    printf("TELEFONO: \n");
-    scanf("%i", telefono);
-	printf("CORREO ELECTRÓNICO: \n");
-    scanf("%c", correo);
-	printf("DIRECCION: \n");
-    scanf("%c", direccion);
-	printf("CONTRASEÑA: \n");
-    scanf("%c", contrasena1);
-    printf("REPITA CONTRASEÑA: \n");
-    scanf("%c", contrasena2);
+    
+    cout << "NOMBRE: \n" << endl;
+    cin >> nombre;
+    cout << "TELEFONO: \n" << endl;
+    cin >> telefono;
+    cout << "CORREO ELECTRÓNICO: \n" << endl;
+    cin >> correo;
+    cout << "DIRECCION: \n" << endl;
+    cin >> direccion;
+    cout << "CONTRASEÑA: \n" << endl;
+    cin >> contrasena1;
+    cout <<"REPITA CONTRASEÑA: \n" << endl;
+    cin >> contrasena2;
 
     //Comprueba si existe Un usario con el correo ya registrado 
     bool existe = existeComprador(db, correo);
     while (existe) {
-        printf("El correo introducido ya existe. Por favor, introduzca otro. \n");
-        printf("CORREO ELECTRÓNICO: \n");
-        scanf("%c", correo);
+        cout << "El correo introducido ya existe. Por favor, introduzca otro. \n" << endl;
+        cout << "CORREO ELECTRÓNICO: \n" << endl;
+        cin >> correo;
         bool existe = existeComprador(db, correo);
     }
 
     //En caso de no escribir la misma contraseña en Contraseña y en repita contraseña pide que se vuelva a escribir
     while (&contrasena1 != &contrasena2) {
-        printf("¡Vaya! Parece que ha habido un error. \n");
-        printf("Vuelve a introducir la contraseña. \n");
-        printf("CONTRASEÑA: \n");
-        scanf("%c", contrasena1);
-        printf("REPITA CONTRASEÑA: \n");
-        scanf("%c", contrasena2);
+        cout << "¡Vaya! Parece que ha habido un error. \n" << endl;
+        cout << "Vuelve a introducir la contraseña. \n" << endl;
+        cout << "CONTRASEÑA: \n" << endl;
+        cin >> contrasena1;
+        cout << "REPITA CONTRASEÑA: \n" << endl;
+        cin >> contrasena2;
     }
 
     registrarComprador(db, nombre, *telefono, correo, direccion, contrasena1);
@@ -71,18 +90,19 @@ Comprador* iniciarCliente (sqlite3 *db) {
 
     //En caso de que el cliente ya este registrado guarda spacio en memoria para el correo y contraseña
     char* correo;
-    correo -> malloc(100*sizeof(char));
+    
     char* contrasena;
-    contrasena -> malloc(50*sizeof(char));
+    
 
-    printf("INCIAR SESIÓN \n");
-    printf("---------------------------------\n");
+    cout << "INCIAR SESIÓN \n" << endl;
+    cout << "---------------------------------\n" << endl;
 
     //Se pide su correo y contraseña y los guarda
-    printf("CORREO ELECTRÓNICO: \n");
-    scanf("%c", correo);
-	printf("CONTRASEÑA: \n");
-    scanf("%c", contrasena);
+    cout << "CORREO ELECTRÓNICO: \n" << endl;
+    cin >> correo;
+    cout << "CONTRASEÑA: \n" << endl;
+    cin >> contrasena;
+
 
     Comprador* persona;
 
@@ -91,44 +111,43 @@ Comprador* iniciarCliente (sqlite3 *db) {
     if (existe == false) {
         int deNuevo;
         while (existe == false) {
-            printf("¡Vaya! Parece que ha habido un error. \n");
-            printf("Creemos que no está registrado en DeustoSportKit. \n");
-            printf("¿Quiere registrarse o reintentar iniciar sesión?");
-            printf("1. Registrarme\n");
-	        printf("2. Reintentar\n");
-	        printf("\n");
+            cout << "¡Vaya! Parece que ha habido un error. \n" << endl;
+            cout << "Creemos que no está registrado en DeustoSportKit. \n" << endl;
+            cout << "¿Quiere registrarse o reintentar iniciar sesión?" << endl;
+            cout << "1. Registrarme\n" << endl;
+            cout << "2. Reintentar\n" << endl;
+            cout << "\n" << endl;
 
             do {
-	            printf("Opción: ");
-	            fflush(stdout);
-                scanf("%i", &deNuevo);
+                cout << "Opción: " << endl;
+                cin >>  &deNuevo;
             } while (deNuevo != 1 || deNuevo != 2);
 
             if (deNuevo == 1) {
                 *persona = registrar (db);
                 return persona;
             } else if (deNuevo == 2) {
-                printf("CORREO ELECTRÓNICO: \n");
-                scanf("%c", correo);
-	            printf("CONTRASEÑA: \n");
-                scanf("%c", contrasena);
+                cout << "CORREO ELECTRÓNICO: \n" << endl;
+                cin >> correo;
+                cout << "CONTRASEÑA: \n" << endl;
+                cin >> contrasena;
 
                 bool existe = existeComprador(db, correo);
 
                 if (existe == false) {
-                    printf("¡Vaya! Parece que ha habido un error. \n");
+                    cout << "¡Vaya! Parece que ha habido un error. \n" << endl;
                     return NULL;
                 } else {
                     *persona = obtenerComprador (db, correo);
                     char* correito = (*persona)->correo;
                     char* contra = (*persona)->contrasena;
                     while (contrasena != contra && correo == correito) {
-                        printf("¡Vaya! Parece que ha habido un error. \n");
-                        printf("Vuelve a meter los datos. \n");
-                        printf("CORREO ELECTRÓNICO: \n");
-                        scanf("%c", correo);
-	                    printf("CONTRASEÑA: \n");
-                        scanf("%c", contrasena);
+                        cout << "¡Vaya! Parece que ha habido un error. \n" << endl;
+                        cout << "Vuelve a meter los datos. \n" << endl;
+                        cout << "CORREO ELECTRÓNICO: \n" << endl;
+                        cin >> correo;
+                        cout << "CONTRASEÑA: \n" << endl;
+                        cin >> contrasena;
                         *persona = obtenerComprador (db, correo);
                         char* correito = (persona)->Comprador::correo;
                         char* contra = (persona)->Comprador::contrasena;
@@ -145,12 +164,13 @@ Comprador* iniciarCliente (sqlite3 *db) {
         char* correito = (*persona)->correo;
         char* contra = (*persona)->contrasena;
         while (contrasena != contra && correo == correito) {
-            printf("¡Vaya! Parece que ha habido un error. \n");
-            printf("Vuelve a meter los datos. \n");
-            printf("CORREO ELECTRÓNICO: \n");
-            scanf("%c", correo);
-	        printf("CONTRASEÑA: \n");
-            scanf("%c", contrasena);
+            cout << "¡Vaya! Parece que ha habido un error. \n" << endl;
+            cout << "Vuelve a meter los datos. \n" << endl;
+            cout << "CORREO ELECTRÓNICO: \n" << endl;
+            cin >> correo;
+            cout << "CONTRASEÑA: \n" << endl;
+            cin >> contrasena;
+
             *persona = obtenerComprador (db, correo);
             char* correito = (*persona)->correo;
             char* contra = (*persona)->contrasena;
@@ -223,17 +243,16 @@ int* iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** arra
         }
         i++;
     }
-
-    printf("¿Qué deseas hacer? \n");
-    printf("1. Realizar la compra del carrito entero \n");
-    printf("2. Borrar un producto del carrito");
-    printf("Pulsa 0 para salir.");
-    printf("\n");
+    cout << """¿Qué deseas hacer? \n" << endl;
+    cout << "1. Realizar la compra del carrito entero \n" << endl;
+    cout << "2. Borrar un producto del carrito" << endl;
+    cout << "Pulsa 0 para salir." << endl;
+    cout << "\n" << endl;
 
     do {
-        printf("ELECCION: ");
-        fflush(stdout);
-        scanf("%i", respuesta);
+        cout << "ELECCION: " << endl;
+        cin >> respuesta;
+
     } while (*respuesta < 0 || *respuesta == 2);
     
 
@@ -243,13 +262,14 @@ int* iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** arra
     }
     else if (*respuesta == 2)
     {
-        printf("¿Qué producto deseas eliminar? \n");
+        cout << "¿Qué producto deseas eliminar? \n" << endl;
+        
 
         int* indice;
         do {
-            printf("ÍNDICE: ");
-            fflush(stdout);
-            scanf("%i", indice);
+            cout << "ÍNDICE: " << endl;
+            cin >> indice;
+
         } while (indice < 0 || indice > sizeArray);
 
         eliminarDeCarrito (db, arrayProductos, sizeArray, *indice);
@@ -285,8 +305,7 @@ void devolverCompra (sqlite3 *db, Comprador comprador, int idProducto, int idCom
         } else if (tipo == 'S') {
             subirStockSupl (db, idProducto, cantidad);
         }
-
-        printf("Trámites de devolución completados. \n");
+        cout << "Trámites de devolución completados. \n" << endl;
     }
 
 }
