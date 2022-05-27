@@ -243,17 +243,16 @@ int* iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** arra
         }
         i++;
     }
-
-    printf("¿Qué deseas hacer? \n");
-    printf("1. Realizar la compra del carrito entero \n");
-    printf("2. Borrar un producto del carrito");
-    printf("Pulsa 0 para salir.");
-    printf("\n");
+    cout << """¿Qué deseas hacer? \n" << endl;
+    cout << "1. Realizar la compra del carrito entero \n" << endl;
+    cout << "2. Borrar un producto del carrito" << endl;
+    cout << "Pulsa 0 para salir." << endl;
+    cout << "\n" << endl;
 
     do {
-        printf("ELECCION: ");
-        fflush(stdout);
-        scanf("%i", respuesta);
+        cout << "ELECCION: " << endl;
+        cin >> respuesta;
+
     } while (*respuesta < 0 || *respuesta == 2);
     
 
@@ -263,13 +262,14 @@ int* iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** arra
     }
     else if (*respuesta == 2)
     {
-        printf("¿Qué producto deseas eliminar? \n");
+        cout << "¿Qué producto deseas eliminar? \n" << endl;
+        
 
         int* indice;
         do {
-            printf("ÍNDICE: ");
-            fflush(stdout);
-            scanf("%i", indice);
+            cout << "ÍNDICE: " << endl;
+            cin >> indice;
+
         } while (indice < 0 || indice > sizeArray);
 
         eliminarDeCarrito (db, arrayProductos, sizeArray, *indice);
@@ -305,8 +305,7 @@ void devolverCompra (sqlite3 *db, Comprador comprador, int idProducto, int idCom
         } else if (tipo == 'S') {
             subirStockSupl (db, idProducto, cantidad);
         }
-
-        printf("Trámites de devolución completados. \n");
+        cout << "Trámites de devolución completados. \n" << endl;
     }
 
 }

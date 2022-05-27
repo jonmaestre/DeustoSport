@@ -4,15 +4,12 @@
 #include <stdbool.h>
 
 #include "Administrador.h"
-#include "Calzado.h"
 #include "Carrito.h"
 #include "Compra.h"
 #include "Comprador.h"
-#include "MaterialDeportivo.h"
-#include "Prenda.h"
-#include "Suplemento.h"
 #include "Producto.h"
 #include "bbdd.h"
+#include "Suplemento.h"
 #include "sqlite3.h"
 #include <stdio.h>
 #include <string.h>
