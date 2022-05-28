@@ -59,14 +59,14 @@ Administrador iniciarAdmin (sqlite3 *db) {
             // Si lo es, habrá que coger el administrador con dicho identificativo y comparar la informacion de este con la introducida
             Administrador administrador = obtenerAdmin(db, identificativo);
 
-            if (strcmp(administrador.getContrasena(), contrasena) != 0) {
+            if (strcmp(administrador.contrasena, contrasena) != 0) {
                 // Si no coincide la contrasena, podra volver a introducirla una vez mas.
                 printf("Algo ha ido mal. Vuelva a introducir los datos. \n");
                 printf("Recuerde que solo tiene una oportunidad más \n");
                 printf("CONTRASEÑA: \n");
                 scanf("%s", contrasena);
 
-                if (strcmp(administrador.getContrasena(), contrasena) != 0) {
+                if (strcmp(administrador.contrasena, contrasena) != 0) {
                     // En caso de fallar la segunda vez, se devolvera null para que no siga adelante
                     printf("¡ERROR!\n");
                     Administrador admin;
@@ -121,7 +121,7 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
         agregarProducto(db, typeProd);
 
         char *nombre, *tipoPren, *color;
-        float *precio;
+        float precio;
         int stock, talla;
 
         // Preguntara de uno en uno los datos del producto
@@ -151,6 +151,9 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
 
         // Se agrega el producto a la base de datos
         agregarPrenda(db, nombre, tipoPren, color, talla, precio, stock);
+        int id=obtenerIdProducto(db,nombre);
+        Prenda p=obtenerPrenda(db,id);
+        entradasNuevasPrenda(p,administrador);
 
         // Se libera la memoria almacenada
         free(nombre);
@@ -168,6 +171,7 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
 
         char *nombre, *tipoCal, *color;
         float precio, talla;
+        int stock;
 
 
         printf("CREACIÓN DE CALZADO \n");
@@ -196,6 +200,9 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
 
 
         agregarCalzado(db, nombre, tipoCal, color, talla, precio, stock);
+        int id=obtenerIdProducto(db,nombre);
+        Calzado c=obtenerCalzado(db,id);
+        entradasNuevasCalzado(c,administrador);
 
         free(nombre);
         nombre = NULL;
@@ -245,6 +252,9 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
         scanf("%i", stock);
 
         agregarMD(db, nombre, tipoMat, color, talla, precio, deporte, stock);
+        int id=obtenerIdProducto(db,nombre);
+        MaterialDeportivo MD=obtenerMaterial(db,id);
+        entradasNuevasMD(MD,administrador);
 
 
         free(nombre);
@@ -285,6 +295,9 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
         scanf("%i", stock);
 
         agregarSupl(db, nombre, tipoSup, stock, precio);
+        int id=obtenerIdProducto(db,nombre);
+        Suplemento s=obtenerSuplemento(db,id);
+        entradasNuevasSupl(s,administrador);
 
         free(nombre);
         nombre = NULL;
@@ -429,7 +442,7 @@ void ventanaAdmin (sqlite3 *db, Administrador administrador) {
 
         do {
             printf("¿Qué desea hacer, %s?", administrador.nombre);
-            scanf("%i", eleccion)
+            scanf("%i", eleccion);
         } while (!(eleccion>= 0 && eleccion<=3));
 
         if (eleccion == 0) {
@@ -443,4 +456,41 @@ void ventanaAdmin (sqlite3 *db, Administrador administrador) {
         }
 
     } while (eleccion != 0);
+
+    
+}
+void entradasNuevasCalzado(Calzado cal, Administrador administrador){
+        FILE* f;
+        f=fopen("nuevosProductos.txt","w");
+        fprintf(f,"Nuevo calzado añadido por %s",administrador.nombre);
+        fprintf(f,"%s//%s//%s",cal.nombre,cal.color,cal.tipo);
+        fclose(f);
+
+}
+
+void entradasNuevasMD(MaterialDeportivo MD, Administrador administrador){
+        FILE* f;
+        f=fopen("nuevosProductos.txt","w");
+        fprintf(f,"Nuevo Material Deportivo añadido por %s",administrador.nombre);
+        fprintf(f,"%s//%s//%s",MD.nombre,MD.color,MD.tipo);
+        fclose(f);
+
+}
+
+void entradasNuevasPrenda(Prenda Prenda, Administrador administrador){
+        FILE* f;
+        f=fopen("nuevosProductos.txt","w");
+        fprintf(f,"Nueva prenda añadido por %s",administrador.nombre);
+        fprintf(f,"%s//%s//%s",Prenda.nombre,Prenda.color,Prenda.tipo);
+        fclose(f);
+
+}
+
+void entradasNuevasSupl(Suplemento Supl, Administrador administrador){
+        FILE* f;
+        f=fopen("nuevosProductos.txt","w");
+        fprintf(f,"Nuevo suplemento añadido por %s",administrador.nombre);
+        fprintf(f,"%s//%s",Supl.nombre,Supl.tipo);
+        fclose(f);
+
 }
