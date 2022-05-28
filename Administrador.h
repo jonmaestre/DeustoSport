@@ -1,3 +1,5 @@
+#include "sqlite3.h"
+
 #ifndef ADMINISTRADOR_H_
 #define ADMINISTRADOR_H_
 

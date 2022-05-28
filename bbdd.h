@@ -1,21 +1,9 @@
+#include "sqlite3.h"
+#include "Estructuras.h"
+#include "Administrador.h"
+
 #ifndef BBDD_H_
 #define BBDD_H_
-#include "sqlite3.h"
-#include <stdbool.h>
-
-#include "Administrador.h"
-#include "Carrito.h"
-#include "Compra.h"
-#include "Comprador.h"
-#include "Producto.h"
-#include "bbdd.h"
-#include "sqlite3.h"
-#include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
-#include <stdlib.h>
-
-
 
 // PRODUCTOS;
     int maxIdProducto(sqlite3 *db);

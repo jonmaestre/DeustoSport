@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 #include "Administrador.h"
-#include "Producto.h"
+#include "Estructuras.h"
 #include "bbdd.h"
 #include "sqlite3.h"
 
