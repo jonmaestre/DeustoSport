@@ -30,10 +30,9 @@ namespace productos {
         private:
             char *color;
             int talla;
-            int genero;
         
         public:
-            Calzado(char* nombre, char* tipo, char* color, int talla, float precioBase, int genero, int stock);
+            Calzado(char* nombre, char* tipo, char* color, int talla, float precioBase, int stock);
             Calzado(const Calzado& c);
             virtual ~Calzado();
 
@@ -41,7 +40,6 @@ namespace productos {
     
             char* getColor();
             int getTalla();
-            int getGenero();
     };
 
 
@@ -68,10 +66,9 @@ namespace productos {
         private:
             char *color;
             int talla;
-            int sexo;
             
         public:
-            Prenda(char* nombre, char* tipo, char* color, int talla, float precioBase, int sexo, int stock);
+            Prenda(char* nombre, char* tipo, char* color, int talla, float precioBase, int stock);
             Prenda(const Prenda& p);
             virtual ~Prenda();
 
@@ -79,7 +76,6 @@ namespace productos {
 
             char* getColor();
             int getTalla();
-            int getSexo();
     };
 
 

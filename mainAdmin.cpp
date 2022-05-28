@@ -6,13 +6,10 @@
 using namespace std;
 
 #include "Administrador.h"
-#include "Calzado.h"
 #include "Carrito.h"
 #include "Compra.h"
 #include "Comprador.h"
-#include "MaterialDeportivo.h"
-#include "Prenda.h"
-#include "Suplemento.h"
+#include "Producto.h"
 #include "bbdd.h"
 #include "sqlite3.h"
 #include "funcionesAdmin.h"
@@ -40,6 +37,12 @@ int main (void) {
         printf("¡Que pase un buen dia!");
     } else {
         Administrador administrador = iniciarAdmin (db);
+
+        // Si el identificativo del administrador es igual a -1, significa que es un impostor
+        if (administrador.identificativo != -1) {
+            ventanaAdmin (db, administrador);
+        }
+
     }
 
 

@@ -123,7 +123,7 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
 
         char *nombre, *tipoPren, *color;
         float *precio;
-        int sexo, stock, talla;
+        int stock, talla;
 
         // Preguntara de uno en uno los datos del producto
         printf("CREACIÓN DE PRENDA \n");
@@ -147,19 +147,11 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
         scanf("PRECIO: \n");
         scanf("%i", precio);
 
-        // De sexo solo hay dos opciones, asi que en caso de no introducir los datos correctamente, se seguira preguntando
-        do {
-            scanf("SEXO: \n");
-            scnaf("0. Hombre \n");
-            scanf("1. Mujer \n");
-            scanf("%i", sexo);
-        } while (sexo != 0 || sexo != 1);
-
         printf("STOCK: \n");
         scanf("%i", stock);
 
         // Se agrega el producto a la base de datos
-        agregarPrenda(db, nombre, tipoPren, color, talla, precio, sexo, stock);
+        agregarPrenda(db, nombre, tipoPren, color, talla, precio, stock);
 
         // Se libera la memoria almacenada
         free(nombre);
@@ -177,7 +169,6 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
 
         char *nombre, *tipoCal, *color;
         float precio, talla;
-        int sexo, stock;
 
 
         printf("CREACIÓN DE CALZADO \n");
@@ -201,19 +192,11 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
         scanf("PRECIO: \n");
         scanf("%i", precio);
 
-        // De sexo solo hay dos opciones, asi que en caso de no introducir los datos correctamente, se seguira preguntando
-        do {
-            scanf("SEXO: \n");
-            scnaf("0. Hombre \n");
-            scanf("1. Mujer \n");
-            scanf("%i", sexo);
-        } while (sexo != 0 || sexo != 1);
-
         printf("STOCK: \n");
         scanf("%i", stock);
 
 
-        agregarCalzado(db, nombre, tipoCal, color, talla, precio, sexo, stock);
+        agregarCalzado(db, nombre, tipoCal, color, talla, precio, stock);
 
         free(nombre);
         nombre = NULL;
@@ -258,14 +241,6 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
         printf("DEPORTE: \n");
         deporte = malloc(sizeof(char)*15);
         scanf("%s", deporte);
-
-        // De sexo solo hay dos opciones, asi que en caso de no introducir los datos correctamente, se seguira preguntando
-        do {
-            scanf("SEXO: \n");
-            scnaf("0. Hombre \n");
-            scanf("1. Mujer \n");
-            scanf("%i", sexo);
-        } while (sexo != 0 || sexo != 1);
 
         printf("STOCK: \n");
         scanf("%i", stock);

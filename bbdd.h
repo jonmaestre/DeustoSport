@@ -34,20 +34,16 @@
     void subirStockCalzado (sqlite3 *db, int id, int cant);
     void bajarStockCalzado(sqlite3 *db, int id, int cant);
     void eliminarCalzado(sqlite3 *db, int id);
-    int sizeCalzadoH(sqlite3 *db);
-    int sizeCalzadoM(sqlite3 *db);
-    Calzado* showCalzadoH(sqlite3 *db);
-    Calzado* showCalzadoM(sqlite3 *db);
+    int sizeCalzado(sqlite3 *db);
+    Calzado* showCalzado(sqlite3 *db);
 
     Prenda obtenerPrenda (sqlite3 *db, int id);
     void agregarPrenda(sqlite3 *db, char* nom, char* tipo, char* color, int talla, float precio, int sexo, int cantidad);
     void subirStockCPrenda (sqlite3 *db, int id, int cant);
     void bajarStockPrenda(sqlite3 *db, int id, int cant);
     void eliminarPrenda(sqlite3 *db, int id);
-    int sizePrendaH(sqlite3 *db);
-    int sizePrendaM(sqlite3 *db);
-    Prenda* showPrendaH(sqlite3 *db);
-    Prenda* showPrendaM(sqlite3 *db);
+    int sizePrenda(sqlite3 *db);
+    Prenda* showPrenda(sqlite3 *db);
 
 
     MaterialDeportivo obtenerMaterial (sqlite3 *db, int id);

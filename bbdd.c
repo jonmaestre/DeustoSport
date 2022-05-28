@@ -136,7 +136,7 @@ bool existeProducto2 (sqlite3 *db, char* nombre) {
     sqlite3_stmt *stmt;
 	char sql[100];
 
-	int iden, sexo, stock;
+	int iden, stock;
 	char *nombre, *tipo, *color, *talla;
 	float  precio;
 
@@ -153,23 +153,22 @@ bool existeProducto2 (sqlite3 *db, char* nombre) {
 	strcpy(color, (char*)sqlite3_column_text(stmt, 3));
 	strcpy(talla, (char*)sqlite3_column_text(stmt, 4));
 	precio = (float)sqlite3_column_double(stmt, 5);
-	sexo = (int)sqlite3_column_int(stmt, 6);
-	stock = (int)sqlite3_column_int(stmt, 7);
+	stock = (int)sqlite3_column_int(stmt, 6);
 
-	Calzado zapatilla = {iden, nombre, tipo, color, talla, precio, sexo, stock};
+	Calzado zapatilla = {iden, nombre, tipo, color, talla, precio, stock};
 
 	sqlite3_finalize(stmt);
 
 	return zapatilla;
 }
 
-void agregarCalzado(sqlite3 *db, char* nom, char* tipo, char* color, float talla, float precio, int sexo, int cantidad){
+void agregarCalzado(sqlite3 *db, char* nom, char* tipo, char* color, float talla, float precio, int cantidad){
     sqlite3_stmt *stmt;
 
 	char sql[100];
 	int maxId = maxIdProducto(db);
 
-	sprintf(sql, "INSERT INTO Calzado VALUES (%i, %s, %s, %s, %f, %f, %i, %i)", maxId+1, nom, tipo, color, talla, precio, sexo, cantidad);
+	sprintf(sql, "INSERT INTO Calzado VALUES (%i, %s, %s, %s, %f, %f, %i)", maxId+1, nom, tipo, color, talla, precio, cantidad);
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	sqlite3_step(stmt);
 
@@ -206,35 +205,23 @@ void eliminarCalzado(sqlite3 *db, int id){
 	sqlite3_finalize(stmt);
 }
 
-
-
-int sizeCalzadoH(sqlite3 *db){
+int sizeCalzado(sqlite3 *db){
 	sqlite3_stmt *stmt;
 	char sql[100];
-	sprintf(sql, "SELECT COUNT(*) FROM Calzado WHERE Sexo_Calzado = %i", 0);
+	sprintf(sql, "SELECT COUNT(*) FROM Calzado", 1);
 	int size = sqlite3_step(stmt);
 
 	sqlite3_finalize(stmt);
 	return size;
 }
 
-int sizeCalzadoM(sqlite3 *db){
-	sqlite3_stmt *stmt;
-	char sql[100];
-	sprintf(sql, "SELECT COUNT(*) FROM Calzado WHERE Sexo_Calzado = %i", 1);
-	int size = sqlite3_step(stmt);
-
-	sqlite3_finalize(stmt);
-	return size;
-}
-
-Calzado* showCalzadoH(sqlite3 *db) {
+Calzado* showCalzado(sqlite3 *db) {
 	sqlite3_stmt *stmt;
 
 	int size= sizeCalzadoH(db);
 	Calzado* listaCalzado=(Calzado*)malloc(sizeof(Calzado)*size);
 
-	char sql[] = "SELECT * FROM Calzado WHERE Sexo_Calzado = 0";
+	char sql[] = "SELECT * FROM Calzado";
 
 	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	if (result != SQLITE_OK) {
@@ -265,7 +252,6 @@ Calzado* showCalzadoH(sqlite3 *db) {
 
 			newCalzado.id=idM;
 			newCalzado.nombre=nombreM;
-			newCalzado.genero=0;
 			newCalzado.tipo=tipoM;
 			newCalzado.precio=precioM;
 			newCalzado.talla=tallaM;
@@ -291,68 +277,6 @@ Calzado* showCalzadoH(sqlite3 *db) {
 	return listaCalzado;
 }
 
-Calzado* showCalzadoM(sqlite3 *db) {
-	sqlite3_stmt *stmt;
-
-	int size= sizeCalzadoM(db);
-	Calzado* listaCalzado=(Calzado*)malloc(sizeof(Calzado)*size);
-
-	char sql[] = "SELECT * FROM Calzado WHERE Sexo_Calzado = 1";
-
-	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
-	if (result != SQLITE_OK) {
-		printf("Error preparing statement (SELECT)\n");
-		printf("%s\n", sqlite3_errmsg(db));
-		
-	}
-	int i=0;
-	Calzado newCalzado;
-	int idM;
-	char nombreM[100];
-	char tipoM[100];
-	char colorM[100];
-	char tallaM[100];
-	float precioM;
-	int StockM;
-
-	do {
-		result = sqlite3_step(stmt) ;
-		if (result == SQLITE_ROW) {
-			idM=sqlite3_column_int(stmt,0);
-			strcpy(nombreM, (char *) sqlite3_column_text(stmt, 1));
-			strcpy(tipoM, (char *) sqlite3_column_text(stmt, 2));
-			strcpy(colorM, (char *) sqlite3_column_text(stmt, 3));
-			strcpy(tallaM, (char *) sqlite3_column_text(stmt, 4));
-			precioM = sqlite3_column_double(stmt,5);
-			StockM=sqlite3_column_int(stmt,7);
-
-			newCalzado.id=idM;
-			newCalzado.nombre=nombreM;
-			newCalzado.genero=1;
-			newCalzado.tipo=tipoM;
-			newCalzado.precio=precioM;
-			newCalzado.talla=tallaM;
-			newCalzado.color=colorM;
-			newCalzado.stock=StockM;
-
-			listaCalzado[i]=newCalzado;
-			i++;
-			
-		}
-	} while (i<size);
- 
-	printf("\n");
-	printf("\n");
-
-	result = sqlite3_finalize(stmt);
-	if (result != SQLITE_OK) {
-		printf("Error finalizing statement (SELECT)\n");
-		printf("%s\n", sqlite3_errmsg(db));
-		
-	}
-
-	return listaCalzado;
-}
 
 // *************************** PRENDA ***************************
 
@@ -360,7 +284,7 @@ Prenda obtenerPrenda (sqlite3 *db, int id){
     sqlite3_stmt *stmt;
 	char sql[100];
 
-	int iden, sexo, stock;
+	int iden, stock;
 	char nombre[100], tipo[15], color[15], talla[3];
 	float precio;
 
@@ -373,23 +297,22 @@ Prenda obtenerPrenda (sqlite3 *db, int id){
 	strcpy(color, (char*)sqlite3_column_text(stmt, 3));
 	strcpy(talla, (char*)sqlite3_column_text(stmt, 4));
 	precio = (float)sqlite3_column_double(stmt, 5);
-	sexo = (int)sqlite3_column_int(stmt, 6);
-	stock = (int)sqlite3_column_int(stmt, 7);
+	stock = (int)sqlite3_column_int(stmt, 6);
 
-	Prenda prenda = {iden, nombre, tipo, color, talla, precio, sexo, stock};
+	Prenda prenda = {iden, nombre, tipo, color, talla, precio, stock};
 
 	sqlite3_finalize(stmt);
 
 	return prenda;
 }
 
-void agregarPrenda(sqlite3 *db, char* nom, char* tipo, char* color, char* talla, float precio, int sexo, int cantidad){
+void agregarPrenda(sqlite3 *db, char* nom, char* tipo, char* color, char* talla, float precio, int cantidad){
     sqlite3_stmt *stmt;
 
 	char sql[100];
 	int maxId = maxIdProducto(db);
 
-	sprintf(sql, "INSERT INTO Prenda VALUES (%i, %s, %s, %s, %s, %f, %i, %i)", maxId+1, nom, tipo, color, talla, precio, sexo, cantidad);
+	sprintf(sql, "INSERT INTO Prenda VALUES (%i, %s, %s, %s, %s, %f, %i)", maxId+1, nom, tipo, color, talla, precio, cantidad);
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	sqlite3_step(stmt);
 
@@ -426,33 +349,23 @@ void eliminarPrenda(sqlite3 *db, int id){
 	sqlite3_finalize(stmt);
 }
 
-int sizePrendaH(sqlite3 *db){
+int sizePrenda(sqlite3 *db){
 	sqlite3_stmt *stmt;
 	char sql[100];
-	sprintf(sql, "SELECT COUNT(*) FROM Prenda WHERE Sexo_Prenda = %i", 0);
+	sprintf(sql, "SELECT COUNT(*) FROM Prenda", 1);
 	int size = sqlite3_step(stmt);
 
 	sqlite3_finalize(stmt);
 	return size;
 }
 
-int sizePrendaM(sqlite3 *db){
-	sqlite3_stmt *stmt;
-	char sql[100];
-	sprintf(sql, "SELECT COUNT(*) FROM Prenda WHERE Sexo_Prenda = %i", 1);
-	int size = sqlite3_step(stmt);
-
-	sqlite3_finalize(stmt);
-	return size;
-}
-
-Prenda* showPrendaH(sqlite3 *db) {
+Prenda* showPrenda(sqlite3 *db) {
 	sqlite3_stmt *stmt;
 
 	int size= sizeCalzadoH(db);
 	Prenda* listaPrenda=(Prenda*)malloc(sizeof(Prenda)*size);
 
-	char sql[] = "SELECT * FROM Prenda WHERE Sexo_Prenda = 0";
+	char sql[] = "SELECT * FROM Prenda";
 
 	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	if (result != SQLITE_OK) {
@@ -483,7 +396,6 @@ Prenda* showPrendaH(sqlite3 *db) {
 
 			newPrenda.identificativo=idM;
 			newPrenda.nombre=nombreM;
-			newPrenda.sexo=0;
 			newPrenda.tipo=tipoM;
 			newPrenda.precio=precioM;
 			newPrenda.talla=tallaM;
@@ -509,68 +421,6 @@ Prenda* showPrendaH(sqlite3 *db) {
 	return listaPrenda;
 }
 
-Prenda* showPrendaM(sqlite3 *db) {
-	sqlite3_stmt *stmt;
-
-	int size= sizeCalzadoM(db);
-	Prenda* listaPrenda=(Prenda*)malloc(sizeof(Prenda)*size);
-
-	char sql[] = "SELECT * FROM Prenda WHERE Sexo_Prenda = 1";
-
-	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
-	if (result != SQLITE_OK) {
-		printf("Error preparing statement (SELECT)\n");
-		printf("%s\n", sqlite3_errmsg(db));
-		
-	}
-	int i=0;
-	Prenda newPrenda;
-	int idM;
-	char nombreM[100];
-	char tipoM[100];
-	char colorM[100];
-	char tallaM[100];
-	float precioM;
-	int StockM;
-
-	do {
-		result = sqlite3_step(stmt) ;
-		if (result == SQLITE_ROW) {
-			idM=sqlite3_column_int(stmt,0);
-			strcpy(nombreM, (char *) sqlite3_column_text(stmt, 1));
-			strcpy(tipoM, (char *) sqlite3_column_text(stmt, 2));
-			strcpy(colorM, (char *) sqlite3_column_text(stmt, 3));
-			strcpy(tallaM, (char *) sqlite3_column_text(stmt, 4));
-			precioM = sqlite3_column_double(stmt,6);
-			StockM=sqlite3_column_int(stmt,7);
-
-			newPrenda.identificativo=idM;
-			newPrenda.nombre=nombreM;
-			newPrenda.sexo=1;
-			newPrenda.tipo=tipoM;
-			newPrenda.precio=precioM;
-			newPrenda.talla=tallaM;
-			newPrenda.color=colorM;
-			newPrenda.stock=StockM;
-
-			listaPrenda[i]=newPrenda;
-			i++;
-			
-		}
-	} while (i<size);
- 
-	printf("\n");
-	printf("\n");
-
-	result = sqlite3_finalize(stmt);
-	if (result != SQLITE_OK) {
-		printf("Error finalizing statement (SELECT)\n");
-		printf("%s\n", sqlite3_errmsg(db));
-		
-	}
-
-	return listaPrenda;
-}
 // *************************** MATERIAL ***************************
 
 MaterialDeportivo obtenerMaterial (sqlite3 *db, int id){

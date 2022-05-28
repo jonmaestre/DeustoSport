@@ -53,10 +53,9 @@ namespace productos {
 
 
 
-    Calzado::Calzado(char* nombre, char* tipo, char* color, int talla, float precioBase, int genero, int stock): Producto(nombre, tipo, precioBase, stock) {
+    Calzado::Calzado(char* nombre, char* tipo, char* color, int talla, float precioBase, int stock): Producto(nombre, tipo, precioBase, stock) {
         this->color = new char[strlen(color)+1];
         this->talla = talla;
-        this->genero = genero;
     }
 
     Calzado::Calzado(const Calzado &c) : Producto(c) {
@@ -92,10 +91,6 @@ namespace productos {
 
     int Calzado::getTalla() {
         return this->talla;
-    }
-
-    int Calzado::getGenero() {
-        return this->genero;
     }
 
 
@@ -149,10 +144,9 @@ namespace productos {
 
 
 
-    Prenda::Prenda(char* nombre, char* tipo, char* color, int talla, float precioBase, int sexo, int stock): Producto(nombre, tipo, precioBase, stock) {
-    this->color = new char[strlen(color)+1];
-    this->talla = talla;
-    this->sexo=sexo;
+    Prenda::Prenda(char* nombre, char* tipo, char* color, int talla, float precioBase, int stock): Producto(nombre, tipo, precioBase, stock) {
+        this->color = new char[strlen(color)+1];
+        this->talla = talla;
     }
 
     Prenda::Prenda(const Prenda &p) : Producto(p) {  
@@ -165,7 +159,7 @@ namespace productos {
         delete[] color;
     }
 
-        float Prenda::precioFinal(){
+    float Prenda::precioFinal(){
         float precioF=0.0;
         precioF+=this->getPrecioBase();
         //tipo no se lo que hace si eso luego lo implemento
@@ -196,10 +190,6 @@ namespace productos {
 
     int Prenda::getTalla() {
         return this->talla;
-    }
-
-    int Prenda::getSexo() {
-        return this->sexo;
     }
 
 
