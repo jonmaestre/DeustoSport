@@ -16,7 +16,7 @@ namespace productos {
             Producto(const Producto &p);
             virtual ~Producto();
 
-            virtual float precioFinal();
+            virtual void serializar();
 
             int getIdentificativo();
             char* getNombre();
@@ -36,7 +36,7 @@ namespace productos {
             Calzado(const Calzado& c);
             virtual ~Calzado();
 
-            virtual float precioFinal();
+            virtual void serializar();
     
             char* getColor();
             int getTalla();
@@ -54,7 +54,7 @@ namespace productos {
             MaterialDeportivo(const MaterialDeportivo& md);
             virtual ~MaterialDeportivo();
 
-            virtual float precioFinal();
+            virtual void serializar();
 
             char* getColor();
             int getTalla();
@@ -72,7 +72,7 @@ namespace productos {
             Prenda(const Prenda& p);
             virtual ~Prenda();
 
-            virtual float precioFinal();
+            virtual void serializar();
 
             char* getColor();
             int getTalla();
@@ -88,7 +88,7 @@ namespace productos {
             Suplemento(const Suplemento& s);
             ~Suplemento();
 
-            virtual float precioFinal();
+            virtual void serializar();
 
             int getNivelEnergia();
    };
