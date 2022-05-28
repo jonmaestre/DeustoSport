@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include <iostream>
-using namespace std;
 
 #include "Administrador.h"
 #include "Carrito.h"

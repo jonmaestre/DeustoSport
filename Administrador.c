@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include <iostream>
 
 #include "Administrador.h"
 #include "Producto.h"
@@ -90,8 +89,8 @@ Administrador iniciarAdmin (sqlite3 *db) {
         }
     }
 
-    free(nombre);
-    nombre = NULL;
+    free(contrasena);
+    contrasena = NULL;
 }
 
 
