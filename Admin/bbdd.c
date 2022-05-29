@@ -151,11 +151,11 @@ bool existeProducto2 (sqlite3 *db, char* nombre) {
 	precio = (float)sqlite3_column_double(stmt, 5);
 	stock = (int)sqlite3_column_int(stmt, 6);
 
-	Calzado zapatilla = {iden, nombre, tipo, color, talla, precio, stock};
+	Calzado zapatilla = {iden, stock, nombre, *tipo, *color, talla, precio};
 
 	sqlite3_finalize(stmt);
 
-	return zapatilla;
+	return NULL;
 }
 
 void agregarCalzado(sqlite3 *db, char* nom, char* tipo, char* color, float talla, float precio, int cantidad){
@@ -246,10 +246,10 @@ Calzado* showCalzado(sqlite3 *db) {
 			precioM = sqlite3_column_double(stmt,5);
 			StockM=sqlite3_column_int(stmt,7);
 
-			newCalzado.id=idM;
+			
 			newCalzado.nombre=nombreM;
 			newCalzado.tipo=tipoM;
-			newCalzado.precio=precioM;
+			
 			newCalzado.talla=tallaM;
 			newCalzado.color=colorM;
 			newCalzado.stock=StockM;
@@ -295,7 +295,7 @@ Prenda obtenerPrenda (sqlite3 *db, int id){
 	precio = (float)sqlite3_column_double(stmt, 5);
 	stock = (int)sqlite3_column_int(stmt, 6);
 
-	Prenda prenda = {iden, nombre, tipo, color, talla, precio, stock};
+	Prenda prenda = {iden, nombre, tipo, *color, talla, *precio, stock};
 
 	sqlite3_finalize(stmt);
 
@@ -393,7 +393,7 @@ Prenda* showPrenda(sqlite3 *db) {
 			newPrenda.identificativo=idM;
 			newPrenda.nombre=nombreM;
 			newPrenda.tipo=tipoM;
-			newPrenda.precio=precioM;
+			
 			newPrenda.talla=tallaM;
 			newPrenda.color=colorM;
 			newPrenda.stock=StockM;
@@ -439,7 +439,7 @@ MaterialDeportivo obtenerMaterial (sqlite3 *db, int id){
 	strcpy(deporte, (char*)sqlite3_column_text(stmt, 6));
 	stock = (int)sqlite3_column_int(stmt, 7);
 
-	MaterialDeportivo material = {iden, nombre, tipo, color, talla, precio, deporte, stock};
+	MaterialDeportivo material = {iden, nombre, tipo, *color, talla, *precio, deporte, stock};
 
 	sqlite3_finalize(stmt);
 
@@ -540,7 +540,7 @@ MaterialDeportivo* showMD(sqlite3 *db) {
 			MD.nombre=nombreM;
 			MD.deporte=deporteM;
 			MD.tipo=tipoM;
-			MD.precio=precioM;
+			
 			MD.talla=tallaM;
 			MD.color=colorM;
 			MD.stock=StockM;
@@ -676,7 +676,7 @@ Suplemento* showSupl(sqlite3 *db) {
 			supl.identificativo=idM;
 			supl.nombre=nombreM;
 			supl.tipo=tipoM;
-			supl.precio=precioM;
+			
 			supl.stock=StockM;
 			
 
@@ -771,7 +771,7 @@ void registrarComprador(sqlite3 *db, char* nom, int tlf, char* correo, char* dir
 	sqlite3_finalize(stmt);
 }
 
-Admin obtenerAdmin(sqlite3 *db, int id){
+Admin::obtenerAdmin(sqlite3 *db, int id){
 	sqlite3_stmt *stmt;
 	char sql[100];
 	char *nombre, *contrasena, *funcion;
@@ -900,19 +900,19 @@ Compra* comprasConId (sqlite3* db, int idCompra) {
 		iden = sqlite3_column_int(stmt, 0);
 		idProd = sqlite3_column_int(stmt, 1);
 		idCompr = sqlite3_column_int(stmt, 2);
-		cant = sqlite3_column_int(stmt, 3);
+		//cant = sqlite3_column_int(stmt, 3);
 
-		compra.identificativo=iden;
-		compra.idProducto=idProd;
-		compra.idComprador=idCompr;
-		compra.cantidad=cant;
+		compra;identificativo;
+		compra;idProducto;
+		compra;idComprador;
+		compra;cantidad;
 
-		compras[resul] = compra;
+		//compras[resul] = compra;
 	}while(resul == SQLITE_ROW);
 	
 	sqlite3_finalize(stmt);
 
-	return compras;
+	//return compras;
 }
 
 
@@ -947,7 +947,7 @@ void verTicket (sqlite3* db, int idCompra) {
 	}
 
 	printf("TOTAL: %f \n", carrito.precioTotal);
-}
+};
 
 void agregarCarrito(sqlite3 *db, Carrito carrito) {
 	sqlite3_stmt *stmt;
