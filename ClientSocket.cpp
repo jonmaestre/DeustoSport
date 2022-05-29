@@ -53,33 +53,65 @@ int main(int argc, char *argv[]) {
     // La dieferencia con el "ClienteSocket.c" es que podrá consultar dudas que no sean sobre devoluciones, problemas tecnicos o stock.
 
 
-    do {
-
-		int bytes = recv(s, recvBuff, sizeof(recvBuff), 0);
+    int bytes = recv(s, recvBuff, sizeof(recvBuff), 0);
 		
-        if (bytes > 0) {
+    if (bytes > 0) {
 
-			printf("Recibiendo mensaje... \n");
-            recv(s, recvBuff, sizeof(recvBuff), 0);
-			printf("Mensaje recibido: %s \n", recvBuff);
+		cout << "Recibiendo mensaje... " << endl;
+        recv(s, recvBuff, sizeof(recvBuff), 0);
+		cout << "Mensaje recibido: " << recvBuff << endl;
 
-            char str[512];
-	        int texto;
-	        fflush(stdout);
-	        fgets(str, 512, stdin);
-	        sscanf(str, "%i", &texto);
+        int opcion;
+	    cin >> opcion;
 
-	        printf("Enviando mensaje... \n");
-	        strcpy(sendBuff, texto);
-	        send(s, sendBuff, sizeof(sendBuff), 0);
-	        printf("Mensaje enviado: %s \n", sendBuff);
+	    cout << "Enviando mensaje... " << endl;
+	    strcpy(sendBuff, opcion);
+        send(s, sendBuff, sizeof(sendBuff), 0);
+	    cout << "Mensaje enviado: " << sendBuff << endl;
 
-			if (strcmp(recvBuff, "Agur") == 0) {
-				break;
+		if (strcmp(recvBuff, "Agur") != 0) {
+
+            if (opcion == 1) {
+                // ZAPATILLAS
+
+            } else if (opcion == 2) {
+                // ROPA
+
+            } else if (opcion == 3) {
+                // MATERIAL
+
+            } else (opcion == 4) {
+			
+                do {
+
+                    int bytes = recv(s, recvBuff, sizeof(recvBuff), 0);
+                    
+                    if (bytes > 0) {
+
+                        cout << "Recibiendo mensaje... " << endl;
+                        recv(s, recvBuff, sizeof(recvBuff), 0);
+                        cout << "Mensaje recibido: " << recvBuff << endl;
+
+                        char str[512];
+                        cin >> str;
+
+                        cout << "Enviando mensaje... " << endl;
+                        strcpy(sendBuff, str);
+                        send(s, sendBuff, sizeof(sendBuff), 0);
+                        cout << "Mensaje enviado: " << sendBuff << endl;
+
+                        if (strcmp(recvBuff, "Agur") == 0) {
+                            break;
+                        }
+                    }
+
+                } while (1);
+
             }
-		}
 
-	} while (1);
+        }
+
+        
 
 	// CLOSING the socket and cleaning Winsock...
 	closesocket(s);

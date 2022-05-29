@@ -136,7 +136,7 @@ int main(int argc, char *argv[]) {
 
             if (num == 1) {
                 // ZAPATILLAS
-                
+
             } else if (num == 2) {
                 // ROPA
 
@@ -146,14 +146,14 @@ int main(int argc, char *argv[]) {
             } else if (num == 4) {
                 // ATENCION AL CLIENTE
 
-                    printf("Enviando mensaje... \n");
-	                strcat(sendBuff, "¿Que desea?");
-	                send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-	                printf("Mensaje enviado: %s \n", sendBuff);
+                printf("Enviando mensaje... \n");
+	            strcat(sendBuff, "¿Que desea?");
+	            send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+	            printf("Mensaje enviado: %s \n", sendBuff);
 
-                    printf("Recibiendo mensaje... \n");
-                    recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-                    printf("Mensaje recibido: %s \n", recvBuff);
+                printf("Recibiendo mensaje... \n");
+                recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+                printf("Mensaje recibido: %s \n", recvBuff);
 
                 do {
 
