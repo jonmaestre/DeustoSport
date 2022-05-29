@@ -17,7 +17,7 @@
     bool existeProducto2 (sqlite3 *db, char* nombre);
 
     Calzado obtenerCalzado (sqlite3 *db, int id);
-    void agregarCalzado(sqlite3 *db, char* nom, char* tipo, char* color, int talla, float precio, int sexo, int cantidad);
+    void agregarCalzado(sqlite3 *db, char* nom, char* tipo, char* color, int talla, float precio, int cantidad);
     void subirStockCalzado (sqlite3 *db, int id, int cant);
     void bajarStockCalzado(sqlite3 *db, int id, int cant);
     void eliminarCalzado(sqlite3 *db, int id);
@@ -25,7 +25,7 @@
     Calzado* showCalzado(sqlite3 *db);
 
     Prenda obtenerPrenda (sqlite3 *db, int id);
-    void agregarPrenda(sqlite3 *db, char* nom, char* tipo, char* color, int talla, float precio, int sexo, int cantidad);
+    void agregarPrenda(sqlite3 *db, char* nom, char* tipo, char* color, int talla, float precio, int cantidad);
     void subirStockCPrenda (sqlite3 *db, int id, int cant);
     void bajarStockPrenda(sqlite3 *db, int id, int cant);
     void eliminarPrenda(sqlite3 *db, int id);

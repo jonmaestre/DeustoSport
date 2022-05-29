@@ -1,6 +1,8 @@
 #include "Producto.h"
 #include "string.h"
+#include <iostream>
 #include "bbdd.h"
+using std::cout; using std::endl;
 
 
 namespace productos {
@@ -29,7 +31,7 @@ namespace productos {
         delete[] this->tipo;
     }
 
-    float Producto::precioFinal(){}
+    void Producto::serializar(){}
 
     int Producto::getIdentificativo() {
         return this->identificativo;
@@ -61,28 +63,20 @@ namespace productos {
     Calzado::Calzado(const Calzado &c) : Producto(c) {
         this->color = new char[strlen(c.color)+1];
         this->talla = c.talla;
-        this->genero = c.genero;
     }
 
     Calzado::~Calzado() {
         delete[] color;
     }
 
-    float Calzado::precioFinal(){
-        float precioF=0.0;
-        precioF+=this->getPrecioBase();
-        //tipo no se lo que hace si eso luego lo implemento
-        int talla=this->getTalla();
-        if(talla<=40){
-            precioF=precioF*1.25;
-        }else if (talla<=43)
-        {
-            precioF=precioF*1.75;
-        }else{
-            precioF=precioF*2;
-        }
-        
-        return precioF;
+        void Calzado::serializar(){
+        cout << "Nombre:  " << this->getNombre() << endl;
+        cout << "Tipo:  " << this->getTipo() << endl;
+        cout << "Color:  " << this->getColor() << endl;
+        cout << "Talla:  " << this->getTalla() << endl;
+        cout << "Precio:  " << this->getPrecioBase() << endl;
+        cout << "Stock:  " << this->getStock() << endl;
+
     }
 
     char* Calzado::getColor() {
@@ -112,22 +106,15 @@ namespace productos {
         delete[] deporte;
     }
 
-        float MaterialDeportivo::precioFinal(){
-        float precioF=0.0;
-        precioF+=this->getPrecioBase();
-        //tipo no se lo que hace si eso luego lo implemento
-        //este por hacer ya que no se que tallas se van a usar más o menos
-        int talla=this->getTalla();
-        if(talla<=40){
-            precioF=precioF*1.25;
-        }else if (talla<=43)
-        {
-            precioF=precioF*1.75;
-        }else{
-            precioF=precioF*2;
-        }
-        
-        return precioF;
+        void MaterialDeportivo::serializar(){
+        cout << "Nombre:  " << this->getNombre() << endl;
+        cout << "Tipo:  " << this->getTipo() << endl;
+        cout << "Color:  " << this->getColor() << endl;
+        cout << "Talla:  " << this->getTalla() << endl;
+        cout << "Precio:  " << this->getPrecioBase() << endl;
+        cout << "Deporte:  " << this->getDeporte() << endl;
+        cout << "Stock:  " << this->getStock() << endl;
+
     }
 
     char* MaterialDeportivo::getColor() {
@@ -152,37 +139,13 @@ namespace productos {
     Prenda::Prenda(const Prenda &p) : Producto(p) {  
         this->color = new char[strlen(p.color)+1];
         this->talla = p.talla;
-        this->sexo = p.sexo;
     }
 
     Prenda::~Prenda() {
         delete[] color;
     }
 
-    float Prenda::precioFinal(){
-        float precioF=0.0;
-        precioF+=this->getPrecioBase();
-        //tipo no se lo que hace si eso luego lo implemento
-        //tallas a ver ya que no se si éstas commo van a ir
-        int talla=this->getTalla();
-        if(talla<=40){
-            precioF=precioF*1.25;
-        }else if (talla<=43)
-        {
-            precioF=precioF*1.75;
-        }else{
-            precioF=precioF*2;
-        }
-
-        int sexo=this->sexo;
-        if(sexo==0){
-            precioF==precioF*1.5;
-        }else{
-            precioF==precioF*1.75;
-        }
-        
-        return precioF;
-    }
+  
 
     char* Prenda::getColor() {
        return this->color;
@@ -190,6 +153,15 @@ namespace productos {
 
     int Prenda::getTalla() {
         return this->talla;
+    }
+        void Prenda::serializar(){
+        cout << "Nombre:  " << this->getNombre() << endl;
+        cout << "Tipo:  " << this->getTipo() << endl;
+        cout << "Color:  " << this->getColor() << endl;
+        cout << "Talla:  " << this->getTalla() << endl;
+        cout << "Precio:  " << this->getPrecioBase() << endl;
+        cout << "Stock:  " << this->getStock() << endl;
+
     }
 
 
@@ -205,22 +177,13 @@ namespace productos {
     Suplemento::~Suplemento() {
     }
 
-        float Suplemento::precioFinal(){
-        float precioF=0.0;
-        precioF+=this->getPrecioBase();
-        //tipo no se lo que hace si eso luego lo implemento
-        //niveles de energia a discutir
-        int nivEn=this->getNivelEnergia();
-        if(nivEn<=40){
-            precioF=precioF*1.25;
-        }else if (nivEn<=43)
-        {
-            precioF=precioF*1.75;
-        }else{
-            precioF=precioF*2;
-        }
-        
-        return precioF;
+        void Suplemento::serializar(){
+        cout << "Nombre:  " << this->getNombre() << endl;
+        cout << "Tipo:  " << this->getTipo() << endl;
+        cout << "Precio:  " << this->getPrecioBase() << endl;;
+        cout << "Stock:  " << this->getStock() << endl;
+        cout << "Stock:  " << this->getNivelEnergia() << endl;
+
     }
 
     int Suplemento::getNivelEnergia() {
