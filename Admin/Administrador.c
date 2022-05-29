@@ -141,13 +141,13 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
         scanf("%s", color);
 
         printf("TALLA: \n");
-        scanf("%i", talla);
+        scanf("%i", &talla);
 
         scanf("PRECIO: \n");
-        scanf("%i", precio);
+        scanf("%f", &precio);
 
         printf("STOCK: \n");
-        scanf("%i", stock);
+        scanf("%i", &stock);
 
         // Se agrega el producto a la base de datos
         agregarPrenda(db, nombre, tipoPren, color, talla, precio, stock);
@@ -170,8 +170,8 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
         agregarProducto(db, typeProd);
 
         char *nombre, *tipoCal, *color;
-        float precio, talla;
-        int stock;
+        float precio;
+        int stock, talla;
 
 
         printf("CREACIÓN DE CALZADO \n");
@@ -190,13 +190,13 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
         scanf("%s", color);
 
         printf("TALLA: \n");
-        scanf("%i", talla);
+        scanf("%i", &talla);
 
         scanf("PRECIO: \n");
-        scanf("%i", precio);
+        scanf("%f", &precio);
 
         printf("STOCK: \n");
-        scanf("%i", stock);
+        scanf("%i", &stock);
 
 
         agregarCalzado(db, nombre, tipoCal, color, talla, precio, stock);
@@ -239,17 +239,17 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
         scanf("%s", color);
 
         printf("TALLA: \n");
-        scanf("%i", talla);
+        scanf("%i", &talla);
 
         scanf("PRECIO: \n");
-        scanf("%i", precio);
+        scanf("%f", &precio);
 
         printf("DEPORTE: \n");
         deporte = malloc(sizeof(char)*15);
         scanf("%s", deporte);
 
         printf("STOCK: \n");
-        scanf("%i", stock);
+        scanf("%i", &stock);
 
         agregarMD(db, nombre, tipoMat, color, talla, precio, deporte, stock);
         int id=obtenerIdProducto(db,nombre);
@@ -289,10 +289,10 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
         scanf("%s", tipoSup);
 
         scanf("PRECIO: \n");
-        scanf("%i", precio);
+        scanf("%f", &precio);
 
         printf("STOCK: \n");
-        scanf("%i", stock);
+        scanf("%i", &stock);
 
         agregarSupl(db, nombre, tipoSup, stock, precio);
         int id=obtenerIdProducto(db,nombre);
@@ -376,7 +376,7 @@ void eliminarProductoAdmin (sqlite3 *db, Administrador administrador) {
         printf("¿Está seguro de que quiere eliminarlo?\n");
         printf("1. Sí \n");
         printf("2. No \n");
-        scanf("%i", eleccion);
+        scanf("%i", &eleccion);
 
         if (eleccion == 1) {
             eliminarCalzado(db, iden);
@@ -386,11 +386,11 @@ void eliminarProductoAdmin (sqlite3 *db, Administrador administrador) {
     } else if (tipo == 'M') {
 
         MaterialDeportivo matD =  obtenerMaterial (db, iden);
-        printf("El material deportivo %i es: ", matD.nombre); 
+        printf("El material deportivo %s es: ", matD.nombre); 
         printf("¿Está seguro de que quiere eliminarlo?\n");
         printf("1. Sí \n");
         printf("2. No \n");
-        scanf("%i", eleccion);
+        scanf("%i", &eleccion);
 
         if (eleccion == 1) {
             eliminarMD(db, iden);
@@ -400,11 +400,11 @@ void eliminarProductoAdmin (sqlite3 *db, Administrador administrador) {
     } else if (tipo == 'P') {
 
         Prenda pren =  obtenerPrenda (db, iden);
-        printf("El material deportivo %i es: ", pren.nombre); 
+        printf("El material deportivo %s es: ", pren.nombre); 
         printf("¿Está seguro de que quiere eliminarlo?\n");
         printf("1. Sí \n");
         printf("2. No \n");
-        scanf("%i", eleccion);
+        scanf("%i", &eleccion);
 
         if (eleccion == 1) {
             eliminarMD(db, iden);
@@ -414,11 +414,11 @@ void eliminarProductoAdmin (sqlite3 *db, Administrador administrador) {
     } else if (tipo == 'S') {
 
         Suplemento sup =  obtenerSuplemento (db, iden);
-        printf("El material deportivo %i es: ", sup.nombre); 
+        printf("El material deportivo %s es: ", sup.nombre); 
         printf("¿Está seguro de que quiere eliminarlo?\n");
         printf("1. Sí \n");
         printf("2. No \n");
-        scanf("%i", eleccion);
+        scanf("%i", &eleccion);
 
         if (eleccion == 1) {
             eliminarMD(db, iden);
@@ -442,7 +442,7 @@ void ventanaAdmin (sqlite3 *db, Administrador administrador) {
 
         do {
             printf("¿Qué desea hacer, %s?", administrador.nombre);
-            scanf("%i", eleccion);
+            scanf("%i", &eleccion);
         } while (!(eleccion>= 0 && eleccion<=3));
 
         if (eleccion == 0) {
