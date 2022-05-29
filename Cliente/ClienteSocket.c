@@ -61,8 +61,8 @@ void devolucionClienteSocket (SOCKET s) {
 
 
     if (strcmp(recvBuff, mensaje1) != 0) {
-
-		break;
+		//break;
+		NULL;
 
 	} else if (strcmp(recvBuff, mensaje2) != 0) {
 
@@ -82,8 +82,8 @@ void devolucionClienteSocket (SOCKET s) {
 		printf("Mensaje recibido: %s \n", recvBuff);
 
 		if (strcmp(recvBuff, "¡No existe dicha compra, mentiroso!") != 0) {
-			
-			break;
+			NULL;
+			//break;
 
 		} else {
 
@@ -207,9 +207,10 @@ int main(int argc, char *argv[]) {
 	strcpy(sendBuff, "Hola. ¿Podrias ayudarme?");
 	send(s, sendBuff, sizeof(sendBuff), 0);
 
+
 	do {
 
-		int bytes = recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+		int bytes = recv(s, recvBuff, sizeof(recvBuff), 0);
 
 		if (bytes > 0) {
 			printf("Recibiendo mensaje... \n");
