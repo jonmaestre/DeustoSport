@@ -4,13 +4,11 @@
 #include <stdbool.h>
 
 #include "Administrador.h"
-#include "Calzado.h"
+
 #include "Carrito.h"
 #include "Compra.h"
 #include "Comprador.h"
-#include "MaterialDeportivo.h"
-#include "Prenda.h"
-#include "Suplemento.h"
+
 #include "bbdd.h"
 #include "sqlite3.h"
 
@@ -45,82 +43,10 @@ int inicio () {
 //---------------------------------------------------------------------------------------------
 
 
-// Para inicio de la Zapatillas hombre
-
-void iniciarZapatillasH(sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray)
-{
-    int *respuesta;
-    printf("Estas son las zapatillas para hombre que tenemos en este momento: \n");
-    printf("\n");
-    printf("1. Ver zapatillas para hombre \n");
-    printf("2. Ver carrito \n");
-    printf("Pulsa 0 para salir. \n");
-
-    do {
-        printf("ELECCION: ");
-        fflush(stdout);
-        scanf("%i", respuesta);
-    } while ( *respuesta < 0 || *respuesta >=2);
-
-    if (*respuesta == 1)
-    {
-        int size=sizeCalzadoH(db);
-        int i=0;
-        Calzado* listaCalzadoH=showCalzadoH(db);
-        do{
-            printf("%i. %s %s Precio:%2f\n",(i+1),listaCalzadoH[i].tipo,listaCalzadoH[i].nombre,listaCalzadoH[i].precio);
-        }while (i<size);
-        
-        int *respuesta1;
-        respuesta1 = malloc(sizeof(int));
-
-        printf("¿Te interesa alguna? \n");
-        printf("1. Comprar \n");
-        printf("Pulsa 0 para salir.  \n"); 
-
-        do {
-            scanf("%i", respuesta1);
-            printf("\n"); 
-        } while (*respuesta1 != 0 || *respuesta1 != 1);
-
-        if (*respuesta1 == 1) {
-
-            int zapatillaHom;
-
-            printf ("¿Cuál? Por favor, indique su código. \n");
-            scanf("%i", &zapatillaHom);
-
-            int cant;
-
-            printf ("¿Cuántas zapatillas desea? \n");
-            scanf("%i", &cant);
-
-            if (&comprador == NULL) {
-                printf("Primero debes iniciar sesión. \n");
-                comprador = *iniciarCliente (db);
-            }
-
-            anadirACarrito (db, arrayProductos, sizeArray, zapatillaHom, cant);
-            sizeArray -= 1;
-        }
-
-        
-        free(listaCalzadoH);
-        listaCalzadoH=NULL;
-    }
-    else if (*respuesta == 2)
-    {
-        iniciarCarrito(db, comprador, &sizeArray, arrayProductos);
-    }
-
-    free(respuesta);
-    respuesta = NULL;
-}
-
 
 // Para inicio de la zapatillas mujer
 
-void iniciarZapatillasM(sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray)
+void iniciarZapatillas(sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray)
 {
     int *respuesta;
     printf("Estas son las zapatillas para mujer que tenemos en este momento: \n");
@@ -137,15 +63,15 @@ void iniciarZapatillasM(sqlite3 *db, Comprador comprador, int** arrayProductos, 
 
     if (*respuesta == 1)
     {
-        int size=sizeCalzadoM(db);
+        int size=sizeCalzado(db);
         int i=0;
-        Calzado* listaCalzadoM=showCalzadoM(db);
+        Calzado* listaCalzadoM=showCalzado(db);
         do{
-            printf("%i. %s %s Precio:%2f\n",(i+1),listaCalzadoM[i]->tipo,listaCalzadoM[i]->nombre,listaCalzadoM[i]->precio);
+            printf("%i. %s %s Precio:%2f\n",(i+1),listaCalzado[i]->tipo,listaCalzado[i]->nombre,listaCalzado[i]->precio);
         }while (i<size);
 
         int *respuesta1;
-        respuesta1 -> malloc(sizeof(int));
+        *respuesta1 -> malloc(sizeof(int));
 
         printf("¿Te interesa alguna? \n");
         printf("1. Comprar \n");
@@ -170,10 +96,10 @@ void iniciarZapatillasM(sqlite3 *db, Comprador comprador, int** arrayProductos, 
 
             if (&comprador == NULL) {
                 printf("Primero debes iniciar sesión. \n");
-                comprador = *iniciarCliente (db);
+                //comprador = *iniciarCliente (db);
             }
 
-            anadirACarrito (db, arrayProductos, sizeArray, zapatillaMuj, cant);
+            //anadirACarrito (db, arrayProductos, sizeArray, zapatillaMuj, cant);
             sizeArray -= 1;
 
         }
@@ -185,7 +111,7 @@ void iniciarZapatillasM(sqlite3 *db, Comprador comprador, int** arrayProductos, 
     }
     else if (*respuesta == 2)
     {
-        iniciarCarrito(db, comprador, &sizeArray, arrayProductos);
+        //iniciarCarrito(db, comprador, &sizeArray, arrayProductos);
     }
 
 
@@ -196,7 +122,7 @@ void iniciarZapatillasM(sqlite3 *db, Comprador comprador, int** arrayProductos, 
 
 // Para inicio de ropa hombre
 
-void iniciarRopaH(sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray)
+void iniciarRopa(sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray)
 {
     int respuesta;
     printf("Esta es la ropa para hombre que tenemos en este momento: \n");
@@ -213,11 +139,11 @@ void iniciarRopaH(sqlite3 *db, Comprador comprador, int** arrayProductos, int si
 
     if (respuesta == 1)
     {
-        int size=sizePrendaH(db);
+        int size=sizePrenda(db);
         int i=0;
-        Prenda* listaPrendaH=showPrendaH(db);
+        Prenda* listaPrendaH=showPrenda(db);
         do{
-            printf("%i. %s %s Precio:%2f\n",(i+1),listaPrendaH[i]->tipo,listaPrendaH[i]->nombre,listaPrendaH[i]->precio);
+            printf("%i. %s %s Precio:%2f\n",(i+1),listaPrenda[i]->tipo,listaPrenda[i]->nombre,listaPrenda[i]->precio);
         }while (i<size);
 
 
@@ -247,10 +173,10 @@ void iniciarRopaH(sqlite3 *db, Comprador comprador, int** arrayProductos, int si
 
             if (&comprador == NULL) {
                 printf("Primero debes iniciar sesión. \n");
-                comprador = *iniciarCliente (db);
+                //comprador = *iniciarCliente (db);
             }
 
-            anadirACarrito (db, arrayProductos, sizeArray, ropaHombre, cant);
+            //anadirACarrito (db, arrayProductos, sizeArray, ropaHombre, cant);
             sizeArray -= 1;
         }
 
@@ -259,154 +185,11 @@ void iniciarRopaH(sqlite3 *db, Comprador comprador, int** arrayProductos, int si
     }
     if (respuesta == 2)
     {
-        iniciarCarrito(db, comprador, &sizeArray, arrayProductos);
+        //iniciarCarrito(db, comprador, &sizeArray, arrayProductos);
     }
 
 }
 
-
-// Para inicio de ropa mujer
-
-void iniciarRopaM(sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray)
-{
-    int respuesta;
-    printf("Esta es la ropa para mujer que tenemos en este momento: \n");
-    printf("\n");
-    printf("1. Ver ropa para mujer \n");
-    printf("2. Ver carrito \n");
-    printf("Pulsa 0 para salir. \n");
-
-    do {
-        printf("ELECCION: ");
-        fflush(stdout);
-        scanf("%i", &respuesta);
-    } while (respuesta < 0 || respuesta > 2);
-    
-
-    if (respuesta == 1)
-    {
-
-        
-        int size=sizePrendaM(db);
-        int i=0;
-        Prenda* listaPrendaM=showPrendaM(db);
-        do{
-            printf("%i. %s %s Precio:%2f\n",(i+1),listaPrendaM[i]->tipo,listaPrendaM[i]->nombre,listaPrendaM[i]->precio);
-        }while (i<size);
-
-        int respuesta1;
-
-        printf("¿Te interesa alguna? \n");
-        printf("1. Comprar \n");
-        printf("Pulsa 0 para salir.  \n"); 
-
-        do {
-            scanf("%i", &respuesta1);
-            printf("\n"); 
-        } while (respuesta1 != 0 || respuesta1 != 1);
-
-        if (respuesta1 == 1) {
-
-            int ropaMujer;
-
-            printf ("¿Cuál? Por favor, indique su código. \n");
-            scanf("%i", &ropaMujer);
-
-            int cant;
-
-            printf ("¿Cuántas desea comprar? \n");
-            scanf("%i", &cant);
-
-            if (&comprador == NULL) {
-                printf("Primero debes iniciar sesión. \n");
-                comprador = *iniciarCliente (db);
-            }
-
-            anadirACarrito (db, arrayProductos, sizeArray, ropaMujer, cant);
-            sizeArray -= 1;
-        }
-
-        free(listaPrendaM);
-        listaPrendaM=NULL;
-
-    }
-    else if (respuesta == 2)
-    {
-        iniciarCarrito(db, comprador, &sizeArray, arrayProductos);
-    }
-}
-
-
-// Para inicio de suplementos
-
-void iniciarSuplementos(sqlite3 *db, Comprador comprador, int** arrayProductos, int sizeArray)
-{
-    int respuesta;
-    printf("Estos son los suplementos deportivos que tenemos en este momento: \n");
-    printf("\n");
-    printf("1. Ver suplementos \n");
-    printf("2. Ver carrito \n");
-    printf("Pulsa 0 para salir. \n");
-
-    do {
-        printf("ELECCION: ");
-        fflush(stdout);
-        scanf("%i", &respuesta);
-
-    } while (respuesta < 0 || respuesta > 2);
-    
-
-    if (respuesta == 1)
-    {
-
-        int size=sizeSupl(db);
-        int i=0;
-        Suplemento* listaSupl=showSupl(db);
-        do{
-            printf("%i. %s %s Precio:%2f\n",(i+1),listaSupl[i]->tipo,listaSupl[i]->nombre,listaSupl[i]->precio);
-        }while (i<size);
-
-        int respuesta1;
-
-        printf("¿Te interesa alguna? \n");
-        printf("1. Comprar \n");
-        printf("Pulsa 0 para salir.  \n"); 
-
-        do {
-            scanf("%i", &respuesta1);
-            printf("\n"); 
-        } while (respuesta1 != 0 || respuesta1 != 1);
-
-        if (respuesta1 == 1) {
-
-            int suplem;
-
-            printf ("¿Cuál? Por favor, indique su código. \n");
-            scanf("%i", &suplem);
-
-            int cant;
-
-            printf ("Indique la cantidad \n");
-            scanf("%i", &cant);
-
-
-            if (&comprador == NULL) {
-                printf("Primero debes iniciar sesión. \n");
-                comprador = *iniciarCliente (db);
-            }
-
-            anadirACarrito (db, arrayProductos, sizeArray, suplem, cant);
-            sizeArray -= 1;
-        }
-
-        free(listaSupl);
-        listaSupl=NULL;
-    }
-    else if (respuesta == 2)
-    {
-        iniciarCarrito(db, comprador, &sizeArray, arrayProductos);
-    }
-}
 
 
 // Para inicio de material deportivo especifico
@@ -462,10 +245,10 @@ void iniciarMaterialD(sqlite3 *db, Comprador comprador, int** arrayProductos, in
 
             if (&comprador == NULL) {
                 printf("Primero debes iniciar sesión. \n");
-                comprador = *iniciarCliente (db);
+                //comprador = *iniciarCliente (db);
             }
 
-            anadirACarrito (db, arrayProductos, sizeArray, matDep, cant);
+            //anadirACarrito (db, arrayProductos, sizeArray, matDep, cant);
             sizeArray -= 1;
         }
 
@@ -474,7 +257,7 @@ void iniciarMaterialD(sqlite3 *db, Comprador comprador, int** arrayProductos, in
     }
     else if (respuesta == 2)
     {
-        iniciarCarrito(db, comprador, &sizeArray, arrayProductos);
+        //iniciarCarrito(db, comprador, &sizeArray, arrayProductos);
     }
 }
 
@@ -505,29 +288,20 @@ void ventaPrincipal(sqlite3 *db, Comprador comprador, int** arrayProductos, int 
     while (respuesta != 0) {
         if (respuesta == 1)
         {
-            iniciarZapatillasH(db, comprador, arrayProductos, sizeArray);
-        } else if (respuesta == 2)
-        {
-            iniciarZapatillasM(db, comprador, arrayProductos, sizeArray);
+            iniciarZapatillas(db, comprador, arrayProductos, sizeArray);
         } else if (respuesta == 3)
         {
-            iniciarRopaH(db, comprador, arrayProductos, sizeArray);
-        } else if (respuesta == 4)
-        {
-            iniciarRopaM(db, comprador, arrayProductos, sizeArray);
-        } else if (respuesta == 5)
-        {
-            iniciarSuplementos(db, comprador, arrayProductos, sizeArray);
-        } else if (respuesta == 6)
+            iniciarRopa(db, comprador, arrayProductos, sizeArray);
+        }  else if (respuesta == 6)
         {
             iniciarMaterialD(db, comprador, arrayProductos, sizeArray);
         } else if (respuesta == 7)
         {
-            iniciarCarrito(db, comprador, &sizeArray, arrayProductos);
+            //iniciarCarrito(db, comprador, &sizeArray, arrayProductos);
         }  else if (respuesta == 8) 
         {
             if (&comprador == NULL) {
-                comprador = *iniciarCliente (db);
+                //comprador = *iniciarCliente (db);
             }
             int* idCompra;
             idCompra = malloc(sizeof(int));

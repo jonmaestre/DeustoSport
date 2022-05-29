@@ -5,13 +5,10 @@
 #include <iostream>
 using namespace std;
 
-#include "Calzado.h"
+
 #include "Carrito.h"
 #include "Compra.h"
 #include "Comprador.h"
-#include "MaterialDeportivo.h"
-#include "Prenda.h"
-#include "Suplemento.h"
 #include "bbdd.h"
 #include "sqlite3.h"
 #include "funcionesCliente.h"
@@ -28,7 +25,7 @@ Comprador registrar (sqlite3 *db) {
     // Reserva el espacio en memoria para cda uno de los aspectos a registrar
     char* nombre;
     
-    int* telefono;
+    char* telefono;
     
     char* correo;
     
@@ -109,7 +106,7 @@ Comprador* iniciarCliente (sqlite3 *db) {
     //En caso de que no encuentre la informacion introducida pide que se registre o reintente meter la informacion de usuario
     bool existe = existeComprador(db, correo);
     if (existe == false) {
-        int deNuevo;
+        char deNuevo;
         while (existe == false) {
             cout << "¡Vaya! Parece que ha habido un error. \n" << endl;
             cout << "Creemos que no está registrado en DeustoSportKit. \n" << endl;
@@ -140,7 +137,7 @@ Comprador* iniciarCliente (sqlite3 *db) {
                 } else {
                     *persona = obtenerComprador (db, correo);
                     char* correito = (*persona)->correo;
-                    char* contra = (*persona)->contrasena;
+                    char* contra = *Comprador::persona ;
                     while (contrasena != contra && correo == correito) {
                         cout << "¡Vaya! Parece que ha habido un error. \n" << endl;
                         cout << "Vuelve a meter los datos. \n" << endl;
@@ -196,7 +193,7 @@ void comprarCarrito (sqlite3 *db, Comprador comprador, int** arrayProductos, int
         Compra compra = {idCarrito, arrayProductos[i][0], comprador->identificativo, arrayProductos[i][1]};
         agregarCompra(db, compra);
     }
-
+    
     Carrito carritoNuevo = crearCarrito(db, idCarrito, comprador->identificativo);
     agregarCarrito(db, carritoNuevo);
 
@@ -237,10 +234,7 @@ int* iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** arra
         } else if (type == 'P') {
             Prenda pren = obtenerPrenda (db, arrayProductos[i][0]);
             printf("%i: %s. X%i \n", num+1, pren->nombre, arrayProductos[i][1]);
-        } else if (type == 'S') {
-            Suplemento supl = obtenerSuplemento(db, arrayProductos[i][0]);
-            printf("%i: %s. X%i \n", num+1, supl->nombre, arrayProductos[i][1]);
-        }
+        } 
         i++;
     }
     cout << """¿Qué deseas hacer? \n" << endl;
@@ -265,7 +259,7 @@ int* iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** arra
         cout << "¿Qué producto deseas eliminar? \n" << endl;
         
 
-        int* indice;
+        char* indice;
         do {
             cout << "ÍNDICE: " << endl;
             cin >> indice;
