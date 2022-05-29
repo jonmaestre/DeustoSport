@@ -101,7 +101,7 @@ void devolucionServerSocket (SOCKET comm_socket) {
 			printf("Mensaje recibido: %s \n", recvBuff);
 
 			Devolucion devolucion;
-			devolucion.Devolucion(idCompra, idComprador, idProd, recvBuff);
+			devolucion=Devolucion(idCompra, idComprador, idProd, recvBuff);
 
 			Compra compra = obtenerCompra (db, idCompra, idComprador, idProd);
 			agregarDevolucion (db, compra, recvBuff);
@@ -119,7 +119,7 @@ void devolucionServerSocket (SOCKET comm_socket) {
 
 void problemaServerSocket (SOCKET comm_socket) {
 	
-	char sendBuff[512]
+	char sendBuff[512];
 
 	printf("Enviando mensaje... \n");
 	strcpy(sendBuff, "¡Sentimos las molestias! \n Puede contactar con el servicio tecnico de DeustoSportKit llamando al 600 000 000");
@@ -133,6 +133,9 @@ void problemaServerSocket (SOCKET comm_socket) {
 }
 
 void dudaServerSocket (SOCKET comm_socket, char recvBuff[512], char sendBuff[512]) {
+
+	sqlite3 *db;
+	int result = sqlite3_open("BaseDatos.db", &db);
 
 	char sendBuff[512], recvBuff[512];
 
@@ -149,7 +152,7 @@ void dudaServerSocket (SOCKET comm_socket, char recvBuff[512], char sendBuff[512
 	printf("Mensaje recibido: %s \n", recvBuff);
 
 
-	bool existe = existeProducto (db, recvBuff);
+	bool existe = existeProducto1 (db, recvBuff);
 
 	// Hacemos un bucle de 3 vueltas. Si a la tercera vuelve a introducir mal el nombre, pasará al siguiente if (primera parte)
 	int contador = 1;
@@ -179,19 +182,24 @@ void dudaServerSocket (SOCKET comm_socket, char recvBuff[512], char sendBuff[512
 	} else {
 
 		int idProd = obtenerIdProducto (db, recvBuff);
-		char tipo = obtenerTipoProducto (db, id);;
+		char tipo = obtenerTipoProducto (db, idProd);
+		int cuantos;
 
 		if (strcmp(tipo, 'C') == 0) {
-			Calzado prod = obtenerCalzado(bd, idProd);
+			Calzado prod = obtenerCalzado(db, idProd);
+			cuantos = prod.stock;
 		} else if (strcmp(tipo, 'P') == 0) {
-			Prenda prod = obtenerPrenda(bd, idProd);
+			Prenda prod = obtenerPrenda(db, idProd);
+			cuantos = prod.stock;
 		} else if (strcmp(tipo, 'M') == 0) {
-			MaterialDeportivo prod = obtenerMaterial(bd, idProd);
+			MaterialDeportivo prod = obtenerMaterial(db, idProd);
+			cuantos = prod.stock;
 		} else if (strcmp(tipo, 'S') == 0) {
-			Suplemento prod = obtenerSuplemento(bd, idProd);
+			Suplemento prod = obtenerSuplemento(db, idProd);
+			cuantos = prod.stock;
 		}
 
-		int cuantos = prod.cantidad;
+		
 
 		printf("Enviando mensaje... \n");
 		strcpy(sendBuff, ("Ahora mismo hay un total de %i productos en stock.", cuantos));
