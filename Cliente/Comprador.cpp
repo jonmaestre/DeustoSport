@@ -28,6 +28,10 @@
         delete[] contrasena;
     }
 
+    void Comprador::funcion(){
+        
+    }
+
     char* Comprador::getNombre() {
         return this->nombre;
     }
