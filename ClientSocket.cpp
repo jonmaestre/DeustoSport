@@ -74,13 +74,102 @@ int main(int argc, char *argv[]) {
             if (opcion == 1) {
                 // ZAPATILLAS
 
+				do {
+					cout << "Recibiendo mensaje... " << endl;
+					recv(s, recvBuff, sizeof(recvBuff), 0);
+					cout << "Mensaje recibido: " << recvBuff << endl;
+				} while (strcmp(recvBuff, "¿Te interesa alguna zapatilla? (Si o No)") != 0);
+
+				char* respuesta;
+				respuesta = malloc(sizeof(char)*3);
+	    		cin >> respuesta;
+
+				cout << "Enviando mensaje... " << endl;
+				strcpy(sendBuff, respuesta);
+				send(s, sendBuff, sizeof(sendBuff), 0);
+				cout << "Mensaje enviado: " << sendBuff << endl;
+
+				if (strcmp(recvBuff, "Si") == 0) {
+
+					cout << "Recibiendo mensaje... " << endl;
+					recv(s, recvBuff, sizeof(recvBuff), 0);
+					cout << "Mensaje recibido: " << recvBuff << endl;
+
+					int id;
+					cin >> id;
+
+					cout << "Enviando mensaje... " << endl;
+					strcpy(sendBuff, id);
+					send(s, sendBuff, sizeof(sendBuff), 0);
+					cout << "Mensaje enviado: " << sendBuff << endl;
+
+
+					cout << "Recibiendo mensaje... " << endl;
+					recv(s, recvBuff, sizeof(recvBuff), 0);
+					cout << "Mensaje recibido: " << recvBuff << endl;
+
+					int cant;
+					cin >> cant;
+
+					cout << "Enviando mensaje... " << endl;
+					strcpy(sendBuff, cant);
+					send(s, sendBuff, sizeof(sendBuff), 0);
+					cout << "Mensaje enviado: " << sendBuff << endl;
+
+				}
+
             } else if (opcion == 2) {
                 // ROPA
+
+				do {
+					cout << "Recibiendo mensaje... " << endl;
+					recv(s, recvBuff, sizeof(recvBuff), 0);
+					cout << "Mensaje recibido: " << recvBuff << endl;
+				} while (strcmp(recvBuff, "¿Te interesa alguna prenda? (Si o No)") != 0);
+
+				char* respuesta;
+				respuesta = malloc(sizeof(char)*3);
+	    		cin >> respuesta;
+
+				cout << "Enviando mensaje... " << endl;
+				strcpy(sendBuff, respuesta);
+				send(s, sendBuff, sizeof(sendBuff), 0);
+				cout << "Mensaje enviado: " << sendBuff << endl;
+
+				if (strcmp(recvBuff, "Si") == 0) {
+
+					cout << "Recibiendo mensaje... " << endl;
+					recv(s, recvBuff, sizeof(recvBuff), 0);
+					cout << "Mensaje recibido: " << recvBuff << endl;
+
+					int id;
+					cin >> id;
+
+					cout << "Enviando mensaje... " << endl;
+					strcpy(sendBuff, id);
+					send(s, sendBuff, sizeof(sendBuff), 0);
+					cout << "Mensaje enviado: " << sendBuff << endl;
+
+
+					cout << "Recibiendo mensaje... " << endl;
+					recv(s, recvBuff, sizeof(recvBuff), 0);
+					cout << "Mensaje recibido: " << recvBuff << endl;
+
+					int cant;
+					cin >> cant;
+
+					cout << "Enviando mensaje... " << endl;
+					strcpy(sendBuff, cant);
+					send(s, sendBuff, sizeof(sendBuff), 0);
+					cout << "Mensaje enviado: " << sendBuff << endl;
+
+				}
 
             } else if (opcion == 3) {
                 // MATERIAL
 
             } else (opcion == 4) {
+				// ATENCION AL CLIENTE
 			
                 do {
 
@@ -111,7 +200,7 @@ int main(int argc, char *argv[]) {
 
         }
 
-        
+	}
 
 	// CLOSING the socket and cleaning Winsock...
 	closesocket(s);

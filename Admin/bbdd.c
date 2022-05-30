@@ -128,7 +128,7 @@ bool existeProducto2 (sqlite3 *db, char* nombre) {
 
 // *************************** CALZADO ***************************
 
- obtenerCalzado (sqlite3 *db, int id){
+Calzado obtenerCalzado (sqlite3 *db, int id){
     sqlite3_stmt *stmt;
 	char sql[100];
 
