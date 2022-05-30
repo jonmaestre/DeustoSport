@@ -168,6 +168,50 @@ int main(int argc, char *argv[]) {
             } else if (opcion == 3) {
                 // MATERIAL
 
+				do {
+					cout << "Recibiendo mensaje... " << endl;
+					recv(s, recvBuff, sizeof(recvBuff), 0);
+					cout << "Mensaje recibido: " << recvBuff << endl;
+				} while (strcmp(recvBuff, "¿Te interesa algun material deportivo? (Si o No)") != 0);
+
+				char* respuesta;
+				respuesta = malloc(sizeof(char)*3);
+	    		cin >> respuesta;
+
+				cout << "Enviando mensaje... " << endl;
+				strcpy(sendBuff, respuesta);
+				send(s, sendBuff, sizeof(sendBuff), 0);
+				cout << "Mensaje enviado: " << sendBuff << endl;
+
+				if (strcmp(recvBuff, "Si") == 0) {
+
+					cout << "Recibiendo mensaje... " << endl;
+					recv(s, recvBuff, sizeof(recvBuff), 0);
+					cout << "Mensaje recibido: " << recvBuff << endl;
+
+					int id;
+					cin >> id;
+
+					cout << "Enviando mensaje... " << endl;
+					strcpy(sendBuff, id);
+					send(s, sendBuff, sizeof(sendBuff), 0);
+					cout << "Mensaje enviado: " << sendBuff << endl;
+
+
+					cout << "Recibiendo mensaje... " << endl;
+					recv(s, recvBuff, sizeof(recvBuff), 0);
+					cout << "Mensaje recibido: " << recvBuff << endl;
+
+					int cant;
+					cin >> cant;
+
+					cout << "Enviando mensaje... " << endl;
+					strcpy(sendBuff, cant);
+					send(s, sendBuff, sizeof(sendBuff), 0);
+					cout << "Mensaje enviado: " << sendBuff << endl;
+
+				}
+
             } else (opcion == 4) {
 				// ATENCION AL CLIENTE
 			
