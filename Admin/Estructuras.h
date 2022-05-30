@@ -65,11 +65,5 @@ typedef struct {
     char* nivel;
 } CompradorVip;
 
-typedef struct {
-    int idCompra;
-    int idComprador;
-    int idProducto;
-    char* explicacion;
-} Devolucion;
 
 #endif
