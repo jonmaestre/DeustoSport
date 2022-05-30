@@ -1,7 +1,7 @@
-#ifndef COMPRA_H_
-#define COMPRA_H_
+#ifndef COMPRITA_H_
+#define COMPRITA_H_
 
-class Compra
+class Comprita
 {
 private:
    int identificativo;
@@ -9,9 +9,9 @@ private:
    int idComprador;
    int cantidad;
 public:
-   Compra(int idProducto, int idComprador, int cantidad);
-   Compra(const Compra& c);
-   ~Compra();
+   Comprita(int idProducto, int idComprador, int cantidad);
+   Comprita(const Comprita& c);
+   ~Comprita();
    int getIdentificativo();
    int getIdProducto();
    int getIdComprador();

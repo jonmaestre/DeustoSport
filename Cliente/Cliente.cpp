@@ -1,10 +1,10 @@
-#include "Comprador.h"
+#include "Cliente.h"
 #include <string.h>
 #include <iostream>
 using std::cout; using std::endl;
 
             
-    Comprador::Comprador(char* nombre, int identificativo, int telefono, char* correo, char* direccion, char* contrasena) {
+    Cliente::Cliente(char* nombre, int identificativo, int telefono, char* correo, char* direccion, char* contrasena) {
         this->nombre = new char[strlen(nombre)+1];
         this->identificativo = identificativo;
         this->telefono = telefono;
@@ -13,7 +13,7 @@ using std::cout; using std::endl;
         this->contrasena = new char[strlen(contrasena)+1];
     }
 
-    Comprador::Comprador(const Comprador& c) {
+    Cliente::Cliente(const Cliente& c) {
         this->nombre = new char[strlen(c.nombre)+1];
         this->identificativo = c.identificativo;
         this->telefono = c.telefono;
@@ -22,34 +22,34 @@ using std::cout; using std::endl;
         this->contrasena = new char[strlen(c.contrasena)+1];
     }
 
-    Comprador::~Comprador() {
+    Cliente::~Cliente() {
         delete[] nombre;
         delete[] correo;
         delete[] direccion;
         delete[] contrasena;
     }
 
-    void Comprador::rebajaPrecio(){
+    void Cliente::rebajaPrecio(){
         int precio;
         cout << "Por ser miembro sin VIP no tienes rebaja en el precio por lo que el precio es:  " << precio << endl;
     }
 
-    char* Comprador::getNombre() {
+    char* Cliente::getNombre() {
         return this->nombre;
     }
-    int Comprador::getIdentificativo() {
+    int Cliente::getIdentificativo() {
         return this->identificativo;
     }
-    int Comprador::getTelefono() {
+    int Cliente::getTelefono() {
         return this->telefono;
     }
-    char* Comprador::getCorreo() {
+    char* Cliente::getCorreo() {
         return this->correo;
     }
-    char* Comprador::getDireccion() {
+    char* Cliente::getDireccion() {
         return this->direccion;
     }
-    char* Comprador::getContrasena() {
+    char* Cliente::getContrasena() {
         return this->contrasena;
     }
 

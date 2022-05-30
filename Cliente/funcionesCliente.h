@@ -2,9 +2,9 @@
 #define FUNCIONESCLIENTE_H_
 
 
-Comprador* iniciarCliente (sqlite3 *db);
+Cliente iniciarCliente (sqlite3 *db);
 
-Comprador registrar (sqlite3 *db);
+Cliente registrar (sqlite3 *db);
 
 void anadirACarrito (sqlite3 *db, int** arrayProductos, int sizeArray, int idProd, int cant);
 

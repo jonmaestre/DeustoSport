@@ -1,6 +1,6 @@
 #include "Devolucion.h"
 #include "Producto.h"
-#include "Comprador.h"
+#include "Cliente.h"
 #include <String.h>
 using namespace std;
 
