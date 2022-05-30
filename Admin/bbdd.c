@@ -295,7 +295,7 @@ Prenda obtenerPrenda (sqlite3 *db, int id){
 	precio = (float)sqlite3_column_double(stmt, 5);
 	stock = (int)sqlite3_column_int(stmt, 6);
 
-	Prenda prenda = {iden, nombre, tipo, *color, talla, *precio, stock};
+	Prenda prenda = {iden, nombre, tipo, precio, stock, color, talla};
 
 	sqlite3_finalize(stmt);
 
@@ -438,8 +438,8 @@ MaterialDeportivo obtenerMaterial (sqlite3 *db, int id){
 	precio = (float)sqlite3_column_double(stmt, 5);
 	strcpy(deporte, (char*)sqlite3_column_text(stmt, 6));
 	stock = (int)sqlite3_column_int(stmt, 7);
-
-	MaterialDeportivo material = {iden, nombre, tipo, *color, talla, *precio, deporte, stock};
+ 
+	MaterialDeportivo material = {iden, nombre, tipo, precio, stock, color, talla,deporte};
 
 	sqlite3_finalize(stmt);
 
@@ -565,139 +565,7 @@ MaterialDeportivo* showMD(sqlite3 *db) {
 }
 
 
-// *************************** SUPLEMENTO ***************************
 
-Suplemento obtenerSuplemento (sqlite3 *db, int id){
-    sqlite3_stmt *stmt;
-	char sql[100];
-
-	int iden, stock;
-	char nombre[100], tipo[15];
-
-	sprintf(sql, "SELECT * FROM Suplemento WHERE idProducto = %i",id);
-	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
-	
-	iden = (int)sqlite3_column_int(stmt, 0);
-	strcpy(nombre, (char*)sqlite3_column_text(stmt, 1));
-	strcpy(tipo, (char*)sqlite3_column_text(stmt, 2));
-	stock = (int)sqlite3_column_int(stmt, 3);
-
-	Suplemento suplemento = {iden, nombre, tipo, stock};
-
-	sqlite3_finalize(stmt);
-
-	return suplemento;
-}
-
-void agregarSupl(sqlite3 *db, char* nom, char* tipo, int cantidad, float precio){
-    sqlite3_stmt *stmt;
-
-	char sql[100];
-	int maxId = maxIdProducto(db);
-
-	sprintf(sql, "INSERT INTO Suplemento VALUES (%i, %s, %s, %i, %f)", maxId+1, nom, tipo, cantidad, precio);
-	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
-	sqlite3_step(stmt);
-
-	sqlite3_finalize(stmt);
-}
-
-void subirStockSupl (sqlite3 *db, int id, int cant){
-    sqlite3_stmt *stmt;
-	char sql[100];
-
-	sprintf(sql, "UPDATE Suplemento SET Stock_Sup = Stock_Sup + %i WHERE  ID_Sup = %i", cant, id);
-	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
-	sqlite3_step(stmt);
-	sqlite3_finalize(stmt);
-}
-
-void bajarStockSupl(sqlite3 *db, int id, int cant){
-    sqlite3_stmt *stmt;
-	char sql[100];
-
-	sprintf(sql, "UPDATE Suplemento SET Stock_Sup = Stock_Sup + %i WHERE  ID_Sup = %i", cant, id);
-	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
-	sqlite3_step(stmt);
-	sqlite3_finalize(stmt);
-}
-
-void eliminarSupl(sqlite3 *db, int id){
-    sqlite3_stmt *stmt;
-	char sql[100];
-
-	sprintf(sql, "DELETE Suplemento WHERE ID_Sup = %i", id);
-	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
-	sqlite3_step(stmt);
-	sqlite3_finalize(stmt);
-}
-
-int sizeSupl(sqlite3 *db){
-	sqlite3_stmt *stmt;
-	char sql[100];
-	sprintf(sql, "SELECT COUNT(*) FROM Suplemento");
-	int size = sqlite3_step(stmt);
-
-	sqlite3_finalize(stmt);
-	return size;
-}
-
-Suplemento* showSupl(sqlite3 *db) {
-	sqlite3_stmt *stmt;
-
-	int size= sizeSupl(db);
-	Suplemento* listaSupl=(Suplemento*)malloc(sizeof(Suplemento)*size);
-
-	char sql[] = "SELECT * FROM Suplemento";
-
-	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
-	if (result != SQLITE_OK) {
-		printf("Error preparing statement (SELECT)\n");
-		printf("%s\n", sqlite3_errmsg(db));
-		
-	}
-	int i=0;
-	Suplemento supl;
-	int idM;
-	char nombreM[100];
-	char tipoM[100];
-	float precioM;
-	int StockM;
-
-	do {
-		result = sqlite3_step(stmt) ;
-		if (result == SQLITE_ROW) {
-			idM=sqlite3_column_int(stmt,0);
-			strcpy(nombreM, (char *) sqlite3_column_text(stmt, 1));
-			strcpy(tipoM, (char *) sqlite3_column_text(stmt, 2));
-			precioM = sqlite3_column_double(stmt,3);
-			StockM = sqlite3_column_int(stmt,4);
-
-			supl.identificativo=idM;
-			supl.nombre=nombreM;
-			supl.tipo=tipoM;
-			
-			supl.stock=StockM;
-			
-
-			listaSupl[i]=supl;
-			i++;
-			
-		}
-	} while (i<size);
- 
-	printf("\n");
-	printf("\n");
-
-	result = sqlite3_finalize(stmt);
-	if (result != SQLITE_OK) {
-		printf("Error finalizing statement (SELECT)\n");
-		printf("%s\n", sqlite3_errmsg(db));
-		
-	}
-
-	return listaSupl;
-}
 
 // ------------------------------------------------------------------------------------------------------
 
@@ -771,7 +639,7 @@ void registrarComprador(sqlite3 *db, char* nom, int tlf, char* correo, char* dir
 	sqlite3_finalize(stmt);
 }
 
-Admin::obtenerAdmin(sqlite3 *db, int id){
+Administrador obtenerAdmin(sqlite3 *db, int id){
 	sqlite3_stmt *stmt;
 	char sql[100];
 	char *nombre, *contrasena, *funcion;
@@ -783,7 +651,7 @@ Admin::obtenerAdmin(sqlite3 *db, int id){
 	strcpy(contrasena, (char*)sqlite3_column_text(stmt,2));
 	strcpy(funcion, (char*)sqlite3_column_text(stmt,3));
 
-	Admin a1 = {nombre, id, contrasena, funcion};
+	Administrador a1 = {nombre, id, contrasena, funcion};
 	sqlite3_finalize(stmt);
 	return a1;
 }
@@ -830,41 +698,7 @@ int idMaxAdmin(sqlite3 *db) {
 
 
 // ------------------------------------------------------------------------------------------------------
-// COMPRAS Y CARRITOS
-
-int ultimoCarrito (sqlite3 *db) {
-	sqlite3_stmt *stmt;
-
-	char sql[100];
-
-	sprintf(sql, "SELECT MAX(identificativoCompra) FROM Carrito");
-	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
-	int maximo = sqlite3_step(stmt);
-	sqlite3_finalize(stmt);
-
-	return maximo;
-}
-
-Carrito obtenerCarrito (sqlite3 *db, int idCompra){
-
-    sqlite3_stmt *stmt;
-	char sql[100];
-
-	int idComprador;
-	float precioTotal;
-
-	sprintf(sql, "SELECT * FROM Carrito WHERE ID = %i", idCompra);
-	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
-	
-	precioTotal = (float)sqlite3_column_double(stmt, 1);
-	idComprador = (int)sqlite3_column_int(stmt, 2);
-
-	Carrito carrito = {idCompra, idComprador, precioTotal};
-
-	sqlite3_finalize(stmt);
-
-	return carrito;
-}
+// COMPRAS 
 
 int sizeComprasconId(sqlite3* db, int idCompra){
 	sqlite3_stmt *stmt;
@@ -902,10 +736,10 @@ Compra* comprasConId (sqlite3* db, int idCompra) {
 		idCompr = sqlite3_column_int(stmt, 2);
 		//cant = sqlite3_column_int(stmt, 3);
 
-		compra;identificativo;
-		compra;idProducto;
-		compra;idComprador;
-		compra;cantidad;
+		compra.identificativo;
+		compra.idProducto;
+		compra.idComprador;
+		compra.cantidad;
 
 		//compras[resul] = compra;
 	}while(resul == SQLITE_ROW);
@@ -916,50 +750,7 @@ Compra* comprasConId (sqlite3* db, int idCompra) {
 }
 
 
-void verTicket (sqlite3* db, int idCompra) {
 
-	Compra* compras;
-	compras = comprasConId(db, idCompra);
-
-	Carrito carrito = obtenerCarrito(db, idCompra);
-
-	printf("TICKET: %i \n", idCompra);
-	printf("--------------------\n");
-
-	int i = 0;
-	while (&compras[i] != NULL) {
-		int num = i + 1;
-		char type = obtenerTipoProducto (db, compras[i].idProducto);
-        // C -> calzado		M -> material	P -> prenda 	S -> suplemento
-        if (type == 'C') {
-            Calzado calz = obtenerCalzado (db, compras[i].idProducto);
-            printf("%i: %s. X%i (ID: %i)\n", num, calz.nombre, compras[i].cantidad, calz.id);
-        } else if (type == 'M') {
-            MaterialDeportivo matD =  obtenerMaterial (db, compras[i].idProducto);
-            printf("%i: %s. X%i (ID: %i)\n", num, matD.nombre, compras[i].cantidad, matD.identificativo);
-        } else if (type == 'P') {
-            Prenda pren = obtenerPrenda (db, compras[i].idProducto);
-            printf("%i: %s. X%i (ID: %i)\n", num, pren.nombre, compras[i].cantidad, pren.identificativo);
-        } else if (type == 'S') {
-            Suplemento supl = obtenerSuplemento(db, compras[i].idProducto);
-            printf("%i: %s. X%i (ID: %i)\n", num, supl.nombre, compras[i].cantidad, supl.identificativo);
-        }
-	}
-
-	printf("TOTAL: %f \n", carrito.precioTotal);
-};
-
-void agregarCarrito(sqlite3 *db, Carrito carrito) {
-	sqlite3_stmt *stmt;
-
-	char sql[100];
-
-	sprintf(sql, "INSERT INTO Carrito VALUES (%i, %i, %f)", carrito.idCompra, carrito.idComprador, carrito.precioTotal);
-	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
-	sqlite3_step(stmt);
-
-	sqlite3_finalize(stmt);
-}
 
 void agregarCompra(sqlite3 *db, Compra compra) {
 	sqlite3_stmt *stmt;
@@ -1069,6 +860,17 @@ Compra obtenerCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto
 	sqlite3_finalize(stmt);
 
 	return compra;
+}
+
+int ultimaCompra(sqlite3 *db){
+	sqlite3_stmt *stmt;
+	char sql[100];
+
+	sprintf(sql, "SELECT * FROM Compra WHERE MAX(ID_Compra)");
+	sqlite3_step(stmt);
+	int iden;
+	iden = sqlite3_column_int(stmt, 0);
+	return iden;
 }
 
 

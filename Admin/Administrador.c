@@ -266,43 +266,6 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
         free(deporte);
         deporte = NULL;
     
-    } else if (tipo == 4) {
-        
-        strcpy(typeProd, "Suplemento");
-
-        agregarProducto(db, typeProd);
-
-        char *nombre, *tipoSup;
-        float precio;
-        int stock;
-
-
-        printf("CREACIÓN DE SUPLEMENTO \n");
-        printf("------------------------- \n");
-
-        printf("NOMBRE: \n");
-        nombre = malloc(sizeof(char)*20);
-        scanf("%s", nombre);
-
-        printf("TIPO: \n");
-        tipoSup = malloc(sizeof(char)*20);
-        scanf("%s", tipoSup);
-
-        scanf("PRECIO: \n");
-        scanf("%f", &precio);
-
-        printf("STOCK: \n");
-        scanf("%i", &stock);
-
-        agregarSupl(db, nombre, tipoSup, stock, precio);
-        int id=obtenerIdProducto(db,nombre);
-        Suplemento s=obtenerSuplemento(db,id);
-        entradasNuevasSupl(s,administrador);
-
-        free(nombre);
-        nombre = NULL;
-        free(tipoSup);
-        tipoSup = NULL;
     }
 
 } 
@@ -411,20 +374,7 @@ void eliminarProductoAdmin (sqlite3 *db, Administrador administrador) {
             printf("Producto eliminado correctamente. \n");
         }
 
-    } else if (tipo == 'S') {
-
-        Suplemento sup =  obtenerSuplemento (db, iden);
-        printf("El material deportivo %s es: ", sup.nombre); 
-        printf("¿Está seguro de que quiere eliminarlo?\n");
-        printf("1. Sí \n");
-        printf("2. No \n");
-        scanf("%i", &eleccion);
-
-        if (eleccion == 1) {
-            eliminarMD(db, iden);
-            printf("Producto eliminado correctamente. \n");
-        }
-    }
+    } 
 
 }
 
@@ -486,11 +436,4 @@ void entradasNuevasPrenda(Prenda Prenda, Administrador administrador){
 
 }
 
-void entradasNuevasSupl(Suplemento Supl, Administrador administrador){
-        FILE* f;
-        f=fopen("nuevosProductos.txt","w");
-        fprintf(f,"Nuevo suplemento añadido por %s",administrador.nombre);
-        fprintf(f,"%s//%s",Supl.nombre,Supl.tipo);
-        fclose(f);
 
-}

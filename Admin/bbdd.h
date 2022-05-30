@@ -41,13 +41,6 @@
     int sizeMD(sqlite3 *db);
     MaterialDeportivo* showMD(sqlite3 *db);
 
-    Suplemento obtenerSuplemento (sqlite3 *db, int id);
-    void agregarSupl(sqlite3 *db, char* nom, char* tipo, int cantidad, float precio);
-    void subirStockSupl (sqlite3 *db, int id, int cant);
-    void bajarStockSupl(sqlite3 *db, int id, int cant);
-    void eliminarSupl(sqlite3 *db, int id);
-    int sizeSupl(sqlite3 *db);
-    Suplemento* showSupl(sqlite3 *db);
 
 
     // USUARIOS
@@ -60,17 +53,14 @@
 
 
     // CARRITOS / COMPRAS
-    int ultimoCarrito (sqlite3 *db);
-    Carrito obtenerCarrito (sqlite3 *db, int idCompra);
     int sizeComprasConId (sqlite3* db, int idCompra);
     Compra* comprasConId (sqlite3* db, int idCompra);
-    void verTicket (sqlite3* db, int idCompra);
-    void agregarCarrito(sqlite3 *db, Carrito carrito);
     void agregarCompra(sqlite3 *db, Compra compra);
     bool existeCompra1 (sqlite3 *db, int idCompra, int idComprador, int idProducto);
     bool existeCompra2 (sqlite3 *db, int idCompra);
     void eliminarCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto);
     Compra obtenerCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto);
+    int ultimaCompra(sqlite3 *db);
 
 
     // DEVOLUCIONES
