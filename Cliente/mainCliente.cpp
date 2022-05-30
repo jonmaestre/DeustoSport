@@ -5,9 +5,9 @@
 
 #include "Administrador.h"
 
-#include "Carrito.h"
-#include "Compra.h"
-#include "Comprador.h"
+#include "Estructuras.h"
+#include "Comprita.h"
+#include "Cliente.h"
 
 #include "bbdd.h"
 #include "sqlite3.h"

@@ -1,34 +1,34 @@
-#include "Compra.h"
+#include "Comprita.h"
 
 
-Compra::Compra(int idProducto, int idComprador, int cantidad) {
+Comprita::Comprita(int idProducto, int idComprador, int cantidad) {
     this->idProducto = idProducto;
     this->idComprador = idComprador;
     this->cantidad = cantidad;
 }
 
-Compra::Compra(const Compra& c) {
+Comprita::Comprita(const Comprita& c) {
     this->idProducto = c.idProducto;
     this->idComprador = c.idComprador;
     this->cantidad = c.cantidad;
 }
 
-Compra::~Compra() {
+Comprita::~Comprita() {
 
 }
 
-int Compra::getIdentificativo() {
+int Comprita::getIdentificativo() {
     return this->identificativo;
 }
 
-int Compra::getIdProducto() {
+int Comprita::getIdProducto() {
     return this->idProducto;
 }
 
-int Compra::getIdComprador() {
+int Comprita::getIdComprador() {
     return this->idComprador;
 }
 
-int Compra::getCantidad() {
+int Comprita::getCantidad() {
     return this->cantidad;
 }
