@@ -963,23 +963,3 @@ int ultimaCompra(sqlite3 *db){
 
 
 
-// DEVOLUCIONES
-
-void agregarDevolucion (sqlite3 *db, Compra compra, char* explicacion) {
-	sqlite3_open("BasedeDatos",&db);
-
-	eliminarCompra (db, compra.identificativo, compra.idComprador, compra.idProducto);
-
-	sqlite3_stmt *stmt;
-
-	char sql[100];
-
-	sprintf(sql, "INSERT INTO Devolucion VALUES (%i, %i, %i, %s)", compra.identificativo, compra.idComprador, compra.idProducto, explicacion);
-	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
-	sqlite3_step(stmt);
-
-	sqlite3_finalize(stmt);
-	sqlite3_close(db);
-
-}
-

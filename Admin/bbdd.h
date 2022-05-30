@@ -64,8 +64,6 @@
     int ultimaCompra(sqlite3 *db);
 
 
-    // DEVOLUCIONES
-    void agregarDevolucion (sqlite3 *db, Compra compra, char* explicacion);
-
+   
 
 #endif 

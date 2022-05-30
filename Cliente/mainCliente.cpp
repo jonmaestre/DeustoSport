@@ -275,7 +275,6 @@ void ventaPrincipal(sqlite3 *db, Comprador comprador, int** arrayProductos, int 
     printf("5. Suplementos deportivos\n");
     printf("6. Material especifico para deportes \n");
     printf("7. Ver carrito \n");
-    printf("8. Devolver producto");
     printf("Pulsa 0 para salir. \n");
 
     do {
@@ -311,7 +310,6 @@ void ventaPrincipal(sqlite3 *db, Comprador comprador, int** arrayProductos, int 
             idProducto = malloc(sizeof(int));
             printf("IDENTIFICATIVO DEL PRODUCTO: \n");
             scanf("%i", idProducto);
-            devolverCompra (db, comprador, *idProducto, *idCompra);
         }
     }
 
