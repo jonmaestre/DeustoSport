@@ -27,10 +27,9 @@ char* CompradorVip::getNivel()
 }
 
 
-void CompradorVip::rebajaPrecio()
+int CompradorVip::rebajaPrecio(int precio)
 {
 	char* nivel=this->nivel;
-	int precio;
 	if(nivel=="standar"){
 		precio=precio*0.95;
 		cout << "Por ser miembro standar tienes una rebaja del 5 por ciento en el precio por lo que el precio es:  " << precio << endl;
