@@ -2,6 +2,7 @@
 #include<string.h>
 
 #include <iostream>
+using std::cout; using std::endl;
 using namespace std;
 
 CompradorVip::CompradorVip(char* nombre, int identificativo, int telefono, char* correo, char* direccion, char* contrasena, char* nivel): Comprador(nombre, identificativo, telefono, correo, direccion, contrasena)
@@ -26,7 +27,18 @@ char* CompradorVip::getNivel()
 }
 
 
-void CompradorVip::funcion()
+void CompradorVip::rebajaPrecio()
 {
+	char* nivel=this->nivel;
+	int precio;
+	if(nivel=="standar"){
+		precio=precio*0.05;
+		cout << "Por ser miembro standar tienes una rebaja del 5 por ciento en el precio por lo que el precio es:  " << precio << endl;
+
+
+	}else{
+		precio=precio*0.15;
+		cout << "Por ser miembro standar tienes una rebaja del 15 por ciento en el precio por lo que el precio es:  " << precio << endl;
+	}
 }
 
