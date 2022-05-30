@@ -3,9 +3,13 @@
 
 #include <stdio.h>
 #include <winsock2.h>
+#include <ctype.h>
+#include <iostream>
 
 #define SERVER_IP "127.0.0.1"
 #define SERVER_PORT 6000
+
+using namespace std;
 
 int main(int argc, char *argv[]) {
 
@@ -82,6 +86,10 @@ int main(int argc, char *argv[]) {
 
 		if (strcmp(cuenta, "No") == 0) {
 
+			char* entrado;
+			entrado = new char[30];
+			strcpy(entrado, "ERROR");
+
 			do {
 
 				cout << "Recibiendo mensaje... " << endl;
@@ -129,8 +137,6 @@ int main(int argc, char *argv[]) {
 				recv(s, recvBuff, sizeof(recvBuff), 0);
 				cout << "Mensaje recibido: " << recvBuff << endl;
 
-				char* extrado;
-				entrado = new char[30];
 				strcpy(entrado, recvBuff);
 
 			} while ((strcmp(entrado, "ERROR") == 0));
@@ -159,9 +165,12 @@ int main(int argc, char *argv[]) {
 
 			int telf;
 			cin >> telf;
+			char* teleff;
+			teleff = new char[sizeof(char)*10];
+			std::sprintf(teleff, "%d", telf);
 
 			cout << "Enviando mensaje... " << endl;
-			strcpy(sendBuff, telf);
+			strcpy(sendBuff, teleff);
 			send(s, sendBuff, sizeof(sendBuff), 0);
 			cout << "Mensaje enviado: " << sendBuff << endl;
 
@@ -251,9 +260,12 @@ int main(int argc, char *argv[]) {
 
         int opcion;
 	    cin >> opcion;
+		char* opp;
+		opp = new char[sizeof(char)*2];
+		std::sprintf(opp, "%d", opcion);
 
 	    cout << "Enviando mensaje... " << endl;
-	    strcpy(sendBuff, opcion);
+	    strcpy(sendBuff, opp);
         send(s, sendBuff, sizeof(sendBuff), 0);
 	    cout << "Mensaje enviado: " << sendBuff << endl;
 
@@ -285,9 +297,12 @@ int main(int argc, char *argv[]) {
 
 					int id;
 					cin >> id;
+					char* idenn;
+					idenn = new char[sizeof(char)*5];
+					std::sprintf(idenn, "%d", id);
 
 					cout << "Enviando mensaje... " << endl;
-					strcpy(sendBuff, id);
+					strcpy(sendBuff, idenn);
 					send(s, sendBuff, sizeof(sendBuff), 0);
 					cout << "Mensaje enviado: " << sendBuff << endl;
 
@@ -298,9 +313,12 @@ int main(int argc, char *argv[]) {
 
 					int cant;
 					cin >> cant;
+					char* cannti;
+					cannti = new char[sizeof(char)*10];
+					std::sprintf(cannti, "%d", cant);
 
 					cout << "Enviando mensaje... " << endl;
-					strcpy(sendBuff, cant);
+					strcpy(sendBuff, cannti);
 					send(s, sendBuff, sizeof(sendBuff), 0);
 					cout << "Mensaje enviado: " << sendBuff << endl;
 
@@ -350,9 +368,12 @@ int main(int argc, char *argv[]) {
 
 					int id;
 					cin >> id;
+					char* idenn;
+					idenn = new char[sizeof(char)*10];
+					std::sprintf(idenn, "%d", id);
 
 					cout << "Enviando mensaje... " << endl;
-					strcpy(sendBuff, id);
+					strcpy(sendBuff, idenn);
 					send(s, sendBuff, sizeof(sendBuff), 0);
 					cout << "Mensaje enviado: " << sendBuff << endl;
 
@@ -363,9 +384,12 @@ int main(int argc, char *argv[]) {
 
 					int cant;
 					cin >> cant;
+					char* cannti;
+					cannti = new char[sizeof(char)*10];
+					std::sprintf(cannti, "%d", cant);
 
 					cout << "Enviando mensaje... " << endl;
-					strcpy(sendBuff, cant);
+					strcpy(sendBuff, cannti);
 					send(s, sendBuff, sizeof(sendBuff), 0);
 					cout << "Mensaje enviado: " << sendBuff << endl;
 
@@ -411,9 +435,12 @@ int main(int argc, char *argv[]) {
 
 					int id;
 					cin >> id;
+					char* idenn;
+					idenn = new char[sizeof(char)*10];
+					std::sprintf(idenn, "%d", id);
 
 					cout << "Enviando mensaje... " << endl;
-					strcpy(sendBuff, id);
+					strcpy(sendBuff, idenn);
 					send(s, sendBuff, sizeof(sendBuff), 0);
 					cout << "Mensaje enviado: " << sendBuff << endl;
 
@@ -424,9 +451,13 @@ int main(int argc, char *argv[]) {
 
 					int cant;
 					cin >> cant;
+					char* cannti;
+					cannti = new char[sizeof(char)*10];
+					std::sprintf(cannti, "%d", cant);
+
 
 					cout << "Enviando mensaje... " << endl;
-					strcpy(sendBuff, cant);
+					strcpy(sendBuff, cannti);
 					send(s, sendBuff, sizeof(sendBuff), 0);
 					cout << "Mensaje enviado: " << sendBuff << endl;
 
@@ -444,7 +475,7 @@ int main(int argc, char *argv[]) {
 
 				}
 
-            } else (opcion == 4) {
+            } else if (opcion == 4) {
 				// ATENCION AL CLIENTE
 			
                 do {
