@@ -408,6 +408,7 @@ void ventanaAdmin (sqlite3 *db, Administrador administrador) {
 
     
 }
+
 void entradasNuevasCalzado(Calzado cal, Administrador administrador){
         FILE* f;
         f=fopen("nuevosProductos.txt","w");
