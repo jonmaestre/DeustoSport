@@ -13,9 +13,7 @@
     void agregarProducto(sqlite3 *db, char* tipo);
 
     char obtenerTipoProducto (sqlite3 *db, int id);
-    int obtenerIdProducto (sqlite3 *db, char* nombre);
-    bool existeProducto1 (sqlite3 *db, int id);
-    bool existeProducto2 (sqlite3 *db, char* nombre);
+    bool existeProducto (sqlite3 *db, int id);
 
     Calzado obtenerCalzado (sqlite3 *db, int id);
     void agregarCalzado(sqlite3 *db, char* nom, char* tipo, char* color, int talla, float precio, int cantidad);
@@ -43,27 +41,25 @@
     MaterialDeportivo* showMD(sqlite3 *db);
 
 
-
     // USUARIOS
     bool existeComprador (sqlite3 *db, char* correo);
+    bool compradorEsVip (sqlite3 *db, char* correo);
     Comprador obtenerComprador (sqlite3 *db, char* correo);
-    void registrarComprador(sqlite3 *db, char* nom, int tlf, char* correo, char* dir, char* cont);
+    CompradorVip obtenerCompradorVip (sqlite3 *db, char* correo);
+    void registrarComprador(sqlite3 *db, char* nom, int tlf, char* correo, char* dir, char* cont, bool vip);
+    void registrarCompradorVip(sqlite3 *db, char* nom, int tlf, char* correo, char* dir, char* cont, char* nivel);
     Administrador obtenerAdmin(sqlite3 *db, int id);
     bool existeAdmin(sqlite3 *db, int id);
     int maxIDComprador(sqlite3 *db);
 
 
-    // CARRITOS / COMPRAS
-    int sizeComprasConId (sqlite3* db, int idCompra);
-    Compra* comprasConId (sqlite3* db, int idCompra);
+    // COMPRAS
+    Compra compraConId (sqlite3* db, int idCompra);
     void agregarCompra(sqlite3 *db, Compra compra);
     bool existeCompra1 (sqlite3 *db, int idCompra, int idComprador, int idProducto);
     bool existeCompra2 (sqlite3 *db, int idCompra);
     void eliminarCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto);
-    Compra obtenerCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto);
     int ultimaCompra(sqlite3 *db);
 
-
-   
 
 #endif 
