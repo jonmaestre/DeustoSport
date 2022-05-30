@@ -155,7 +155,7 @@ Calzado obtenerCalzado (sqlite3 *db, int id){
 
 	sqlite3_finalize(stmt);
 
-	return NULL;
+	return zapatilla;
 }
 
 void agregarCalzado(sqlite3 *db, char* nom, char* tipo, char* color, float talla, float precio, int cantidad){
