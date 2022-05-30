@@ -1,6 +1,7 @@
 #include "sqlite3.h"
 #include "Admin/Estructuras.h"
 #include "bbdd.h"
+#include "logger.h"
 
 
 // IMPORTANT: Winsock Library ("ws2_32") should be linked
@@ -78,7 +79,7 @@ int main(int argc, char *argv[]) {
 
 
     // *********************************************************************************************
-  
+
 
 	// INICIAR SESIOOOOOOOON
 	int idComprador;
@@ -131,7 +132,7 @@ int main(int argc, char *argv[]) {
 			contra = malloc(sizeof(char)*70);
 
 			strcpy(contra, sendBuff);
-			
+
 
 		bool existe = existeComprador (db, correo);
 
@@ -154,6 +155,8 @@ int main(int argc, char *argv[]) {
 		} while (existe == FALSE);
 
 		Comprador cliente = obtenerComprador (db, correo);
+
+		logger(cliente.nombre, "INICIAR SESION", "loggers.txt");
 
 		idComprador = cliente.identificativo;
 
@@ -254,7 +257,11 @@ int main(int argc, char *argv[]) {
 
 			registrarComprador(comm_socket, nombre, telf, correo, direc, contra, comm_socket);
 
-			Comprador cliente = obtenerComprador (comm_socket, correo);
+			Comprador cliente = obtenerComprador (db, correo);
+
+			logger(cliente.nombre, "REGISTRAR", "loggers.txt");
+			logger(cliente.nombre, "INICIAR SESION", "loggers.txt");
+
 			idComprador = cliente.identificativo;
 
 		} else if (strcmp(recvBuff, "Si") == 0) {
@@ -278,7 +285,11 @@ int main(int argc, char *argv[]) {
 
 			registrarCompradorVip(comm_socket, nombre, telf, correo, direc, contra, nivel);
 
-			Comprador cliente = obtenerComprador (comm_socket, correo);
+			Comprador cliente = obtenerComprador (db, correo);
+
+			logger(cliente.nombre, "REGISTRAR", "loggers.txt");
+			logger(cliente.nombre, "INICIAR SESION", "loggers.txt");
+
 			idComprador = cliente.identificativo;
 
 		}
@@ -327,7 +338,7 @@ int main(int argc, char *argv[]) {
 	do {
 
 		int bytes = recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-		
+
         if (bytes > 0) {
 
             printf("Recibiendo mensaje... \n");
@@ -404,7 +415,7 @@ int main(int argc, char *argv[]) {
 					int cant = strtol(recvBuff, NULL, 10);
 
 					Calzado zap = listaCalzado[id-1];
-					
+
 
 					if (cant > zap.stock) {
 
@@ -435,9 +446,6 @@ int main(int argc, char *argv[]) {
 					send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 					printf("Mensaje enviado.");
 
-					free(ticket);
-					ticket = NULL;
-
 
 					float dinero = cant * zap.precioBase;
 
@@ -455,8 +463,12 @@ int main(int argc, char *argv[]) {
 					send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 					printf("Mensaje enviado.");
 
+					logger(cliente.nombre, ("COMPRAR CALZADO %i", id), "loggers.txt");
+
 					free(ticket);
 					ticket = NULL;
+					free(precio);
+					precio = NUL;
 
 				}
 
@@ -551,8 +563,28 @@ int main(int argc, char *argv[]) {
 					send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 					printf("Mensaje enviado.");
 
+					float dinero = cant * zap.precioBase;
+
+					if (vip == TRUE) {
+						ClienteVip cli = obtenerClienteVIP(db, idComprador);
+						dinero = cli.rebajarPrecio(dinero);
+					}
+
+					char* precio;
+					precio = malloc (sizeof(char)*256);
+					precio = "PRECIO: %f", dinero;
+
+					printf("Enviando mensaje... \n");
+					strcat(sendBuff, precio);
+					send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+					printf("Mensaje enviado.");
+
+					logger(cliente.nombre, ("COMPRAR PRENDA %i", id), "loggers.txt");
+
 					free(ticket);
 					ticket = NULL;
+					free(precio);
+					precio = NULL;
 
 				}
 
@@ -644,8 +676,28 @@ int main(int argc, char *argv[]) {
 					send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 					printf("Mensaje enviado.");
 
+					float dinero = cant * zap.precioBase;
+
+					if (vip == TRUE) {
+						ClienteVip cli = obtenerClienteVIP(db, idComprador);
+						dinero = cli.rebajarPrecio(dinero);
+					}
+
+					char* precio;
+					precio = malloc (sizeof(char)*256);
+					precio = "PRECIO: %f", dinero;
+
+					printf("Enviando mensaje... \n");
+					strcat(sendBuff, precio);
+					send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+					printf("Mensaje enviado.");
+
+					logger(cliente.nombre, ("COMPRAR MATERIAL DEPORTIVO %i", id), "loggers.txt");
+
 					free(ticket);
 					ticket = NULL;
+					free(precio);
+					precio = NUL;
 
 				}
 
@@ -702,4 +754,3 @@ int main(int argc, char *argv[]) {
 
 	return 0;
 }
-
