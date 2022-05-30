@@ -1,6 +1,7 @@
 #include "Comprador.h"
-#include<string.h>
-
+#include <string.h>
+#include <iostream>
+using std::cout; using std::endl;
 
             
     Comprador::Comprador(char* nombre, int identificativo, int telefono, char* correo, char* direccion, char* contrasena) {
@@ -28,8 +29,9 @@
         delete[] contrasena;
     }
 
-    void Comprador::funcion(){
-        
+    void Comprador::rebajaPrecio(){
+        int precio;
+        cout << "Por ser miembro sin VIP no tienes rebaja en el precio por lo que el precio es:  " << precio << endl;
     }
 
     char* Comprador::getNombre() {

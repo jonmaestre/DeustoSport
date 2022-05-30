@@ -1,6 +1,8 @@
 #ifndef COMPRADOR_H_
 #define COMPRADOR_H_
 
+
+
 class Comprador
 {
 private:
@@ -14,7 +16,10 @@ private:
 public:
     Comprador(char* nombre, int identificativo, int telefono, char* correo, char* direccion, char* contrasena);
     Comprador(const Comprador& c);
-    ~Comprador();
+    virtual ~Comprador();
+    
+    virtual void rebajaPrecio();
+
     char* getNombre();
     int getIdentificativo();
     int getTelefono();
