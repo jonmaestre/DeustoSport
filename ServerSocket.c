@@ -83,9 +83,163 @@ int main(int argc, char *argv[]) {
 
 
 	// INICIAR SESIOOOOOOOON
-	int idComprador = 0;
+	int idComprador;
+
+	printf("Enviando mensaje... \n");
+	strcat(sendBuff, "¡Buenos dias! Antes de comprar en DeustoSportKit, deberas iniciar sesion.");
+	send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+	printf("Mensaje enviado: %s \n", sendBuff);
+
+	printf("Enviando mensaje... \n");
+	strcat(sendBuff, "¿Tienes cuenta de DeustoSportKit? (Si o No)");
+	send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+	printf("Mensaje enviado: %s \n", sendBuff);
+
+	printf("Recibiendo mensaje... \n");
+	recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+	printf("Mensaje recibido: %s \n", recvBuff);
+
+	if (strcmp(recvBuff, "Si") == 0) {
+
+		do {
+
+			printf("Enviando mensaje... \n");
+			strcat(sendBuff, "¿Correo?");
+			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+			printf("Mensaje enviado: %s \n", sendBuff);
+
+			printf("Recibiendo mensaje... \n");
+			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+			printf("Mensaje recibido: %s \n", recvBuff);
+
+			char* correo;
+			correo = malloc(sizeof(char)*70);
+
+			strcpy(correo, sendBuff);
 
 
+			printf("Enviando mensaje... \n");
+			strcat(sendBuff, "¿Contrasena?");
+			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+			printf("Mensaje enviado: %s \n", sendBuff);
+
+			printf("Recibiendo mensaje... \n");
+			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+			printf("Mensaje recibido: %s \n", recvBuff);
+
+			char* contra;
+			contra = malloc(sizeof(char)*70);
+
+			strcpy(contra, sendBuff);
+			
+
+			bool existe = existeComprador (db, correo);
+
+		} while (existe == FALSE);
+
+
+	} else if (strcmp(recvBuff, "No") == 0) {
+
+		printf("Enviando mensaje... \n");
+		strcat(sendBuff, "¿Como te llamas?");
+		send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+		printf("Mensaje enviado: %s \n", sendBuff);
+
+		printf("Recibiendo mensaje... \n");
+		recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+		printf("Mensaje recibido: %s \n", recvBuff);
+
+		char* nombre;
+		nombre = malloc(sizeof(char)*10);
+
+		strcpy(nombre, sendBuff);
+
+
+		printf("Enviando mensaje... \n");
+		strcat(sendBuff, "¿Numero de telefono?");
+		send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+		printf("Mensaje enviado: %s \n", sendBuff);
+
+		printf("Recibiendo mensaje... \n");
+		recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+		printf("Mensaje recibido: %s \n", recvBuff);
+
+		int telf = strtol(recvBuff, NULL, 10);
+
+
+		printf("Enviando mensaje... \n");
+		strcat(sendBuff, "¿Correo?");
+		send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+		printf("Mensaje enviado: %s \n", sendBuff);
+
+		printf("Recibiendo mensaje... \n");
+		recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+		printf("Mensaje recibido: %s \n", recvBuff);
+
+		char* correo;
+		correo = malloc(sizeof(char)*50);
+
+		strcpy(correo, sendBuff);
+
+
+		printf("Enviando mensaje... \n");
+		strcat(sendBuff, "¿Direccion?");
+		send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+		printf("Mensaje enviado: %s \n", sendBuff);
+
+		printf("Recibiendo mensaje... \n");
+		recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+		printf("Mensaje recibido: %s \n", recvBuff);
+
+		char* direc;
+		direc = malloc(sizeof(char)*60);
+
+		strcpy(direc, sendBuff);
+
+
+		printf("Enviando mensaje... \n");
+		strcat(sendBuff, "¿Coontrasena?");
+		send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+		printf("Mensaje enviado: %s \n", sendBuff);
+
+		printf("Recibiendo mensaje... \n");
+		recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+		printf("Mensaje recibido: %s \n", recvBuff);
+
+		char* contra;
+		contra = malloc(sizeof(char)*10);
+
+		strcpy(contra, sendBuff);
+
+
+		printf("Enviando mensaje... \n");
+		strcat(sendBuff, "¿Numero de telefono?");
+		send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+		printf("Mensaje enviado: %s \n", sendBuff);
+
+		printf("Recibiendo mensaje... \n");
+		recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+		printf("Mensaje recibido: %s \n", recvBuff);
+
+		int telf = strtol(recvBuff, NULL, 10);
+
+
+
+
+
+
+
+
+		// REGISTRAAAAAAAAAAAR
+
+	}
+
+
+
+	// COGER CON EL CORREO EL COMPRADOR QUE SEA
+
+
+	// PROGRAMA
 
     printf("Enviando mensaje... \n");
 	strcat(sendBuff, "¡Buenos dias! Le atiende el servicio de atencion al cliente de DeustoSporKit. \nUn operador se encargara de ayudarle en todo lo necesario. Para terminar la conexion solo debe decir 'Agur'. \n ¿En que puedo ayudarle?");
@@ -212,7 +366,17 @@ int main(int argc, char *argv[]) {
 					Compra* comprita = comprasConId (db, zap.identificativo);
 
 
-					// IMPRIMIR COMPRA
+					char* ticket;
+					ticket = malloc (sizeof(char)*256);
+					ticket = "TICKET: (ID: %i, Producto: %i x %i)", idCompra, id, cant;
+
+					printf("Enviando mensaje... \n");
+					strcat(sendBuff, ticket);
+					send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+					printf("Mensaje enviado.");
+
+					free(ticket);
+					ticket = NULL;
 
 				}
 
@@ -285,7 +449,17 @@ int main(int argc, char *argv[]) {
 					Compra* comprita = comprasConId (db, pren.identificativo);
 
 
-					// IMPRIMIR COMPRA
+					char* ticket;
+					ticket = malloc (sizeof(char)*256);
+					ticket = "TICKET: (ID: %i, Producto: %i x %i)", idCompra, id, cant;
+
+					printf("Enviando mensaje... \n");
+					strcat(sendBuff, ticket);
+					send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+					printf("Mensaje enviado.");
+
+					free(ticket);
+					ticket = NULL;
 
 				}
 
@@ -354,10 +528,18 @@ int main(int argc, char *argv[]) {
 
 					agregarCompra(db, Compra compra);
 
-					Compra* comprita = comprasConId (db, md.identificativo);
 
+					char* ticket;
+					ticket = malloc (sizeof(char)*256);
+					ticket = "TICKET: (ID: %i, Producto: %i x %i)", idCompra, id, cant;
 
-					// IMPRIMIR COMPRA
+					printf("Enviando mensaje... \n");
+					strcat(sendBuff, ticket);
+					send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+					printf("Mensaje enviado.");
+
+					free(ticket);
+					ticket = NULL;
 
 				}
 

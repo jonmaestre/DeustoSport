@@ -33,15 +33,6 @@ typedef struct {
 } Prenda;
 
 typedef struct {
-    int identificativo;
-    char* nombre;
-    char* tipo;
-    float precioBase;
-    int stock;
-    int nivelEnergia;
-} Suplemento;
-
-typedef struct {
     int idCompra;
     int idComprador;
     float precioTotal;
@@ -52,6 +43,7 @@ typedef struct {
     int idProducto;
     int idComprador;
     int cantidad;
+    float precio;
 } Compra;
 
 typedef struct {
@@ -62,6 +54,16 @@ typedef struct {
     char* direccion;
     char* contrasena;
 } Comprador;
+
+typedef struct {
+    char* nombre;
+    int identificativo;
+    int telefono;
+    char* correo;
+    char* direccion;
+    char* contrasena;
+    char* nivel;
+} CompradorVip;
 
 typedef struct {
     int idCompra;

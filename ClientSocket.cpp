@@ -116,6 +116,11 @@ int main(int argc, char *argv[]) {
 					send(s, sendBuff, sizeof(sendBuff), 0);
 					cout << "Mensaje enviado: " << sendBuff << endl;
 
+
+					cout << "Recibiendo mensaje... " << endl;
+					recv(s, recvBuff, sizeof(recvBuff), 0);
+					cout << "Mensaje recibido: " << recvBuff << endl;
+
 				}
 
             } else if (opcion == 2) {
@@ -163,6 +168,11 @@ int main(int argc, char *argv[]) {
 					send(s, sendBuff, sizeof(sendBuff), 0);
 					cout << "Mensaje enviado: " << sendBuff << endl;
 
+
+					cout << "Recibiendo mensaje... " << endl;
+					recv(s, recvBuff, sizeof(recvBuff), 0);
+					cout << "Mensaje recibido: " << recvBuff << endl;
+
 				}
 
             } else if (opcion == 3) {
@@ -209,6 +219,10 @@ int main(int argc, char *argv[]) {
 					strcpy(sendBuff, cant);
 					send(s, sendBuff, sizeof(sendBuff), 0);
 					cout << "Mensaje enviado: " << sendBuff << endl;
+
+					cout << "Recibiendo mensaje... " << endl;
+					recv(s, recvBuff, sizeof(recvBuff), 0);
+					cout << "Mensaje recibido: " << recvBuff << endl;
 
 				}
 
