@@ -1,6 +1,7 @@
 #include "sqlite3.h"
 #include "Estructuras.h"
 #include "Administrador.h"
+#include "stdbool.h"
 
 #ifndef BBDD_H_
 #define BBDD_H_
@@ -26,7 +27,7 @@
 
     Prenda obtenerPrenda (sqlite3 *db, int id);
     void agregarPrenda(sqlite3 *db, char* nom, char* tipo, char* color, int talla, float precio, int cantidad);
-    void subirStockCPrenda (sqlite3 *db, int id, int cant);
+    void subirStockPrenda (sqlite3 *db, int id, int cant);
     void bajarStockPrenda(sqlite3 *db, int id, int cant);
     void eliminarPrenda(sqlite3 *db, int id);
     int sizePrenda(sqlite3 *db);

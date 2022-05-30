@@ -132,8 +132,8 @@ Calzado obtenerCalzado (sqlite3 *db, int id){
     sqlite3_stmt *stmt;
 	char sql[100];
 
-	int iden, stock;
-	char *nombre, *tipo, *color, *talla;
+	int iden, stock, talla;
+	char *nombre, *tipo, *color;
 	float  precio;
 
 	nombre = malloc(100*sizeof(char));
@@ -147,11 +147,11 @@ Calzado obtenerCalzado (sqlite3 *db, int id){
 	strcpy(nombre, (char*)sqlite3_column_text(stmt, 1));
 	strcpy(tipo, (char*)sqlite3_column_text(stmt, 2));
 	strcpy(color, (char*)sqlite3_column_text(stmt, 3));
-	strcpy(talla, (char*)sqlite3_column_text(stmt, 4));
+	talla = (int)sqlite3_column_int(stmt, 4);
 	precio = (float)sqlite3_column_double(stmt, 5);
 	stock = (int)sqlite3_column_int(stmt, 6);
 
-	Calzado zapatilla = {iden, stock, nombre, *tipo, *color, talla, precio};
+	Calzado zapatilla = {iden, nombre, tipo, precio, stock, color, talla};
 
 	sqlite3_finalize(stmt);
 
@@ -214,7 +214,7 @@ int sizeCalzado(sqlite3 *db){
 Calzado* showCalzado(sqlite3 *db) {
 	sqlite3_stmt *stmt;
 
-	int size= sizeCalzadoH(db);
+	int size= sizeCalzado(db);
 	Calzado* listaCalzado=(Calzado*)malloc(sizeof(Calzado)*size);
 
 	char sql[] = "SELECT * FROM Calzado";
@@ -226,12 +226,11 @@ Calzado* showCalzado(sqlite3 *db) {
 		
 	}
 	int i=0;
-	Calzado newCalzado;
 	int idM;
 	char nombreM[100];
 	char tipoM[100];
 	char colorM[100];
-	char tallaM[100];
+	int tallaM;
 	float precioM;
 	int StockM;
 
@@ -242,18 +241,12 @@ Calzado* showCalzado(sqlite3 *db) {
 			strcpy(nombreM, (char *) sqlite3_column_text(stmt, 1));
 			strcpy(tipoM, (char *) sqlite3_column_text(stmt, 2));
 			strcpy(colorM, (char *) sqlite3_column_text(stmt, 3));
-			strcpy(tallaM, (char *) sqlite3_column_text(stmt, 4));
+			tallaM = sqlite3_column_int(stmt, 4);
 			precioM = sqlite3_column_double(stmt,5);
 			StockM=sqlite3_column_int(stmt,7);
 
+			Calzado newCalzado={idM,nombreM,tipoM,precioM,StockM,colorM,tallaM};
 			
-			newCalzado.nombre=nombreM;
-			newCalzado.tipo=tipoM;
-			
-			newCalzado.talla=tallaM;
-			newCalzado.color=colorM;
-			newCalzado.stock=StockM;
-
 			listaCalzado[i]=newCalzado;
 			i++;
 			
@@ -280,8 +273,8 @@ Prenda obtenerPrenda (sqlite3 *db, int id){
     sqlite3_stmt *stmt;
 	char sql[100];
 
-	int iden, stock;
-	char nombre[100], tipo[15], color[15], talla[3];
+	int iden, stock, talla;
+	char nombre[100], tipo[15], color[15];
 	float precio;
 
 	sprintf(sql, "SELECT * FROM Prenda WHERE idProducto = %i",id);
@@ -291,7 +284,7 @@ Prenda obtenerPrenda (sqlite3 *db, int id){
 	strcpy(nombre, (char*)sqlite3_column_text(stmt, 1));
 	strcpy(tipo, (char*)sqlite3_column_text(stmt, 2));
 	strcpy(color, (char*)sqlite3_column_text(stmt, 3));
-	strcpy(talla, (char*)sqlite3_column_text(stmt, 4));
+	talla = (int)sqlite3_column_int(stmt, 4);
 	precio = (float)sqlite3_column_double(stmt, 5);
 	stock = (int)sqlite3_column_int(stmt, 6);
 
@@ -358,7 +351,7 @@ int sizePrenda(sqlite3 *db){
 Prenda* showPrenda(sqlite3 *db) {
 	sqlite3_stmt *stmt;
 
-	int size= sizeCalzadoH(db);
+	int size= sizePrenda(db);
 	Prenda* listaPrenda=(Prenda*)malloc(sizeof(Prenda)*size);
 
 	char sql[] = "SELECT * FROM Prenda";
@@ -371,11 +364,10 @@ Prenda* showPrenda(sqlite3 *db) {
 	}
 	int i=0;
 	Prenda newPrenda;
-	int idM;
+	int idM, tallaM;
 	char nombreM[100];
 	char tipoM[100];
 	char colorM[100];
-	char tallaM[100];
 	float precioM;
 	int StockM;
 
@@ -386,7 +378,7 @@ Prenda* showPrenda(sqlite3 *db) {
 			strcpy(nombreM, (char *) sqlite3_column_text(stmt, 1));
 			strcpy(tipoM, (char *) sqlite3_column_text(stmt, 2));
 			strcpy(colorM, (char *) sqlite3_column_text(stmt, 3));
-			strcpy(tallaM, (char *) sqlite3_column_text(stmt, 4));
+			tallaM = (int) sqlite3_column_int(stmt, 4);
 			precioM = sqlite3_column_double(stmt,6);
 			StockM = sqlite3_column_int(stmt,7);
 
@@ -434,7 +426,7 @@ MaterialDeportivo obtenerMaterial (sqlite3 *db, int id){
 	strcpy(nombre, (char*)sqlite3_column_text(stmt, 1));
 	strcpy(tipo, (char*)sqlite3_column_text(stmt, 2));
 	strcpy(color, (char*)sqlite3_column_text(stmt, 3));
-	strcpy(talla, (int)sqlite3_column_int(stmt, 4));
+	talla= (int)sqlite3_column_int(stmt, 4);
 	precio = (float)sqlite3_column_double(stmt, 5);
 	strcpy(deporte, (char*)sqlite3_column_text(stmt, 6));
 	stock = (int)sqlite3_column_int(stmt, 7);
@@ -515,12 +507,11 @@ MaterialDeportivo* showMD(sqlite3 *db) {
 	}
 	int i=0;
 	MaterialDeportivo MD;
-	int idM;
+	int idM,tallaM;
 	char deporteM[100];
 	char nombreM[100];
 	char tipoM[100];
 	char colorM[100];
-	char tallaM[100];
 	float precioM;
 	int StockM;
 
@@ -531,7 +522,7 @@ MaterialDeportivo* showMD(sqlite3 *db) {
 			strcpy(nombreM, (char *) sqlite3_column_text(stmt, 1));
 			strcpy(tipoM, (char *) sqlite3_column_text(stmt, 2));
 			strcpy(colorM, (char *) sqlite3_column_text(stmt, 3));
-			strcpy(tallaM, (char *) sqlite3_column_text(stmt, 4));
+			tallaM = (int) sqlite3_column_int(stmt, 4);
 			precioM = sqlite3_column_double(stmt,5);
 			strcpy(deporteM, (char *) sqlite3_column_text(stmt, 6));
 			StockM=sqlite3_column_int(stmt,7);
@@ -716,7 +707,8 @@ Compra* comprasConId (sqlite3* db, int idCompra) {
 	sqlite3_stmt *stmt;
 	int iden, idProd, idCompr, cant;
 
-	int size=sizeComprasConId(db,idCompra);
+	int size;
+	size=sizeComprasconId(db,idCompra);
 	char sql[100];
 	Compra* compras;
 	compras = (Compra*) malloc(sizeof(Compra) * size);
@@ -734,19 +726,19 @@ Compra* comprasConId (sqlite3* db, int idCompra) {
 		iden = sqlite3_column_int(stmt, 0);
 		idProd = sqlite3_column_int(stmt, 1);
 		idCompr = sqlite3_column_int(stmt, 2);
-		//cant = sqlite3_column_int(stmt, 3);
+		cant = sqlite3_column_int(stmt, 3);
 
 		compra.identificativo;
 		compra.idProducto;
 		compra.idComprador;
 		compra.cantidad;
 
-		//compras[resul] = compra;
+	compras[resul] = compra;
 	}while(resul == SQLITE_ROW);
 	
 	sqlite3_finalize(stmt);
 
-	//return compras;
+	return compras;
 }
 
 
@@ -804,30 +796,7 @@ bool existeCompra2 (sqlite3 *db, int idCompra) {
 	return respuesta;
 }
 
-void eliminarCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto) {
 
-	sqlite3_stmt *stmt;
-	char sql[100];
-
-	Compra compra = obtenerCompra (db, idCompra, idComprador, idProducto);
-
-	char tipo = obtenerTipoProducto (db, idProducto);
-
-	if (strcmp(&tipo, "C") == 0) {
-		bajarStockCalzado(db, idProducto, compra.cantidad);
-	} else if (strcmp(&tipo, "P") == 0) {
-		bajarStockPrenda(db, idProducto, compra.cantidad);
-	} else if (strcmp(&tipo, "M") == 0) {
-		bajarStockMD(db, idProducto, compra.cantidad);
-	} else if (strcmp(&tipo, "S") == 0) {
-		bajarStockSupl(db, idProducto, compra.cantidad);
-	}
-	
-	sprintf(sql, "DELETE FROM Compra WHERE ID_Compra = %i AND idProducto = %i AND idComprador = %i", idCompra, idProducto, idComprador);
-	sqlite3_step(stmt);
-
-	sqlite3_finalize(stmt);
-}
 
 
 Compra obtenerCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto) {
@@ -860,6 +829,30 @@ Compra obtenerCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto
 	sqlite3_finalize(stmt);
 
 	return compra;
+}
+
+void eliminarCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto) {
+
+	sqlite3_stmt *stmt;
+	char sql[100];
+
+	Compra compra;
+	compra = obtenerCompra (db, idCompra, idComprador, idProducto);
+
+	char tipo = obtenerTipoProducto (db, idProducto);
+
+	if (strcmp(&tipo, "C") == 0) {
+		bajarStockCalzado(db, idProducto, compra.cantidad);
+	} else if (strcmp(&tipo, "P") == 0) {
+		bajarStockPrenda(db, idProducto, compra.cantidad);
+	} else if (strcmp(&tipo, "M") == 0) {
+		bajarStockMD(db, idProducto, compra.cantidad);
+	} 
+	
+	sprintf(sql, "DELETE FROM Compra WHERE ID_Compra = %i AND idProducto = %i AND idComprador = %i", idCompra, idProducto, idComprador);
+	sqlite3_step(stmt);
+
+	sqlite3_finalize(stmt);
 }
 
 int ultimaCompra(sqlite3 *db){
