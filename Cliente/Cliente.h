@@ -1,9 +1,9 @@
-#ifndef COMPRADOR_H_
-#define COMPRADOR_H_
+#ifndef CLIENTE_H_
+#define CLIENTE_H_
 
 
 
-class Comprador
+class Cliente
 {
 private:
     char* nombre;
@@ -14,9 +14,9 @@ private:
     char* contrasena;
 
 public:
-    Comprador(char* nombre, int identificativo, int telefono, char* correo, char* direccion, char* contrasena);
-    Comprador(const Comprador& c);
-    virtual ~Comprador();
+    Cliente(char* nombre, int identificativo, int telefono, char* correo, char* direccion, char* contrasena);
+    Cliente(const Cliente& c);
+    virtual ~Cliente();
     
     virtual void rebajaPrecio();
 

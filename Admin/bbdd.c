@@ -564,6 +564,18 @@ MaterialDeportivo* showMD(sqlite3 *db) {
 // ------------------------------------------------------------------------------------------------------
 // USUARIOS
 
+int maxIDComprador(sqlite3 *db){
+		sqlite3_stmt *stmt;
+	char sql[100];
+
+	sprintf(sql, "SELECT MAX(Identificativo) FROM Comprador");
+	int max = sqlite3_column_int(stmt, 0);
+
+	sqlite3_finalize(stmt);
+
+	return max;
+}
+
 bool existeComprador (sqlite3 *db, char* correo) {
 	sqlite3_stmt *stmt;
 
@@ -622,8 +634,8 @@ Comprador obtenerComprador (sqlite3 *db, char* correo) {
 void registrarComprador(sqlite3 *db, char* nom, int tlf, char* correo, char* dir, char* cont){
     sqlite3_stmt *stmt;
 	char sql[100];
-
-	sprintf(sql, "INSERT INTO Comprador (Nombre_Comprador, Telefono_Comprador, Correo_Comprador, Direccion_Comprador, Contrasena_Comprador) values(%s,%i,%s,%s,%s)", nom, tlf, correo, dir, cont);
+	int iden= maxIDComprador(db) + 1;
+	sprintf(sql, "INSERT INTO Comprador (Nombre_Comprador, ID_Comprador,Telefono_Comprador, Correo_Comprador, Direccion_Comprador, Contrasena_Comprador) values(%s,%i,%i,%s,%s,%s)", nom, iden, tlf, correo, dir, cont);
 	
     sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	sqlite3_step(stmt);
@@ -671,8 +683,6 @@ int idMaxAdmin(sqlite3 *db) {
 	sqlite3_stmt *stmt;
 	char sql[100];
 
-	bool respuesta;
-
 	sprintf(sql, "SELECT MAX(Identificativo) FROM Administrador");
 	int max = sqlite3_column_int(stmt, 0);
 
@@ -680,6 +690,8 @@ int idMaxAdmin(sqlite3 *db) {
 
 	return max;
 }
+
+
 
 
 

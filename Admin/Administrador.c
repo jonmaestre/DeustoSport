@@ -42,7 +42,7 @@ Administrador iniciarAdmin (sqlite3 *db) {
         strcpy(admin.funcion, "nada");
         return admin;            // administrador falso
 
-    } else {
+    } else if (respuestaPregunta == PROGRAMADORES) {
         // Hay que asegurarse de que el aministrador con el identificativo metida existe.
         bool existe;
         existe = existeAdmin(db, identificativo);
@@ -57,16 +57,16 @@ Administrador iniciarAdmin (sqlite3 *db) {
             return admin;            // administrador falso
         } else {
             // Si lo es, habrá que coger el administrador con dicho identificativo y comparar la informacion de este con la introducida
-            Administrador administrador = obtenerAdmin(db, identificativo);
+            Administrador admin2 = obtenerAdmin(db, identificativo);
 
-            if (strcmp(administrador.contrasena, contrasena) != 0) {
+            if (strcmp(admin2.contrasena, contrasena) != 0) {
                 // Si no coincide la contrasena, podra volver a introducirla una vez mas.
                 printf("Algo ha ido mal. Vuelva a introducir los datos. \n");
                 printf("Recuerde que solo tiene una oportunidad más \n");
                 printf("CONTRASEÑA: \n");
                 scanf("%s", contrasena);
 
-                if (strcmp(administrador.contrasena, contrasena) != 0) {
+                if (strcmp(admin2.contrasena, contrasena) != 0) {
                     // En caso de fallar la segunda vez, se devolvera null para que no siga adelante
                     printf("¡ERROR!\n");
                     Administrador admin;
@@ -77,14 +77,14 @@ Administrador iniciarAdmin (sqlite3 *db) {
                     return admin;            // administrador falso
                 } else {
                     // Si coincide,  se devulve el administrador
-                    printf("Bienvenido, %s", administrador.nombre);
-                    return administrador;
+                    printf("Bienvenido, %s", admin2.nombre);
+                    return admin2;
                 }
 
             } else {
                 // Si coincide, se devuelve el administrador
-                printf("Bienvenido, %s", administrador.nombre);
-                return administrador;
+                printf("Bienvenido, %s", admin2.nombre);
+                return admin2;
             }
         }
     }
@@ -143,7 +143,7 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
         printf("TALLA: \n");
         scanf("%i", &talla);
 
-        scanf("PRECIO: \n");
+        printf("PRECIO: \n");
         scanf("%f", &precio);
 
         printf("STOCK: \n");
@@ -192,7 +192,7 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
         printf("TALLA: \n");
         scanf("%i", &talla);
 
-        scanf("PRECIO: \n");
+        printf("PRECIO: \n");
         scanf("%f", &precio);
 
         printf("STOCK: \n");
@@ -241,7 +241,7 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
         printf("TALLA: \n");
         scanf("%i", &talla);
 
-        scanf("PRECIO: \n");
+        printf("PRECIO: \n");
         scanf("%f", &precio);
 
         printf("DEPORTE: \n");
