@@ -12,7 +12,7 @@
 int main (void) {
 
     sqlite3 *db;
-	int result = sqlite3_open("BaseDatos.db", &db);
+	int result = sqlite3_open("BasedeDatos.db", &db);
 
     printf("BIENVENIDX A DEUSTOSPORTKIT :) \n");
 
@@ -25,7 +25,7 @@ int main (void) {
     do {
 	    printf("Opción: \n");
         scanf("%i", &respuesta);
-    } while (!(respuesta == 0 || respuesta <=1));
+    } while (!(respuesta == 0 || respuesta ==1));
 
     if (respuesta == 0) {
         printf("¡Que pase un buen dia!");
@@ -39,5 +39,5 @@ int main (void) {
 
     }
 
-
+    sqlite3_close(db);
 }

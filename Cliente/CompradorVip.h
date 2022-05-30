@@ -11,7 +11,7 @@ class CompradorVip: public Comprador {
             CompradorVip(const CompradorVip &CV);
             virtual ~CompradorVip();
 
-            virtual void funcion();
+            virtual void rebajaPrecio();
 
             char* getNivel();
     };

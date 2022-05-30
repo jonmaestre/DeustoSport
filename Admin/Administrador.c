@@ -12,7 +12,7 @@
 
 
 Administrador iniciarAdmin (sqlite3 *db) {
-
+    int result = sqlite3_open("BasedeDatos.db", &db);
     // revisar los char*
     int identificativo;
     char* contrasena;
@@ -27,7 +27,7 @@ Administrador iniciarAdmin (sqlite3 *db) {
     printf("IDENTIFICATIVO PROPIO: \n");
     scanf("%i", &identificativo);
 	printf("CONTRASEÑA: \n");
-    scanf("%s", contrasena);
+    scanf("%s", &contrasena);
     printf("¿CUÁNTOS PROGRAMADORES HAY EN 'DeustoSportKit'?: \n");
     scanf("%i", &respuestaPregunta);
 
@@ -91,6 +91,7 @@ Administrador iniciarAdmin (sqlite3 *db) {
 
     free(contrasena);
     contrasena = NULL;
+    result = sqlite3_close(db);
 }
 
 
