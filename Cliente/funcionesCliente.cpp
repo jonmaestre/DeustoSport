@@ -3,18 +3,18 @@
 #include <string.h>
 #include <stdbool.h>
 #include <iostream>
-using namespace std;
-using std::stoi;
+#include <dirent.h>
 
-#include "Estructuras.h"
+//#include "Estructuras.h"
 #include "Comprita.h"
 #include "Cliente.h"
 #include "bbdd.h"
 #include "sqlite3.h"
-#include "funcionesCliente.h"
 
 #define PROGRAMADORES 5
 
+using namespace std;
+using std::stoi;
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
 //Funciones
@@ -76,7 +76,7 @@ Cliente registrar (sqlite3 *db) {
     }
 
     int tel=stoi(telefono);
-    registrarComprador(db, nombre, tel, correo, direccion, contrasena1);
+    registrarComprador(db, nombre, tel, correo, direccion, contrasena1, true);
     int iden=maxIDComprador(db);
     Cliente *comprador = new Cliente(nombre,iden,tel,correo,direccion,contrasena1);
 
