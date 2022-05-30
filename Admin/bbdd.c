@@ -73,6 +73,24 @@ char obtenerTipoProducto (sqlite3 *db, int id){
 	return tipo[0];				// C -> calzado		M -> material	P -> prenda 	S -> suplemento
 }
 
+int obtenerIdProducto (sqlite3 *db, char* nombre) {
+	sqlite3_stmt *stmt;
+	sqlite3_open("BasedeDatos.db", &db);
+
+	char sql[100];
+	int id;
+
+	sprintf(sql, "SELECT identificativo FROM Producto WHERE nombre = %s", nombre);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	
+	id = (sqlite3_column_int(stmt, 0));
+
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
+
+	return id;	
+}
+
 bool existeProducto (sqlite3 *db, int id) {
 	sqlite3_stmt *stmt;
 	sqlite3_open("BasedeDatos.db", &db);
@@ -95,6 +113,30 @@ bool existeProducto (sqlite3 *db, int id) {
 	}
 	sqlite3_close(db);
 
+	return respuesta;	
+}
+
+bool existeProducto2 (sqlite3 *db, char* nombre) {
+	sqlite3_stmt *stmt;
+	sqlite3_open("BasedeDatos.db", &db);
+
+	char sql[100];
+	int existe;
+
+	sprintf(sql, "SELECT COUNT(*) FROM Producto WHERE nombre = %s", nombre);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	existe = sqlite3_step(stmt);
+
+	sqlite3_finalize(stmt);
+
+	bool respuesta;
+
+	if (existe == 0) {
+		respuesta = false;
+	} else {
+		respuesta = true;
+	}
+	sqlite3_close(db);
 	return respuesta;	
 }
 
