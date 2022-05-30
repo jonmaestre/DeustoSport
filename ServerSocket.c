@@ -3,6 +3,7 @@
 #include "bbdd.h"
 #include "logger.h"
 
+
 // IMPORTANT: Winsock Library ("ws2_32") should be linked
 
 #include <stdio.h>
@@ -78,7 +79,7 @@ int main(int argc, char *argv[]) {
 
 
     // *********************************************************************************************
-  
+
 
 	// INICIAR SESIOOOOOOOON
 	int idComprador;
@@ -131,9 +132,9 @@ int main(int argc, char *argv[]) {
 			contra = malloc(sizeof(char)*70);
 
 			strcpy(contra, sendBuff);
-			
 
-			bool existe = existeComprador (db, correo);
+
+		bool existe = existeComprador (db, correo);
 
 			if (existe == TRUE) {
 
@@ -254,7 +255,7 @@ int main(int argc, char *argv[]) {
 
 			vip = FALSE;
 
-			registrarComprador(db, nombre, telf, correo, direc, contra);
+			registrarComprador(comm_socket, nombre, telf, correo, direc, contra, comm_socket);
 
 			Comprador cliente = obtenerComprador (db, correo);
 
@@ -282,7 +283,7 @@ int main(int argc, char *argv[]) {
 
 			strcpy(esVip, sendBuff);
 
-			registrarCompradorVip(db, nombre, telf, correo, direc, contra, nivel);
+			registrarCompradorVip(comm_socket, nombre, telf, correo, direc, contra, nivel);
 
 			Comprador cliente = obtenerComprador (db, correo);
 
@@ -337,7 +338,7 @@ int main(int argc, char *argv[]) {
 	do {
 
 		int bytes = recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-		
+
         if (bytes > 0) {
 
             printf("Recibiendo mensaje... \n");
@@ -414,7 +415,7 @@ int main(int argc, char *argv[]) {
 					int cant = strtol(recvBuff, NULL, 10);
 
 					Calzado zap = listaCalzado[id-1];
-					
+
 
 					if (cant > zap.stock) {
 
@@ -431,7 +432,7 @@ int main(int argc, char *argv[]) {
 
 					Compra comprita = {idCompra, id, idComprador, cant};
 
-					agregarCompra(db, Compra compra);
+					agregarCompra(db, Compra::compra);
 
 					Compra* comprita = comprasConId (db, zap.identificativo);
 
@@ -548,7 +549,7 @@ int main(int argc, char *argv[]) {
 
 					Compra comprita = {idCompra, id, idComprador, cant};
 
-					agregarCompra(db, Compra compra);
+					agregarCompra(db, Compra::compra);
 
 					Compra* comprita = comprasConId (db, pren.identificativo);
 
@@ -663,7 +664,7 @@ int main(int argc, char *argv[]) {
 
 					Compra comprita = {idCompra, id, idComprador, cant};
 
-					agregarCompra(db, Compra compra);
+					agregarCompra(db, Compr::compra);
 
 
 					char* ticket;
@@ -753,4 +754,3 @@ int main(int argc, char *argv[]) {
 
 	return 0;
 }
-
