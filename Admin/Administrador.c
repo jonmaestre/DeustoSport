@@ -302,10 +302,8 @@ void recargarProoductoAdmin (sqlite3 *db, Administrador administrador) {
     } else if (tipo == 'M') {
         subirStockMD (db, iden, cantidad);
     } else if (tipo == 'P') {
-        subirStockCPrenda (db, iden, cantidad);
-    } else if (tipo == 'S') {
-        subirStockSupl (db, iden, cantidad);
-    }
+        subirStockPrenda (db, iden, cantidad);
+    } 
     
 }
 
