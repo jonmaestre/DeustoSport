@@ -1,15 +1,15 @@
-#ifndef COMPRADORVIP_H_
-#define COMPRADORVIP_H_
+#ifndef CLIENTEVIP_H_
+#define CLIENTEVIP_H_
 
-#include "Comprador.h"
+#include "Cliente.h"
 
-class CompradorVip: public Comprador {
+class ClienteVip: public Cliente {
         char* nivel;
 
         public:
-            CompradorVip(char* nombre, int identificativo, int telefono, char* correo, char* direccion, char* contrasena, char* nivel);
-            CompradorVip(const CompradorVip &CV);
-            virtual ~CompradorVip();
+            ClienteVip(char* nombre, int identificativo, int telefono, char* correo, char* direccion, char* contrasena, char* nivel);
+            ClienteVip(const ClienteVip &CV);
+            virtual ~ClienteVip();
 
             virtual int rebajaPrecio(int precio);
 

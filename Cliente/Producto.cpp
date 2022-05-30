@@ -69,7 +69,7 @@ namespace productos {
         delete[] color;
     }
 
-        void Calzado::serializar(){
+    void Calzado::serializar(){
         cout << "Nombre:  " << this->getNombre() << endl;
         cout << "Tipo:  " << this->getTipo() << endl;
         cout << "Color:  " << this->getColor() << endl;
@@ -106,7 +106,7 @@ namespace productos {
         delete[] deporte;
     }
 
-        void MaterialDeportivo::serializar(){
+    void MaterialDeportivo::serializar(){
         cout << "Nombre:  " << this->getNombre() << endl;
         cout << "Tipo:  " << this->getTipo() << endl;
         cout << "Color:  " << this->getColor() << endl;
@@ -154,7 +154,7 @@ namespace productos {
     int Prenda::getTalla() {
         return this->talla;
     }
-        void Prenda::serializar(){
+    void Prenda::serializar(){
         cout << "Nombre:  " << this->getNombre() << endl;
         cout << "Tipo:  " << this->getTipo() << endl;
         cout << "Color:  " << this->getColor() << endl;
@@ -177,7 +177,7 @@ namespace productos {
     Suplemento::~Suplemento() {
     }
 
-        void Suplemento::serializar(){
+    void Suplemento::serializar(){
         cout << "Nombre:  " << this->getNombre() << endl;
         cout << "Tipo:  " << this->getTipo() << endl;
         cout << "Precio:  " << this->getPrecioBase() << endl;;
