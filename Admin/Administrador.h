@@ -29,6 +29,4 @@ void entradasNuevasMD(MaterialDeportivo MD, Administrador administrador);
 
 void entradasNuevasPrenda(Prenda Prenda, Administrador administrador);
 
-void entradasNuevasSupl(Suplemento Supl, Administrador administrador);
-
 #endif
