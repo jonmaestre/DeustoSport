@@ -20,6 +20,8 @@ int main(int argc, char *argv[]) {
 	struct sockaddr_in server;
 	struct sockaddr_in client;
 	char sendBuff[512], recvBuff[512];
+	sqlite3 *db;
+	sqlite3_open("BasedeDatos.db",&db);
 
 	printf("\nInitialising Winsock...\n");
 	if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
@@ -134,9 +136,9 @@ int main(int argc, char *argv[]) {
 			strcpy(contra, sendBuff);
 
 
-		bool existe = existeComprador (db, correo);
+			int existe = existeComprador (db, correo);
 
-			if (existe == TRUE) {
+			if (existe == 1) {
 
 				printf("Enviando mensaje... \n");
 				strcat(sendBuff, "¡Bienvenido de vuelta!");
@@ -152,7 +154,7 @@ int main(int argc, char *argv[]) {
 
 			}
 
-		} while (existe == FALSE);
+		} while (existe == 0);
 
 		Comprador cliente = obtenerComprador (db, correo);
 
@@ -430,9 +432,9 @@ int main(int argc, char *argv[]) {
 
 					int idCompra = ultimaCompra(db) + 1;
 
-					Compra comprita = {idCompra, id, idComprador, cant};
+					Compra compra = {idCompra, id, idComprador, cant};
 
-					agregarCompra(db, Compra::compra);
+					agregarCompra(db, compra);
 
 					Compra* comprita = comprasConId (db, zap.identificativo);
 
@@ -450,7 +452,7 @@ int main(int argc, char *argv[]) {
 					float dinero = cant * zap.precioBase;
 
 					if (vip == TRUE) {
-						ClienteVip cli = obtenerClienteVIP(db, idComprador);
+						CompradorVip cli = obtenerClienteVIP(db, idComprador);
 						dinero = cli.rebajarPrecio(dinero);
 					}
 
@@ -463,7 +465,7 @@ int main(int argc, char *argv[]) {
 					send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 					printf("Mensaje enviado.");
 
-					logger(cliente.nombre, ("COMPRAR CALZADO %i", id), "loggers.txt");
+					logger(.nombre, ("COMPRAR CALZADO %i", id), "loggers.txt");
 
 					free(ticket);
 					ticket = NULL;
@@ -549,7 +551,7 @@ int main(int argc, char *argv[]) {
 
 					Compra comprita = {idCompra, id, idComprador, cant};
 
-					agregarCompra(db, Compra::compra);
+					agregarCompra(db, comprita);
 
 					Compra* comprita = comprasConId (db, pren.identificativo);
 
@@ -664,7 +666,7 @@ int main(int argc, char *argv[]) {
 
 					Compra comprita = {idCompra, id, idComprador, cant};
 
-					agregarCompra(db, Compr::compra);
+					agregarCompra(db, comprita);
 
 
 					char* ticket;
@@ -679,7 +681,7 @@ int main(int argc, char *argv[]) {
 					float dinero = cant * zap.precioBase;
 
 					if (vip == TRUE) {
-						ClienteVip cli = obtenerClienteVIP(db, idComprador);
+						CompradorVip cli = obtenerClienteVIP(db, idComprador);
 						dinero = cli.rebajarPrecio(dinero);
 					}
 

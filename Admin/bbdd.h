@@ -51,16 +51,18 @@
     void registrarComprador(sqlite3 *db, char* nom, int tlf, char* correo, char* dir, char* cont, bool vip);
     void registrarCompradorVip(sqlite3 *db, char* nom, int tlf, char* correo, char* dir, char* cont, char* nivel);
     Administrador obtenerAdmin(sqlite3 *db, int id);
-    bool existeAdmin(sqlite3 *db, int id);
+    int existeAdmin(sqlite3 *db, int id);
     int maxIDComprador(sqlite3 *db);
 
 
     // COMPRAS
+    int sizeComprasconId(sqlite3* db,int idCompra);
     Compra compraConId (sqlite3* db, int idCompra);
     void agregarCompra(sqlite3 *db, Compra compra);
     bool existeCompra1 (sqlite3 *db, int idCompra, int idComprador, int idProducto);
     bool existeCompra2 (sqlite3 *db, int idCompra);
     void eliminarCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto);
+
     int ultimaCompra(sqlite3 *db);
 
 

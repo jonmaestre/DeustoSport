@@ -44,9 +44,9 @@ Administrador iniciarAdmin (sqlite3 *db) {
 
     } else if (respuestaPregunta == PROGRAMADORES) {
         // Hay que asegurarse de que el aministrador con el identificativo metida existe.
-        bool existe;
+        int existe;
         existe = existeAdmin(db, identificativo);
-        if (existe == false) {
+        if (existe == 0) {
             // Si el identificativo no está en la base de datos, el administrador no existe.
             printf("¡USTED NO ES UN ADMINISTRADOR! \n");
             Administrador admin;
@@ -119,7 +119,7 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
         
         strcpy(typeProd, "Prenda");
 
-        agregarProducto(db, typeProd);
+
 
         char *nombre, *tipoPren, *color;
         float precio;
@@ -168,7 +168,6 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
         
         strcpy(typeProd, "Calzado");
 
-        agregarProducto(db, typeProd);
 
         char *nombre, *tipoCal, *color;
         float precio;
@@ -217,7 +216,7 @@ void crearProductoAdmin (sqlite3 *db, Administrador administrador) {
         
         strcpy(typeProd, "MaterDepor");
 
-        agregarProducto(db, typeProd);
+        
 
         char *nombre, *tipoMat, *color, *deporte;
         float precio;
@@ -280,7 +279,7 @@ void recargarProoductoAdmin (sqlite3 *db, Administrador administrador) {
     printf("IDENTIFICATIVO: \n");
     scanf("%i", &iden);
 
-    bool existe = existeProducto1 (db, iden);
+    bool existe = existeProducto (db, iden);
 
     while (existe == false) {
         printf("El producto indicado no existe. \n");
@@ -317,7 +316,7 @@ void eliminarProductoAdmin (sqlite3 *db, Administrador administrador) {
     printf("IDENTIFICATIVO:\n");
     scanf("%i", &iden);
 
-    bool existe = existeProducto1 (db, iden);
+    bool existe = existeProducto (db, iden);
 
     while (existe == false) {
         printf("El producto indicado no existe.\n");

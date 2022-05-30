@@ -656,29 +656,7 @@ bool existeComprador (sqlite3 *db, char* correo) {
 	return respuesta;
 }
 
-bool compradorEsVip (sqlite3 *db, char* correo) {
-	sqlite3_stmt *stmt;
-	sqlite3_open("BasedeDatos.db",&db);
 
-	int* resultado;
-	resultado = malloc(sizeof(int));
-	bool respuesta;
-	char sql[100];
-
-	sprintf(sql, "SELECT compradorVip FROM Comprador WHERE correo = %s", correo);
-	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
-	*resultado = sqlite3_step(stmt);
-
-	if (strcmp(resultado, "FALSE") == 0) {
-		respuesta = false;
-	} else {
-		respuesta = true;
-	}
-
-	sqlite3_finalize(stmt);
-	sqlite3_close(db);
-	return respuesta;
-}
 
 Comprador obtenerComprador (sqlite3 *db, char* correo) {
 	sqlite3_stmt *stmt;
@@ -718,7 +696,7 @@ CompradorVip obtenerCompradorVip (sqlite3 *db, char* correo) {
 	sqlite3_stmt *stmt;
 	sqlite3_open("BasedeDatos.db",&db);
 
-	Comprador persona;
+	CompradorVip persona;
 	char sql[100];
 	char *nombre, *direccion, *contrasena, *nivel;
 	nombre = malloc(15*sizeof(char));
@@ -769,22 +747,7 @@ void registrarComprador(sqlite3 *db, char* nom, int tlf, char* correo, char* dir
 	sqlite3_close(db);
 }
 
-void registrarCompradorVip(sqlite3 *db, char* nom, int tlf, char* correo, char* dir, char* cont, char* level) {
-    sqlite3_stmt *stmt;
-	sqlite3_open("BasedeDatos.db",&db);
-	char sql[100];
 
-	registrarComprador(db, nom, tlf, correo, dir, cont, TRUE);
-
-	int iden= maxIDComprador(db);
-
-	sprintf(sql, "INSERT INTO Comprador (nombre, identificativo, telefono, correo, direccion, constrasena, nivel) values (%s,%i,%i,%s,%s,%s,%s)", nom, iden, tlf, correo, dir, cont, level);
-
-    sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
-	sqlite3_step(stmt);
-	sqlite3_finalize(stmt);
-	sqlite3_close(db);
-}
 
 Administrador obtenerAdmin(sqlite3 *db, int id){
 	sqlite3_stmt *stmt;
@@ -805,22 +768,24 @@ Administrador obtenerAdmin(sqlite3 *db, int id){
 	return a1;
 }
 
-bool existeAdmin(sqlite3 *db, int id){
+int existeAdmin(sqlite3 *db, int id){
 	sqlite3_stmt *stmt;
 	sqlite3_open("BasedeDatos.db",&db);
 	char sql[100];
 
-	bool respuesta;
+	int respuesta;
 
 	sprintf(sql, "SELECT COUNT(*) FROM Administrador WHERE identificativo = %d", id);
+	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+
 	int size = sqlite3_step(stmt);
 
 	sqlite3_finalize(stmt);
 
 	if (size == 0) {
-		respuesta = false;
+		respuesta = 0;
 	} else {
-		respuesta = true;
+		respuesta = 1;
 	}
 	sqlite3_close(db);
 
@@ -852,6 +817,19 @@ int idMaxAdmin(sqlite3 *db) {
 
 // ------------------------------------------------------------------------------------------------------
 // COMPRAS 
+int sizeComprasconId(sqlite3* db, int idCompra){
+	sqlite3_stmt *stmt;
+	sqlite3_open("BasedeDatos.db",&db);
+
+	char sql[100];
+
+	sprintf(sql, "SELECT COUNT(*) FROM Compra WHERE ID_Compra = %i", idCompra);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	int size = sqlite3_step(stmt);
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
+	return size;
+}
 
 Compra comprasConId (sqlite3* db, int idCompra) {
 	sqlite3_stmt *stmt;
@@ -950,31 +928,7 @@ bool existeCompra2 (sqlite3 *db, int idCompra) {
 }
 
 
-void eliminarCompra (sqlite3 *db, int idCompra, int idComprador, int idProducto) {
 
-	sqlite3_stmt *stmt;
-	sqlite3_open("BasedeDatos.db",&db);
-	char sql[100];
-
-	Compra compra;
-	compra = obtenerCompra (db, idCompra, idComprador, idProducto);
-
-	char tipo = obtenerTipoProducto (db, idProducto);
-
-	if (strcmp(&tipo, "C") == 0) {
-		bajarStockCalzado(db, idProducto, compra.cantidad);
-	} else if (strcmp(&tipo, "P") == 0) {
-		bajarStockPrenda(db, idProducto, compra.cantidad);
-	} else if (strcmp(&tipo, "M") == 0) {
-		bajarStockMD(db, idProducto, compra.cantidad);
-	} 
-	
-	sprintf(sql, "DELETE FROM Compra WHERE idenificativo = %i AND idProducto = %i AND idComprador = %i", idCompra, idProducto, idComprador);
-	sqlite3_step(stmt);
-
-	sqlite3_finalize(stmt);
-	sqlite3_close(db);
-}
 
 int ultimaCompra(sqlite3 *db){
 	sqlite3_stmt *stmt;

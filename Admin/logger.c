@@ -13,7 +13,7 @@ void logger(const char* user, const char* action, const char* fileName) {
 
     fprintf(file, "%s [%s]: %s\n", ctime(&now), user, action);
 
-    fclose(f);
+    fclose(file);
 
 }
 
