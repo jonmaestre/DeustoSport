@@ -77,13 +77,12 @@ int main(int argc, char *argv[]) {
 
 
     // *********************************************************************************************
-    // El servicio de Atencion al Cliente de DeustoSportKit será una ayuda iteractiva con un trabajador de la plataforma.
-    // Este tratará de ayudar al cliente con sus dudas/problemas que no pueda resolver la máquina sola en el otro socket.
-    // Esa será la diferencia al "ServerSocket.c", que las respuestas de ese serán por el ordenador y no por un humano real.
-
+  
 
 	// INICIAR SESIOOOOOOOON
 	int idComprador;
+
+	bool vip;
 
 	printf("Enviando mensaje... \n");
 	strcat(sendBuff, "¡Buenos dias! Antes de comprar en DeustoSportKit, deberas iniciar sesion.");
@@ -135,7 +134,29 @@ int main(int argc, char *argv[]) {
 
 			bool existe = existeComprador (db, correo);
 
+			if (existe == TRUE) {
+
+				printf("Enviando mensaje... \n");
+				strcat(sendBuff, "¡Bienvenido de vuelta!");
+				send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+				printf("Mensaje enviado: %s \n", sendBuff);
+
+			} else {
+
+				printf("Enviando mensaje... \n");
+				strcat(sendBuff, "ERROR");
+				send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+				printf("Mensaje enviado: %s \n", sendBuff);
+
+			}
+
 		} while (existe == FALSE);
+
+		Comprador cliente = obtenerComprador (db, correo);
+
+		idComprador = cliente.identificativo;
+
+		vip = compradorEsVip(db, idComprador);
 
 
 	} else if (strcmp(recvBuff, "No") == 0) {
@@ -150,7 +171,7 @@ int main(int argc, char *argv[]) {
 		printf("Mensaje recibido: %s \n", recvBuff);
 
 		char* nombre;
-		nombre = malloc(sizeof(char)*10);
+		nombre = malloc(sizeof(char)*15);
 
 		strcpy(nombre, sendBuff);
 
@@ -198,7 +219,7 @@ int main(int argc, char *argv[]) {
 
 
 		printf("Enviando mensaje... \n");
-		strcat(sendBuff, "¿Coontrasena?");
+		strcat(sendBuff, "¿Contrasena?");
 		send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 		printf("Mensaje enviado: %s \n", sendBuff);
 
@@ -207,13 +228,13 @@ int main(int argc, char *argv[]) {
 		printf("Mensaje recibido: %s \n", recvBuff);
 
 		char* contra;
-		contra = malloc(sizeof(char)*10);
+		contra = malloc(sizeof(char)*15);
 
 		strcpy(contra, sendBuff);
 
 
 		printf("Enviando mensaje... \n");
-		strcat(sendBuff, "¿Numero de telefono?");
+		strcat(sendBuff, "¿Quieres ser cliente VIP? (Si o No)");
 		send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 		printf("Mensaje enviado: %s \n", sendBuff);
 
@@ -221,22 +242,48 @@ int main(int argc, char *argv[]) {
 		recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
 		printf("Mensaje recibido: %s \n", recvBuff);
 
-		int telf = strtol(recvBuff, NULL, 10);
+		char* esVip;
+		esVip = malloc(sizeof(char)*3);
+
+		strcpy(esVip, sendBuff);
+
+		if (strcmp(recvBuff, "No") == 0) {
+
+			vip = FALSE;
+
+			registrarComprador(db, nombre, telf, correo, direc, contra);
+
+			Comprador cliente = obtenerComprador (db, correo);
+			idComprador = cliente.identificativo;
+
+		} else if (strcmp(recvBuff, "Si") == 0) {
+
+			vip = TRUE;
+
+			printf("Enviando mensaje... \n");
+			strcat(sendBuff, "¿Quieres ser VIP standard o premium?");
+			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+			printf("Mensaje enviado: %s \n", sendBuff);
+
+			printf("Recibiendo mensaje... \n");
+			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+			printf("Mensaje recibido: %s \n", recvBuff);
 
 
+			char* nivel;
+			nivel = malloc(sizeof(char)*10);
 
+			strcpy(esVip, sendBuff);
 
+			registrarCompradorVip(db, nombre, telf, correo, direc, contra, nivel);
 
+			Comprador cliente = obtenerComprador (db, correo);
+			idComprador = cliente.identificativo;
 
-
-
-		// REGISTRAAAAAAAAAAAR
+		}
 
 	}
 
-
-
-	// COGER CON EL CORREO EL COMPRADOR QUE SEA
 
 
 	// PROGRAMA
@@ -356,6 +403,18 @@ int main(int argc, char *argv[]) {
 					int cant = strtol(recvBuff, NULL, 10);
 
 					Calzado zap = listaCalzado[id-1];
+					
+
+					if (cant > zap.stock) {
+
+						printf("Enviando mensaje... \n");
+						strcat(sendBuff, "¡No tenemos tantos zapatos! Te venderemos solo los que quedan");
+						send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+						printf("Mensaje enviado.");
+
+						cant = zap.stock;
+
+					}
 
 					int idCompra = ultimaCompra(db) + 1;
 
@@ -372,6 +431,26 @@ int main(int argc, char *argv[]) {
 
 					printf("Enviando mensaje... \n");
 					strcat(sendBuff, ticket);
+					send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+					printf("Mensaje enviado.");
+
+					free(ticket);
+					ticket = NULL;
+
+
+					float dinero = cant * zap.precioBase;
+
+					if (vip == TRUE) {
+						ClienteVip cli = obtenerClienteVIP(db, idComprador);
+						dinero = cli.rebajarPrecio(dinero);
+					}
+
+					char* precio;
+					precio = malloc (sizeof(char)*256);
+					precio = "PRECIO: %f", dinero;
+
+					printf("Enviando mensaje... \n");
+					strcat(sendBuff, precio);
 					send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 					printf("Mensaje enviado.");
 
@@ -439,6 +518,19 @@ int main(int argc, char *argv[]) {
 					int cant = strtol(recvBuff, NULL, 10);
 
 					Prenda pren = listaPrenda[id-1];
+
+
+					if (cant > pren.stock) {
+
+						printf("Enviando mensaje... \n");
+						strcat(sendBuff, "¡No tenemos tantas prendas! Te venderemos solo las que quedan");
+						send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+						printf("Mensaje enviado.");
+
+						cant = pren.stock;
+
+					}
+
 
 					int idCompra = ultimaCompra(db) + 1;
 
@@ -521,6 +613,19 @@ int main(int argc, char *argv[]) {
 					int cant = strtol(recvBuff, NULL, 10);
 
 					MaterialDeportivo md = listaMD[id-1];
+
+
+					if (cant > md.stock) {
+
+						printf("Enviando mensaje... \n");
+						strcat(sendBuff, "¡No tenemos tantos materiales! Te venderemos solo los que quedan");
+						send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+						printf("Mensaje enviado.");
+
+						cant = md.stock;
+
+					}
+
 
 					int idCompra = ultimaCompra(db) + 1;
 
