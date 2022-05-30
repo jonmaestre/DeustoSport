@@ -14,22 +14,22 @@ int main(int argc, char *argv[]) {
 	struct sockaddr_in server;
 	char sendBuff[512], recvBuff[512];
 
-	printf("\nInitialising Winsock...\n");
+	cout << "Initialising Winsock..." << endl;
 	if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-		printf("Failed. Error Code : %d", WSAGetLastError());
+		cout << "Failed. Error Code " << WSAGetLastError() << endl;
 		return -1;
 	}
 
-	printf("Initialised.\n");
+	cout << "Initialised." << endl;
 
 	//SOCKET creation
 	if ((s = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
-		printf("Could not create socket : %d", WSAGetLastError());
+		cout << "Could not create socket : " << WSAGetLastError() << endl;
 		WSACleanup();
 		return -1;
 	}
 
-	printf("Socket created.\n");
+	cout << "Socket created." << endl;
 
 	server.sin_addr.s_addr = inet_addr(SERVER_IP);
 	server.sin_family = AF_INET;
@@ -37,25 +37,213 @@ int main(int argc, char *argv[]) {
 
 	//CONNECT to remote server
 	if (connect(s, (struct sockaddr*) &server, sizeof(server)) == SOCKET_ERROR) {
-		printf("Connection error: %d", WSAGetLastError());
+		cout << "Connection error: " << WSAGetLastError() << endl;
 		closesocket(s);
 		WSACleanup();
 		return -1;
 	}
 
-	printf("Connection stablished with: %s (%d)\n", inet_ntoa(server.sin_addr), ntohs(server.sin_port));
+	cout << "Connection stablished with:" << inet_ntoa(server.sin_addr) << "(" << ntohs(server.sin_port) << ")" << endl;
 
 
 
     // *********************************************************************************************
-    // El ClienteQueAtender es un cliente de la plataforma que acude al servicio de Atencion al Cliente de DeustoSportKit.
-    // Aquí podrá comunicarse libremente con un trabajador de la empresa dispuesto a ayudarle.
-    // La dieferencia con el "ClienteSocket.c" es que podrá consultar dudas que no sean sobre devoluciones, problemas tecnicos o stock.
+    
+
+
+
+
 
 
     int bytes = recv(s, recvBuff, sizeof(recvBuff), 0);
 		
     if (bytes > 0) {
+
+		// INICIAR SESION
+
+		cout << "Recibiendo mensaje... " << endl;
+        recv(s, recvBuff, sizeof(recvBuff), 0);
+		cout << "Mensaje recibido: " << recvBuff << endl;
+
+		cout << "Recibiendo mensaje... " << endl;
+        recv(s, recvBuff, sizeof(recvBuff), 0);
+		cout << "Mensaje recibido: " << recvBuff << endl;
+
+
+		char* cuenta;
+		cuenta = new char[3];
+	    cin >> cuenta;
+
+	    cout << "Enviando mensaje... " << endl;
+	    strcpy(sendBuff, cuenta);
+        send(s, sendBuff, sizeof(sendBuff), 0);
+	    cout << "Mensaje enviado: " << sendBuff << endl;
+
+
+		if (strcmp(cuenta, "No") == 0) {
+
+			do {
+
+				cout << "Recibiendo mensaje... " << endl;
+				recv(s, recvBuff, sizeof(recvBuff), 0);
+				cout << "Mensaje recibido: " << recvBuff << endl;
+
+				char* correo;
+				correo = new char[70];
+				cin >> cuenta;
+
+				cout << "Enviando mensaje... " << endl;
+				strcpy(sendBuff, correo);
+				send(s, sendBuff, sizeof(sendBuff), 0);
+				cout << "Mensaje enviado: " << sendBuff << endl;
+
+
+				cout << "Recibiendo mensaje... " << endl;
+				recv(s, recvBuff, sizeof(recvBuff), 0);
+				cout << "Mensaje recibido: " << recvBuff << endl;
+
+				char* contra;
+				contra = new char[70];
+				cin >> contra;
+
+				cout << "Enviando mensaje... " << endl;
+				strcpy(sendBuff, contra);
+				send(s, sendBuff, sizeof(sendBuff), 0);
+				cout << "Mensaje enviado: " << sendBuff << endl;
+
+
+				cout << "Recibiendo mensaje... " << endl;
+				recv(s, recvBuff, sizeof(recvBuff), 0);
+				cout << "Mensaje recibido: " << recvBuff << endl;
+
+				char* contra;
+				contra = new char[70];
+				cin >> contra;
+
+				cout << "Enviando mensaje... " << endl;
+				strcpy(sendBuff, contra);
+				send(s, sendBuff, sizeof(sendBuff), 0);
+				cout << "Mensaje enviado: " << sendBuff << endl;
+
+				cout << "Recibiendo mensaje... " << endl;
+				recv(s, recvBuff, sizeof(recvBuff), 0);
+				cout << "Mensaje recibido: " << recvBuff << endl;
+
+				char* extrado;
+				entrado = new char[30];
+				strcpy(entrado, recvBuff);
+
+			} while ((strcmp(entrado, "ERROR") == 0));
+
+			delete[] entrado;
+
+		} else if (strcmp(cuenta, "No") == 0) {
+
+			cout << "Recibiendo mensaje... " << endl;
+			recv(s, recvBuff, sizeof(recvBuff), 0);
+			cout << "Mensaje recibido: " << recvBuff << endl;
+
+			char* nombre;
+			nombre = new char[15];
+			cin >> nombre;
+
+			cout << "Enviando mensaje... " << endl;
+			strcpy(sendBuff, nombre);
+			send(s, sendBuff, sizeof(sendBuff), 0);
+			cout << "Mensaje enviado: " << sendBuff << endl;
+
+
+			cout << "Recibiendo mensaje... " << endl;
+			recv(s, recvBuff, sizeof(recvBuff), 0);
+			cout << "Mensaje recibido: " << recvBuff << endl;
+
+			int telf;
+			cin >> telf;
+
+			cout << "Enviando mensaje... " << endl;
+			strcpy(sendBuff, telf);
+			send(s, sendBuff, sizeof(sendBuff), 0);
+			cout << "Mensaje enviado: " << sendBuff << endl;
+
+
+			cout << "Recibiendo mensaje... " << endl;
+			recv(s, recvBuff, sizeof(recvBuff), 0);
+			cout << "Mensaje recibido: " << recvBuff << endl;
+
+			char* correo;
+			correo = new char[50];
+			cin >> correo;
+
+			cout << "Enviando mensaje... " << endl;
+			strcpy(sendBuff, correo);
+			send(s, sendBuff, sizeof(sendBuff), 0);
+			cout << "Mensaje enviado: " << sendBuff << endl;
+
+
+			cout << "Recibiendo mensaje... " << endl;
+			recv(s, recvBuff, sizeof(recvBuff), 0);
+			cout << "Mensaje recibido: " << recvBuff << endl;
+
+			char* direc;
+			direc = new char[60];
+			cin >> direc;
+
+			cout << "Enviando mensaje... " << endl;
+			strcpy(sendBuff, direc);
+			send(s, sendBuff, sizeof(sendBuff), 0);
+			cout << "Mensaje enviado: " << sendBuff << endl;
+
+
+			cout << "Recibiendo mensaje... " << endl;
+			recv(s, recvBuff, sizeof(recvBuff), 0);
+			cout << "Mensaje recibido: " << recvBuff << endl;
+
+			char* contrasena;
+			contrasena = new char[15];
+			cin >> contrasena;
+
+			cout << "Enviando mensaje... " << endl;
+			strcpy(sendBuff, contrasena);
+			send(s, sendBuff, sizeof(sendBuff), 0);
+			cout << "Mensaje enviado: " << sendBuff << endl;
+
+
+			cout << "Recibiendo mensaje... " << endl;
+			recv(s, recvBuff, sizeof(recvBuff), 0);
+			cout << "Mensaje recibido: " << recvBuff << endl;
+
+			char* vip;
+			vip = new char[3];
+			cin >> vip;
+
+			cout << "Enviando mensaje... " << endl;
+			strcpy(sendBuff, vip);
+			send(s, sendBuff, sizeof(sendBuff), 0);
+			cout << "Mensaje enviado: " << sendBuff << endl;
+
+
+			if (strcmp(vip, "Si") == 0) {
+
+				cout << "Recibiendo mensaje... " << endl;
+				recv(s, recvBuff, sizeof(recvBuff), 0);
+				cout << "Mensaje recibido: " << recvBuff << endl;
+
+				char* vipLevel;
+				vipLevel = new char[10];
+				cin >> vipLevel;
+
+				cout << "Enviando mensaje... " << endl;
+				strcpy(sendBuff, vipLevel);
+				send(s, sendBuff, sizeof(sendBuff), 0);
+				cout << "Mensaje enviado: " << sendBuff << endl;
+
+			}
+
+		}
+
+
+
+		// PROGRAMA
 
 		cout << "Recibiendo mensaje... " << endl;
         recv(s, recvBuff, sizeof(recvBuff), 0);
@@ -81,7 +269,7 @@ int main(int argc, char *argv[]) {
 				} while (strcmp(recvBuff, "¿Te interesa alguna zapatilla? (Si o No)") != 0);
 
 				char* respuesta;
-				respuesta = malloc(sizeof(char)*3);
+				respuesta = new char[3];
 	    		cin >> respuesta;
 
 				cout << "Enviando mensaje... " << endl;
@@ -116,6 +304,19 @@ int main(int argc, char *argv[]) {
 					send(s, sendBuff, sizeof(sendBuff), 0);
 					cout << "Mensaje enviado: " << sendBuff << endl;
 
+
+					cout << "Recibiendo mensaje... " << endl;
+					recv(s, recvBuff, sizeof(recvBuff), 0);
+					cout << "Mensaje recibido: " << recvBuff << endl;
+
+					
+					if (strcmp(recvBuff, "¡No tenemos tantos zapatos! Te venderemos solo los que quedan") == 0) {
+
+						cout << "Recibiendo mensaje... " << endl;
+						recv(s, recvBuff, sizeof(recvBuff), 0);
+						cout << "Mensaje recibido: " << recvBuff << endl;
+
+					}
 
 					cout << "Recibiendo mensaje... " << endl;
 					recv(s, recvBuff, sizeof(recvBuff), 0);
@@ -133,7 +334,7 @@ int main(int argc, char *argv[]) {
 				} while (strcmp(recvBuff, "¿Te interesa alguna prenda? (Si o No)") != 0);
 
 				char* respuesta;
-				respuesta = malloc(sizeof(char)*3);
+				respuesta = new char[3];
 	    		cin >> respuesta;
 
 				cout << "Enviando mensaje... " << endl;
@@ -172,6 +373,15 @@ int main(int argc, char *argv[]) {
 					cout << "Recibiendo mensaje... " << endl;
 					recv(s, recvBuff, sizeof(recvBuff), 0);
 					cout << "Mensaje recibido: " << recvBuff << endl;
+
+
+					if (strcmp(recvBuff, "¡No tenemos tantas prendas! Te venderemos solo las que quedan") == 0) {
+
+						cout << "Recibiendo mensaje... " << endl;
+						recv(s, recvBuff, sizeof(recvBuff), 0);
+						cout << "Mensaje recibido: " << recvBuff << endl;
+
+					}
 
 				}
 
@@ -185,7 +395,7 @@ int main(int argc, char *argv[]) {
 				} while (strcmp(recvBuff, "¿Te interesa algun material deportivo? (Si o No)") != 0);
 
 				char* respuesta;
-				respuesta = malloc(sizeof(char)*3);
+				respuesta = new char[3];
 	    		cin >> respuesta;
 
 				cout << "Enviando mensaje... " << endl;
@@ -223,6 +433,14 @@ int main(int argc, char *argv[]) {
 					cout << "Recibiendo mensaje... " << endl;
 					recv(s, recvBuff, sizeof(recvBuff), 0);
 					cout << "Mensaje recibido: " << recvBuff << endl;
+
+					if (strcmp(recvBuff, "¡No tenemos tantos materiales! Te venderemos solo los que quedan") == 0) {
+
+						cout << "Recibiendo mensaje... " << endl;
+						recv(s, recvBuff, sizeof(recvBuff), 0);
+						cout << "Mensaje recibido: " << recvBuff << endl;
+
+					}
 
 				}
 
