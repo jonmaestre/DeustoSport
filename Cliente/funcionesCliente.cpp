@@ -179,34 +179,3 @@ Cliente iniciarCliente (sqlite3 *db) {
     }
 }
 
-// Funcion para añadir al carrito el elemento deseado
-
-
-void devolverCompra (sqlite3 *db, Comprador comprador, int idProducto, int idCompra) {
-
-    bool existe;
-    //existe = existeCompra (db, idCompra);
-
-    if (existe == false) {
-        printf("¡Error! Esa compra no se ha hecho nunca. \n");
-    } else {
-
-        Compra compra =  obtenerCompra (db, idCompra, comprador.identificativo, idProducto);
-        int cantidad = compra.cantidad;
-
-        eliminarCompra (db, idCompra, comprador.identificativo, idProducto);
-
-        char tipo = obtenerTipoProducto (db, idProducto);
-        // C -> calzado		M -> material	P -> prenda 	S -> suplemento
-
-        if (tipo == 'C') {
-            subirStockCalzado (db, idProducto, cantidad);
-        } else if (tipo == 'M') {
-            subirStockMD (db, idProducto, cantidad);
-        } else if (tipo == 'P') {
-            subirStockPrenda (db, idProducto, cantidad);
-        } 
-        cout << "Trámites de devolución completados. \n" << endl;
-    }
-
-}

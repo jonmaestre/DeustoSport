@@ -14,7 +14,6 @@ void eliminarDeCarrito (sqlite3 *db, int** arrayProductos, int* sizeArray, int i
 
 int* iniciarCarrito(sqlite3 *db, Comprador comprador, int* sizeArray, int** arrayProductos);
 
-void devolverCompra (sqlite3 *db, Comprador comprador, int idProducto, int idCompra);
 
 
 #endif

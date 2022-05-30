@@ -963,6 +963,7 @@ int ultimaCompra(sqlite3 *db){
 
 
 
+<<<<<<< HEAD
 // DEVOLUCIONES
 
 void agregarDevolucion (sqlite3 *db, Compra compra, char* explicacion) {
@@ -983,3 +984,5 @@ void agregarDevolucion (sqlite3 *db, Compra compra, char* explicacion) {
 
 }
 
+=======
+>>>>>>> 531c9636df936288c77d125a52f4efae78613aa4

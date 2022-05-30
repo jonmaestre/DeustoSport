@@ -14,6 +14,6 @@ class CompradorVip: public Comprador {
             virtual void rebajaPrecio();
 
             char* getNivel();
-    };
+};
 
 #endif
