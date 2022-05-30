@@ -157,12 +157,12 @@ int main(int argc, char *argv[]) {
 				texto = malloc(sizeof(char)*256);
 
 				do{
-					texto = "%i. %s %s Precio: %2f", (i+1), listaCalzado[i]->tipo, listaCalzado[i]->nombre, listaCalzado[i]->precio;
+					texto = "%i. %s %s %i Precio: %2f", (i+1), listaCalzado[i]->tipo, listaCalzado[i]->nombre, listaCalzado[i]->talla listaCalzado[i]->precioBase;
 					strcat(sendBuff, texto);
 			    	send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 				}while (i<size);
 
-				printf("Zapatillas enviada.");
+				printf("Zapatillas enviadas.");
 
 				free(texto);
 				texto = NULL;
@@ -230,12 +230,12 @@ int main(int argc, char *argv[]) {
 				texto = malloc(sizeof(char)*256);
 
 				do{
-					texto = "%i. %s %s Precio: %2f", (i+1), listaPrenda[i]->tipo, listaPrenda[i]->nombre, listaPrenda[i]->precio;
+					texto = "%i. %s %s %i Precio: %2f", (i+1), listaPrenda[i]->tipo, listaPrenda[i]->nombre, listaPrenda[i]->talla, listaPrenda[i]->precioBase;
 					strcat(sendBuff, texto);
 			    	send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 				}while (i<size);
 
-				printf("Prendas enviada.");
+				printf("Prendas enviadas.");
 
 				free(texto);
 				texto = NULL;
@@ -291,6 +291,75 @@ int main(int argc, char *argv[]) {
 
             } else if (num == 3) {
                 // MATERIAL DEPORTIVO
+
+				int size = sizeMD(db);
+        		int i=0;
+        		MaterialDeportivo* listaMD = showMD(db);
+
+				printf("Enviando material... \n");
+
+				char *texto;
+				texto = malloc(sizeof(char)*256);
+
+				do{
+					texto = "%i. %s %s %i Precio: %2f", (i+1), listaMD[i]->tipo, listaMD[i]->nombre, listaMD[i]->talla, listaMD[i]->precioBase;
+					strcat(sendBuff, texto);
+			    	send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+				}while (i<size);
+
+				printf("Materiales enviados.");
+
+				free(texto);
+				texto = NULL;
+
+				printf("Enviando mensaje... \n");
+			    strcat(sendBuff, "¿Te interesa algun material deportivo? (Si o No)");
+			    send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+			    printf("Mensaje enviado.");
+
+				printf("Recibiendo mensaje... \n");
+				recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+				printf("Mensaje recibido: %s \n", recvBuff);
+
+				if (strcmp(recvBuff, "Si") == 0) {
+
+					printf("Enviando mensaje... \n");
+					strcat(sendBuff, "Escribe el numero.");
+					send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+					printf("Mensaje enviado.");
+
+					printf("Recibiendo mensaje... \n");
+					recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+					printf("Mensaje recibido: %s \n", recvBuff);
+
+					int id = strtol(recvBuff, NULL, 10);
+
+
+					printf("Enviando mensaje... \n");
+					strcat(sendBuff, "¿Cuantas?");
+					send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+					printf("Mensaje enviado.");
+
+					printf("Recibiendo mensaje... \n");
+					recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+					printf("Mensaje recibido: %s \n", recvBuff);
+
+					int cant = strtol(recvBuff, NULL, 10);
+
+					MaterialDeportivo md = listaMD[id-1];
+
+					int idCompra = ultimaCompra(db) + 1;
+
+					Compra comprita = {idCompra, id, idComprador, cant};
+
+					agregarCompra(db, Compra compra);
+
+					Compra* comprita = comprasConId (db, md.identificativo);
+
+
+					// IMPRIMIR COMPRA
+
+				}
 
             } else if (num == 4) {
                 // ATENCION AL CLIENTE
